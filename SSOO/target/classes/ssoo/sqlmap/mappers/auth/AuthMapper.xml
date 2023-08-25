@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssoo.auth.service.impl.AuthMapper">
+	
+	<select id="getAuthInfo" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{ call SPB1100_SEL00(#{id, mode=IN, jdbcType=VARCHAR, javaType=string}, #{password, mode=IN, jdbcType=VARCHAR, javaType=string})}
+	</select>
+	
+	<select id="getMainInfo" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{ call SPB1100_SEL01(#{MainType})}
+	</select>
+	
+	<select id="getMenuList" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{ call SP0100_LST00(#{cod_pg_up}, #{SESSION_COD_MEMB} )}
+	</select>
+	
+	<select id="getBoardList" parameterType="hashmap" resultType="hashmap">
+	    SELECT NAM_TITLE  
+		FROM   BD0100_BOARD 
+		WHERE  CHK_FIX = 'Y'
+		AND    CHK_USAGE = 'B'
+	</select>
+	
+	<select id="A0100Auth" parameterType="hashmap" resultType="hashmap">
+		{ call SPA0100_SEL00(
+							#{COD_COMPANY})}
+	</select>
+</mapper>

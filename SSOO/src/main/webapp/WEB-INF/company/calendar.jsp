@@ -1,0 +1,460 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.js"></script>
+    <style type="text/css">
+        .container{
+            height: 100vh;
+            position: relative;
+        }
+
+        section{
+            width: calc(100% - 160px);
+            padding: 40px 50px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+		header {
+            height: 30px;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 57px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .left_div{
+            width: 75%;
+        }
+
+        .right_div{
+            width: 23%;
+        }
+
+        .bookmark{
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 45px;
+        }
+
+        .bk{
+            width: 200px;
+            border: 1px solid #c5c5c5;
+            text-align: center;
+        }
+        .bk a{
+            text-decoration-line: none;
+            color: black;
+        }
+
+        .graph_div{
+            border: 1px solid #c5c5c5;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .notice_div{
+            border: 1px solid #c5c5c5;
+            padding: 5px;
+        }
+
+        .notice_header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timepicker{
+            width: 100px;
+        }
+
+		.schedule_div{
+			height: 100px;
+			overflow: scroll;
+		}
+
+		.schedule_item{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: #f3f3f3;
+			margin: 6px 0;
+		}
+
+        /* 일정등록 팝업 */
+        .modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: none;
+        }
+
+        .modal_body {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 550px;
+            height: 250px;
+
+            padding: 40px;
+
+            text-align: center;
+
+            background-color: #c5c5c5;
+            border-radius: 10px;
+            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        .modal_content{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .btn_div{
+            margin-top: 40px;
+        }
+
+        .close{
+            width: 40px;
+            height: 40px;
+        }
+
+        #achievement{
+            margin: 20px;
+            width: 300px;
+            height: 160px;
+        }
+
+        .hidden{
+            display: none;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+    	<header>
+            <select id="teamList" onChange="changeTeam()">
+                <option value="TEAM1">TEAM 1</option>
+                <option value="TEAM2">TEAM 2</option>
+                <option value="TEAM3">TEAM 3</option>
+            </select>
+            <div class="btn_div">
+                <button class="btn ps">개인</button>
+                <button class="btn cp">회사</button>
+            </div>
+        </header>
+        <section>
+            <div class="left_div">
+                <div class="bookmark">
+                    <div class="bk">
+                        <input type='text' class="hidden" value="" />
+                        <img src="../images/add.png" alt="#">
+                        <p></p>
+                    </div>
+                    <div class="bk">
+                        <input type='text' class="hidden" value="" />
+                        <img src="../images/add.png" alt="#">
+                        <p></p>
+                    </div>
+                    <div class="bk">
+                        <input type='text' class="hidden" value="https://www.naver.com" />
+                        <img src="https://www.naver.com/favicon.ico" alt="#">
+                        <p>네이버</p>
+                    </div>
+                    <div class="bk">
+                        <input type='text' class="hidden" value="https://papago.naver.com" />
+                        <img src="https://papago.naver.com/favicon.ico" alt="#">
+                        <p>파파고</p>
+                    </div>
+                </div>
+                <div class="calendar_div">
+                    <div id='calendar'></div>
+                    <div class="schedule_div">
+                    	<!-- <div class="schedule_item">
+                    		<h3>스케줄 제목</h3>
+                    		<div class="delete"><img src="../images/delete.png" alt="#"></div>
+                    	</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="right_div">
+                <div class="graph_div">
+                    <div id="achievement"></div>
+                    <div class="percentage"></div>
+                    <div id="slider"></div>
+                </div>
+                <div class="notice_div">
+                    <div class="notice_header">
+                        <h2>공지사항</h2>
+                        <img src="../images/more.png" alt="#" style="width: 24px; height: 24px;">
+                    </div>
+                    <div class="notice_body">
+                        <h3>공지사항 제목</h3>
+                        <p>공지사항 내용</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <div class="modal">
+        <div class="modal_body">
+            <div style="display: flex; justify-content: space-between;">
+                <h3>스케줄 등록</h3>
+                <img src="../images/close.png" class="close">
+            </div>
+            
+            <hr>
+
+            <div class="modal_content">
+                <div>
+                    <label for="name">스케줄명</label>
+                    <input type="text" name="title" id="title">
+                </div>
+                
+                <div>
+                    <label for="startDay">시작</label>
+                    <input type="date" name="startDay" id="startDay">
+                    <input type="text" name="startHH" id="startHH" class="timepicker hh">
+                    <input type="text" name="startMM" id="startMM" class="timepicker mm">
+                </div>
+                <div>
+                    <label for="endDay">종료</label>
+                    <input type="date" name="endDay" id="endDay">
+                    <input type="text" name="endtHH" id="endHH" class="timepicker hh">
+                    <input type="text" name="endMM" id="endMM" class="timepicker mm">
+                </div>
+                <div>
+                    <label for="allDay">종일</label>
+                    <input type="checkbox" name="allDay" id="allDay">
+                </div>
+            </div>
+
+            <div class="btn_div">
+                <button id="addEvt" class="btn save">생성하기</button>
+            </div>
+        </div>
+    </div>
+  </body>
+  <script>
+    var calendarEl, calendar;
+    var isAllDay = false;
+
+    let today = new Date();
+
+    document.addEventListener('DOMContentLoaded', function() {
+        calendarEl = document.getElementById('calendar');
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            selectable: true,
+            height: 650,
+            locale: 'ko',
+            customButtons: {
+                addButton:{
+                    text: '일정등록',
+                    click: function(){ }
+                }
+            },
+            /* headerToolbar: {
+                center: 'addButton'
+            }, */
+            dateClick: function(i){
+                console.log(i);
+                $('.container').css('z-index',-1);
+                $(".modal").css('display','block');
+                $('#startDay').val(i.dateStr);
+                $('#startHH').val(today.getHours());
+                $('#startMM').val(today.getMinutes());
+
+                $('#endDay').val(i.dateStr);
+                $('#endHH').val(today.getHours()+1);
+                $('#endMM').val(today.getMinutes());
+            }
+        });
+        calendar.render();
+    });
+
+    $(document).ready(function () {
+	    $('input.hh').timepicker({
+            timeFormat: 'HH',
+            interval: 1,
+            startHour: '00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $('input.mm').timepicker({
+            timeFormat: 'mm',
+            interval: 1,
+            startMinutes: '00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $('#addEvt').on('click',function(){
+            var title = $('#title').val();
+            var start = $('#startDay').val()+'T'+$('#startHH').val()+':'+$('#startMM').val()+':00';
+            var end = $('#endDay').val()+'T'+$('#endHH').val()+':'+$('#endMM').val()+':00';
+
+			if(!isAllDay){
+				calendar.addEvent({
+	                title: title,
+	                start: start,
+	                end: end
+	            });
+            }else{
+            	calendar.addEvent({
+                    title: title,
+                    start: start,
+                    end: end,
+                    allDay: true
+                });
+            }
+            
+            $(".close").click();
+            
+            // 스케줄리스트에 추가
+            $('.schedule_div').append('<div class="schedule_item"><h3>'+title+'</h3><div class="delete"><img src="../images/delete.png" alt="#"></div></div>');
+            
+        });
+
+        // 북마크
+        $('.bk').on('click',function(){
+            var url = $(this)[0].childNodes[1].value;
+            console.log(url);
+
+            if(url != ''){ 
+                window.location.href = $(this)[0].childNodes[1].value;
+            }else{
+                url = prompt('즐겨찾기 URL를 입력해주세요.');
+                $(this)[0].childNodes[1].value = url;
+                $(this)[0].childNodes[3].src = url+'favicon.ico';
+                $(this)[0].childNodes[5].innerText = '테스트';
+            }
+
+        });
+
+        // 달성률 관련
+        var semiCircle = new ProgressBar.SemiCircle(achievement, {
+            strokeWidth: 6,
+            color: '#FFEA82',
+            trailColor: '#eee',
+            trailWidth: 1,
+            easing: 'easeInOut',
+            duration: 1400,
+            svgStyle: null,
+            text: {
+                value: '',
+                alignToBottom: false
+            },
+            from: {color: '#FFEA82'},
+            to: {color: '#ED6A5A'},
+
+            // Set default step function for all animate calls
+            step: (state, semiCircle) => {
+                semiCircle.path.setAttribute('stroke', state.color);
+                // var value = Math.round(semiCircle.value() * 100);
+                var value = 50;
+                /* if (value === 0) {
+                    semiCircle.setText('0%');
+                } else {
+                    semiCircle.setText(value+'%');
+                }
+
+                semiCircle.text.style.color = state.color;
+                */
+            }
+        });
+        semiCircle.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+        semiCircle.text.style.fontSize = '2rem';
+
+        semiCircle.animate(0.5);
+
+        $("#slider").slider({
+            value:50,
+            min: 0,
+            max: 100,
+            step: 1,
+            slide: function( event, ui ) {
+                if(ui.value != 0) semiCircle.animate(ui.value * 0.01);
+                else semiCircle.animate(0);
+                $('.percentage')[0].innerText = ui.value+'%';
+            }
+        });
+        $('.percentage')[0].innerText = $('#slider').slider('value')+'%';
+
+        $(".close").click(function(){
+            $(".modal").css('display','none');
+            $('.container').css('z-index',1);
+        });
+        
+        $('.btn.ps').on('click',function(){
+            alert('개인화면으로 이동');
+        });
+        
+        $('.delete').on('click',function(){
+        	alert('해당 스케줄을 삭제하시겠습니까?');
+        });
+        
+        $('input[type=checkbox][name=allDay]').change(function() {
+            if ($(this).is(':checked')) {
+                // 종일 체크
+                $('.timepicker').css('display','none');
+                isAllDay = true;
+            }
+            else {
+                // 종일 체크 해제
+            	$('.timepicker').css('display','');
+            	isAllDay = false;
+            }
+        });
+    });
+    
+    window.addEventListener("keydown", function(e){
+        if(e.code == "Tab"){
+            // 개인으로 이동
+            $('.btn.ps').click();
+        }
+    });
+    
+    function changeTeam(){
+    	var teamSelect = document.getElementById("teamList");  
+    	  
+    	// select element에서 선택된 option의 value가 저장된다.  
+    	var selectValue = teamSelect.options[teamSelect.selectedIndex].value;  
+    	
+    	// location.replace("calendar.do#"+selectValue);
+    	window.location.href = "./calendar.do#"+selectValue;
+    }
+
+
+  </script>
+</html>
