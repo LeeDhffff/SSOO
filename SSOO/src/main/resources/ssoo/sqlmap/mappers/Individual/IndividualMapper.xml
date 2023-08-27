@@ -3,7 +3,120 @@
 <mapper namespace="ssoo.Individual.service.impl.IndividualMapper">
 	
 	<select id="ListDays" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
-		SELECT * FROM INDIVIDUAL
+		{call 개인_달력_SELECT (
+			#{COD_MEMB}
+		)}
 	</select>
 	
+	<select id="Individual_Calendar_Insert" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 개인_달력_INSERT (
+			#{COD_MEMB},
+			#{TXT_TITLE},
+			#{DAY_FROM},
+			#{DAY_TO},
+			#{COLOR}
+		)}
+	</select>
+	
+	<select id="Individual_Calendar_Update" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_달력_UPDATE (
+			#{COD_MEMB},
+			#{IDX_SORT},
+			#{TXT_TITLE},
+			#{DAY_FROM},
+			#{DAY_TO},
+			#{COLOR}
+		)}
+	</select>
+	
+	<select id="Individual_Calendar_Delete" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_달력_DELETE (
+			#{COD_MEMB},
+			#{IDX_SORT}
+		)}
+	</select>
+	
+	<select id="ListTodo" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 개인_TODO_SELECT (
+			#{COD_MEMB},
+			#{DAY_KEY},
+			#{GUBUN}
+		)}
+	</select>
+	
+	<select id="ListTodo_Trash" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 개인_TODO_휴지통_SELECT (
+			#{COD_MEMB},
+			#{DAY_KEY}
+		)}
+	</select>
+	
+	<select id="Individual_Todo_Insert" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_TODO_INSERT (
+			#{COD_MEMB},
+			#{TXT_TITLE},
+			#{DAY_KEY},
+			#{LOCATION},
+			#{COLOR},
+			#{CHK_POINT}
+		)}
+	</select>
+	
+	<select id="Individual_Todo_Update" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_TODO_UPDATE (
+			#{COD_MEMB},
+			#{IDX_SORT},
+			#{TXT_TITLE},
+			#{DAY_KEY},
+			#{LOCATION},
+			#{COLOR},
+			#{CHK_POINT}
+		)}
+	</select>
+	
+	
+	<select id="Individual_Todo_Delete" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_TODO_DELETE (
+			#{COD_MEMB},
+			#{IDX_SORT}
+		)}
+	</select>
+	
+	<select id="Individual_Todo_Move_Update" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_TODO_MOVE_UPDATE (
+			#{COD_MEMB},
+			#{IDX_SORT},
+			#{DAY_KEY},
+			#{CHK_POINT}
+		)}
+	</select>
+	
+	<select id="Individual_Todo_Trash_Insert" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_TODO_휴지통_UPDATE (
+			#{COD_MEMB},
+			#{IDX_SORT}
+		)}
+	</select>
+	
+	
+	<select id="ListCharacter" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 개인_캐릭터_SELECT (
+			#{COD_MEMB}
+		)}
+	</select>
+	
+	<select id="Character_Insert" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_캐릭터_INSERT (
+			#{COD_MEMB}
+		)}
+	</select>
+	
+	<select id="Character_Update" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_캐릭터_UPDATE (
+			#{COD_MEMB},
+			#{CHARACTER},
+			#{PARTS},
+			#{ADD_EXP}
+		)}
+	</select>
 </mapper>
