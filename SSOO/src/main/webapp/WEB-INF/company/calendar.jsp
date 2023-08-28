@@ -17,6 +17,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css">
+    
     <style type="text/css">
         .container{
             height: 100vh;
@@ -78,7 +82,7 @@
 
         .notice_header{
             display: flex;
-            justify-content: space-between;
+            /* justify-content: space-between; */
             align-items: center;
         }
 
@@ -101,6 +105,17 @@
 
         /* 일정등록 팝업 */
         .modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: none;
+        }
+
+		.modal2 {
             position: absolute;
             top: 0;
             left: 0;
@@ -144,6 +159,11 @@
             width: 40px;
             height: 40px;
         }
+        
+        .close2{
+            width: 40px;
+            height: 40px;
+        }
 
         #achievement{
             margin: 20px;
@@ -154,6 +174,11 @@
         .hidden{
             display: none;
         }
+
+        /* fullCalendar 관련
+        .fc .fc-highlight{
+        	background-color: #fff4f4;
+        } */
     </style>
   </head>
   <body>
@@ -206,13 +231,12 @@
             <div class="right_div">
                 <div class="graph_div">
                     <div id="achievement"></div>
-                    <div class="percentage"></div>
                     <div id="slider"></div>
                 </div>
                 <div class="notice_div">
                     <div class="notice_header">
+                        <img src="../images/arrow_right.png" alt="#" style="width: 24px; height: 24px;">
                         <h2>공지사항</h2>
-                        <img src="../images/more.png" alt="#" style="width: 24px; height: 24px;">
                     </div>
                     <div class="notice_body">
                         <h3>공지사항 제목</h3>
@@ -257,14 +281,40 @@
             </div>
 
             <div class="btn_div">
-                <button id="addEvt" class="btn save">생성하기</button>
+                <button id="sch_addEvt" class="btn save">생성하기</button>
             </div>
         </div>
+    </div>
+    
+    <div class="modal2">
+    	<div class="modal_body">
+    		<div style="display: flex; justify-content: space-between;">
+                <h3>자주가는 페이지 등록</h3>
+                <img src="../images/close.png" class="close2">
+            </div>
+            
+            <div class="modal_content">
+            	<div>
+                    <label for="name">자주가는 페이지 URL</label>
+                    <input type="text" name="bk_url" id="bk_url">
+                </div>
+                
+                <div>
+                    <label for="name">자주가는 페이지 이름</label>
+                    <input type="text" name="bk_name" id="bk_name">
+                </div>
+            </div>
+            
+            <div class="btn_div">
+                <button id="url_addEvt" class="btn add">등록하기</button>
+            </div>
+    	</div>
     </div>
   </body>
   <script>
     var calendarEl, calendar;
     var isAllDay = false;
+    var cnt = 0;
 
     let today = new Date();
 
@@ -301,6 +351,7 @@
     });
 
     $(document).ready(function () {
+    	   	
 	    $('input.hh').timepicker({
             timeFormat: 'HH',
             interval: 1,
@@ -319,7 +370,7 @@
             scrollbar: true
         });
 
-        $('#addEvt').on('click',function(){
+        $('#sch_addEvt').on('click',function(){
             var title = $('#title').val();
             var start = $('#startDay').val()+'T'+$('#startHH').val()+':'+$('#startMM').val()+':00';
             var end = $('#endDay').val()+'T'+$('#endHH').val()+':'+$('#endMM').val()+':00';
@@ -345,19 +396,32 @@
             $('.schedule_div').append('<div class="schedule_item"><h3>'+title+'</h3><div class="delete"><img src="../images/delete.png" alt="#"></div></div>');
             
         });
+        
+        
 
         // 북마크
         $('.bk').on('click',function(){
             var url = $(this)[0].childNodes[1].value;
-            console.log(url);
 
             if(url != ''){ 
                 window.location.href = $(this)[0].childNodes[1].value;
             }else{
-                url = prompt('즐겨찾기 URL를 입력해주세요.');
+                /* url = prompt('즐겨찾기 URL를 입력해주세요.');
                 $(this)[0].childNodes[1].value = url;
                 $(this)[0].childNodes[3].src = url+'favicon.ico';
-                $(this)[0].childNodes[5].innerText = '테스트';
+                $(this)[0].childNodes[5].innerText = '테스트'; */
+                
+            	$(".modal2").css('display','block');
+                $('.container').css('z-index',-1);
+                
+                $('#url_addEvt').on('click',function(){
+                	url = $('#bk_url').val();
+                    
+                    $(".close2").click();
+                });
+                
+
+                console.log(url);
             }
 
         });
@@ -381,38 +445,47 @@
             // Set default step function for all animate calls
             step: (state, semiCircle) => {
                 semiCircle.path.setAttribute('stroke', state.color);
-                // var value = Math.round(semiCircle.value() * 100);
-                var value = 50;
-                /* if (value === 0) {
+                var value = Math.round(semiCircle.value() * 100);
+
+                if (value === 0) {
                     semiCircle.setText('0%');
                 } else {
                     semiCircle.setText(value+'%');
                 }
 
                 semiCircle.text.style.color = state.color;
-                */
+                
             }
         });
         semiCircle.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
         semiCircle.text.style.fontSize = '2rem';
 
         semiCircle.animate(0.5);
-
-        $("#slider").slider({
-            value:50,
-            min: 0,
-            max: 100,
-            step: 1,
-            slide: function( event, ui ) {
-                if(ui.value != 0) semiCircle.animate(ui.value * 0.01);
-                else semiCircle.animate(0);
-                $('.percentage')[0].innerText = ui.value+'%';
+        
+        $("#achievement").roundSlider({
+        	radius: 80,
+            width: 8,
+            handleSize: "+16",
+            handleShape: "dot",
+            circleShape: "half-top",
+            sliderType: "min-range",
+            value: 65,
+            tooltipFormat: function (e) {
+            	return e.value + "%";
             }
-        });
-        $('.percentage')[0].innerText = $('#slider').slider('value')+'%';
-
+		});
+        
+        function tooltipVal(args){
+        	return args.value+"%";
+        }
+		
         $(".close").click(function(){
             $(".modal").css('display','none');
+            $('.container').css('z-index',1);
+        });
+        
+        $(".close2").click(function(){
+            $(".modal2").css('display','none');
             $('.container').css('z-index',1);
         });
         
