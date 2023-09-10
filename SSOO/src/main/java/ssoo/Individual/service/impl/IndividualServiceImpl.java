@@ -84,4 +84,29 @@ public class IndividualServiceImpl implements IndividualService {
 		// TODO Auto-generated method stub
 		return IndividualMapper.Character_Update(inputMap);
 	}
+	@Override
+	public List<HashMap<String, String>> ListMission(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return IndividualMapper.ListMission(inputMap);
+	}
+	@Override
+	public String TodaysMission(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return IndividualMapper.TodaysMission(inputMap);
+	}
+	@Override
+	public String TodaysMission_Insert(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return IndividualMapper.TodaysMission_Insert(inputMap);
+	}
+	@Override
+	public String TodaysMission_Update(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return IndividualMapper.TodaysMission_Update(inputMap);
+	}
+	@Override
+	public String TodaysMission_Complete(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return IndividualMapper.TodaysMission_Complete(inputMap);
+	}
 }

@@ -94,7 +94,8 @@
 	<select id="Individual_Todo_Trash_Insert" statementType="CALLABLE" parameterType="hashmap" resultType="string">
 		{call 개인_TODO_휴지통_UPDATE (
 			#{COD_MEMB},
-			#{IDX_SORT}
+			#{IDX_SORT},
+			#{GUBUN}
 		)}
 	</select>
 	
@@ -119,4 +120,46 @@
 			#{ADD_EXP}
 		)}
 	</select>
+	
+	
+	<select id="ListMission" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 개인_MISSION_SELECT (
+			#{COD_MEMB},
+			#{DAY_KEY}
+		)}
+	</select>
+	
+	
+	
+	<select id="TodaysMission" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_MISSION_TODAY_INSERT (
+			#{COD_MEMB},
+			#{DAY_KEY}
+		)}
+	</select>
+	
+	
+	<select id="TodaysMission_Insert" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_MISSION_INSERT (
+			#{COD_MEMB},
+			#{MISSION_NM}
+		)}
+	</select>
+	
+	<select id="TodaysMission_Update" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_MISSION_UPDATE (
+			#{COD_MEMB},
+			#{IDX_SORT},
+			#{MISSION_NM}
+		)}
+	</select>
+	
+	<select id="TodaysMission_Complete" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_MISSION_COMPLETE (
+			#{COD_MEMB},
+			#{DAY_KEY},
+			#{IDX_SORT}
+		)}
+	</select>
+	
 </mapper>

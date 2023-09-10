@@ -61,7 +61,7 @@ body{
 			location.href = "Individual.do"
 		})
 		$("#company").on('click',function(){
-			location.href = "company/main.do"
+			location.href = "Company/main.do"
 		})
 	})
 

@@ -135,6 +135,7 @@
    				<div class="pop_bottom">
    					<button class="popup_Save" id="pop_Calendar_save">등록</button>
    					<button class="popup_Update" id="pop_Calendar_update">수정</button>
+   					<button class="popup_Delete" id="pop_Calendar_delete">삭제</button>
    				</div>
    			</div>
    		</div>
@@ -183,7 +184,7 @@
                             <img src="./images/individual/plus.png" alt="plus">
                         </h3>
                         <h3 class="trash notopen">
-                            <img src="./images/individual/trash.png" alt="trash">
+                            <img src="./images/individual/trash.png" alt="trash" class="trash_img">
                         </h3>
                     </div>
                 </div>
@@ -277,7 +278,12 @@
     				
 	            	<div class="character_status">
 	            	<button id="mission"><img src="./images/individual/mitball.png" alt="mission"></button>
+	            	<div class="mission_pop" style="display:none;">
+	            		<div class="mission_pop_div">
+			            	
+		            	</div>
 	            	<div class="character_image"></div>
+	            	</div>
 	            	</div>
 	            	<h3 class="character_owner">허공에 궁쓴다잉</h3>
             		<div class="level_number">
@@ -310,6 +316,8 @@
   var calendar2;
 
   $(document).ready(function(){
+
+	  var clickCnt = 0;
     var calendarEl = $('#calendar')[0];
     var calendarEl2 = $('#calendar_mini')[0];
 
@@ -393,19 +401,30 @@
 // 	       console.log(obj);
 	     },
 	     dateClick: function(obj) {
-				$("#calendar").find(".fc-day").css("background","white");
-				$('.fc-daygrid-day-number').css("color","");
-				$("#calendar").find(".fc-day-today").css("background","var(--fc-today-bg-color,rgba(255,220,40,.15))");
-				
-				$(obj.dayEl).css("background","red");
-				$(obj.dayEl).find('.fc-daygrid-day-number').css("color","white");
-				$("#todo_date").text(obj.dateStr);
-			    selectTodo();
+	    	 if($(obj.dayEl).find('.fc-daygrid-day-number').hasClass("clicked") == false){
+
+					$(".fc-day").css("background","white");
+					$('.fc-daygrid-day-number').css("color","");
+					$(".fc-day-today").css("background","var(--fc-today-bg-color,rgba(255,220,40,.15))");
+					
+					$(obj.dayEl).css("background","red");
+					$(obj.dayEl).find('.fc-daygrid-day-number').css("color","white");
+				    $('.fc-daygrid-day-number').removeClass("clicked");
+				    $(obj.dayEl).find('.fc-daygrid-day-number').addClass("clicked");
+					$("#todo_date").text(obj.dateStr);
+				    selectTodo();
+	    	 }
+	    	 else{
+	    		 $("#calendar_popup").show();
+	    		 $("#pop_Calendar_FROM").val(obj.dateStr);
+	    		 $("#pop_Calendar_TO").val(obj.dateStr);
+	    	 }
 	     },
 	     eventClick: function(info) {
 
 			$("#calendar_popup").show();
 			$("#pop_Calendar_update").show();
+			$("#pop_Calendar_delete").show();
 			$("#pop_Calendar_save").hide();
 			var date1 = info.event.start;
 			
@@ -449,8 +468,6 @@
 
 			var enddate = endyear + "-" + endmonth + "-" + endday;
 
-			console.log($())
-			
 			
 			
 			$("#pop_Calendar_FROM").val(Startdate);
@@ -468,7 +485,8 @@
 			$("#pop_Calendar_Title").val(info.event._def.title);
 			$("#pop_IDX_SORT").val(info.event._def.extendedProps.idx);
 			$("#pop_Calendar_Color").val(info.event._def.ui.backgroundColor);
-			$(".pop_input > .clr-field").css("color",info.event._def.ui.backgroundColor)
+			$(".pop_input > .clr-field").css("color",info.event._def.ui.backgroundColor);
+			
 	    	},
       events: [
       ]
@@ -498,9 +516,9 @@
 	     dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
 	     locale: 'ko', // 한국어 설정
 	     dateClick: function(obj) {
-				$("#calendar_mini").find(".fc-day").css("background","white");
+				$(".fc-day").css("background","white");
 				$('.fc-daygrid-day-number').css("color","");
-				$("#calendar_mini").find(".fc-day-today").css("background","var(--fc-today-bg-color,rgba(255,220,40,.15))");
+				$(".fc-day-today").css("background","var(--fc-today-bg-color,rgba(255,220,40,.15))");
 				
 				$(obj.dayEl).css("background","red");
 				$(obj.dayEl).find('.fc-daygrid-day-number').css("color","white");
@@ -692,6 +710,36 @@
 		
 	})
 
+	$("#pop_Calendar_delete").on("click",function(){
+		
+		if(confirm("해당 일정을 삭제하시겠습니까?")){
+			$(".popup").hide();
+			
+			var updatedata = {
+					COD_MEMB : "ehdgjs",
+					IDX_SORT : $("#pop_IDX_SORT").val()
+			}
+			
+			$.ajax({
+				url: "Individual_Calendar_Delete.do",
+				data: updatedata,
+				type: "POST",
+				async: false,
+				success: function(data){
+					
+
+					calendar.removeAllEvents();
+					calendar2.removeAllEvents();
+
+					selectCalendar();
+				    popReset();
+				}
+				
+			})
+			
+		}
+
+	  });
   });
   
   
@@ -739,7 +787,7 @@
 			
 		})
   }
-
+	
 
 </script>
 </html>

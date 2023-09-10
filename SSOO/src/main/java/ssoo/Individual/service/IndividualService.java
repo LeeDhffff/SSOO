@@ -34,4 +34,15 @@ public interface IndividualService {
 	String Character_Insert(HashMap<String, Object> inputMap) throws Exception;
 	
 	String Character_Update(HashMap<String, Object> inputMap) throws Exception;
+
+	List<HashMap<String, String>> ListMission(HashMap<String, Object> inputMap) throws Exception;
+	
+	String TodaysMission(HashMap<String, Object> inputMap) throws Exception;
+
+	String TodaysMission_Insert(HashMap<String, Object> inputMap) throws Exception;
+	
+	String TodaysMission_Update(HashMap<String, Object> inputMap) throws Exception;
+	
+	String TodaysMission_Complete(HashMap<String, Object> inputMap) throws Exception;
+	
 }

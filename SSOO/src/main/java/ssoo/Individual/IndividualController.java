@@ -194,6 +194,21 @@ public class IndividualController {
 	
 	
 
+	@RequestMapping(value = "ListMission.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String ListMission(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request,
+			HttpSession session) throws Exception {
+
+		System.out.println("개인_미션 조회 input: " + inputMap);
+		List<HashMap<String, String>> ListDays = IndividualService.ListMission(inputMap);
+		System.out.println("개인_미션 조회 result: " + ListDays);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(ListDays);
+		return jsonStr;
+	}
+	
+	
+
 	@RequestMapping(value = "ListCharacter.do", produces = "application/text; charset=utf-8")
 	@ResponseBody
 	public String ListCharacter(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request,
@@ -231,6 +246,70 @@ public class IndividualController {
 		System.out.println("개인_캐릭터 수정 input: " + inputMap);
 		String ListDays = IndividualService.Character_Update(inputMap);
 		System.out.println("개인_캐릭터 수정 result: " + ListDays);
+
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(ListDays);
+		
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "TodaysMission.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String TodaysMission(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request,
+			HttpSession session) throws Exception {
+
+		System.out.println("오늘의 미션 input: " + inputMap);
+		String ListDays = IndividualService.TodaysMission(inputMap);
+		System.out.println("오늘의 미션 result: " + ListDays);
+
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(ListDays);
+		
+		return jsonStr;
+	}
+
+	@RequestMapping(value = "TodaysMission_Insert.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String TodaysMission_Insert(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request,
+			HttpSession session) throws Exception {
+
+		System.out.println("미션 등록 input: " + inputMap);
+		String ListDays = IndividualService.TodaysMission_Insert(inputMap);
+		System.out.println("미션 등록 result: " + ListDays);
+
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(ListDays);
+		
+		return jsonStr;
+	}
+
+	@RequestMapping(value = "TodaysMission_Update.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String TodaysMission_Update(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request,
+			HttpSession session) throws Exception {
+
+		System.out.println("미션 수정 input: " + inputMap);
+		String ListDays = IndividualService.TodaysMission_Update(inputMap);
+		System.out.println("미션 수정 result: " + ListDays);
+
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(ListDays);
+		
+		return jsonStr;
+	}
+
+	@RequestMapping(value = "TodaysMission_Complete.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String TodaysMission_Complete(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request,
+			HttpSession session) throws Exception {
+
+		System.out.println("미션 성공 input: " + inputMap);
+		String ListDays = IndividualService.TodaysMission_Complete(inputMap);
+		System.out.println("미션 성공 result: " + ListDays);
 
 		
 		ObjectMapper mapper = new ObjectMapper();

@@ -44,7 +44,8 @@ $(document).ready(function(){
 	dragopen();
 	selectMiniTodo();	
 	selectCharacter();
-	
+
+	insertTodayMission(selectMission);
 	
 	/*===============================================================================================*/
 	/*==========================================TODO=================================================*/
@@ -229,6 +230,18 @@ $(document).ready(function(){
 	
 
 	
+	$("#mission").on("click",function(){
+		console.log($("#mission").css("display"))
+		if($(".mission_pop").css("display") == "none"){
+			$(".mission_pop").show();	
+		
+		
+		
+		}else{
+			$(".mission_pop").hide();
+		}
+		
+	})
 	
 	
 	/*===============================================================================================*/
@@ -238,18 +251,24 @@ $(document).ready(function(){
 	
 	
 	$(".tab.company").on("click",function(){
-		location.href = "company/main.do"
+		location.href = "Company/main.do"
 	})
 	
 	
-//document.querySelector("body").addEventListener("click", function(e) {
-//	if($("#popup_trash").css("display") != "none"){
-//		console.log(e,e.target)
-//		if(e.target.className != e.currentTarget.querySelector("#popup_trash").className) {
-//			$("#popup_trash").hide();
-//	    }
-//	}
-//})
+document.querySelector("body").addEventListener("click", function(e) {
+	if($("#popup_trash").css("display") != "none"){
+		if(e.target.className != e.currentTarget.querySelector(".popup_trash").className 
+				&& e.target.className != e.currentTarget.querySelector(".trash").className
+				&& e.target.className != e.currentTarget.querySelector(".trash_img").className
+				&& $(e.target).parents(".popup_trash").attr("id") != 'popup_trash'){
+			$("#popup_trash").hide();
+			if($(".trash").hasClass("notopen") == false){
+				$(".trash").addClass("notopen");
+				
+			}
+	    }
+	}
+})
 	
 }); //documet 끝
 
@@ -339,6 +358,66 @@ $(document).on('click','.option_list.save',function(){
 	
 })
 
+$(document).on('click','.option_list.delete',function(){
+	const parent = $(this).parents('.to_do_board_con');
+	
+	$(parent).find('.board_con_title').text($(parent).find('.U_Title').val());
+	
+	const idx = $(parent).attr("idx");
+	
+	
+	if(confirm("해당 Todo 항목을 삭제하시겠습니까?")){
+
+		 var insertdata = {
+					COD_MEMB : "ehdgjs",
+					IDX_SORT : idx
+			}
+			
+			$.ajax({
+				url: "Individual_Todo_Delete.do",
+				data: insertdata,
+				type: "POST",
+				async: false,
+				success: function(data){
+					TrashTodo();
+				}
+				
+			})
+	}
+		
+})
+$(document).on('click','.option_list.recovery',function(){
+	const parent = $(this).parents('.to_do_board_con');
+	
+	$(parent).find('.board_con_title').text($(parent).find('.U_Title').val());
+	
+	const idx = $(parent).attr("idx");
+	
+	
+	if(confirm("해당 Todo 항목을 복구하시겠습니까?")){
+
+		 var insertdata = {
+					COD_MEMB : "ehdgjs",
+					IDX_SORT : idx,
+					GUBUN : 'R'
+			}
+			
+			$.ajax({
+				url: "Individual_Todo_Trash_Insert.do",
+				data: insertdata,
+				type: "POST",
+				async: false,
+				success: function(data){
+					selectTodo();
+					TrashTodo();
+					dragopen();
+					checkTodoNum();
+				}
+				
+			})
+	}
+		
+})
 function dragopen() {
 	$( '.to_do').find('.to_do_board_con').draggable({
 		scroll : false,
@@ -373,7 +452,8 @@ function dragopen() {
 
 					 var insertdata = {
 								COD_MEMB : "ehdgjs",
-								IDX_SORT : idx
+								IDX_SORT : idx,
+								GUBUN : 'D'
 						};
 						console.log(insertdata)
 						$.ajax({
@@ -927,8 +1007,8 @@ function TrashTodo(){
 					AddTODO += '			</h3>';
 					AddTODO += '			<div class="option_pop">';
 					AddTODO += '				<h3 class="option_list update">수정</h3>';
-					AddTODO += '				<h3 class="option_list">파일첨부</h3>';
-					AddTODO += '				<h3 class="option_list">파일삭제</h3>';
+					AddTODO += '				<h3 class="option_list delete">삭제</h3>';
+					AddTODO += '				<h3 class="option_list recovery">복구</h3>';
 					AddTODO += '			</div>';
 					AddTODO += '		</div>';
 					AddTODO += '	</div>';
@@ -1077,7 +1157,85 @@ function selectMiniTodo(){
 		})
 	
 }
+function insertTodayMission(callback){
+	var date = new Date();
+	
+	var month = (date.getMonth() + 1 < 10) ? "0"+ (String)(date.getMonth() + 1)
+				:(String)(date.getMonth() + 1);
+	var dates = (date.getDate() < 10) ? "0"+ (String)(date.getDate())
+			:(String)(date.getDate());
+	
+	var today = date.getFullYear() + "-" + month + "-" + dates;
+	
+	 var selectdata = {
+				COD_MEMB : "ehdgjs",
+				DAY_KEY : today
+		};
+	 
+	 $.ajax({
+			url: "TodaysMission.do",
+			data: selectdata,
+			type: "POST",
+			async: false,
+			success: function(data){		
+	            callback();
+			}
+		})
+}
 
+function selectMission(){
+	
+	var date = new Date();
+	
+	var month = (date.getMonth() + 1 < 10) ? "0"+ (String)(date.getMonth() + 1)
+				:(String)(date.getMonth() + 1);
+	var dates = (date.getDate() < 10) ? "0"+ (String)(date.getDate())
+			:(String)(date.getDate());
+	
+	var today = date.getFullYear() + "-" + month + "-" + dates;
+	
+	 var selectdata = {
+				COD_MEMB : "ehdgjs",
+				DAY_KEY : today
+		};
+	 
+		$.ajax({
+			url: "ListMission.do",
+			data: selectdata,
+			type: "POST",
+			async: false,
+			success: function(data){		
+				var result = JSON.parse(data);
+				
+				var addString = "";
+				console.log(result);
+				for(var i=0; i<result.length ; i++){
+
+					addString += '<div class="mission_div">';
+					addString += '<h4>'+result[i].MISSION_NM+'</h4>';
+					addString += '<div class="togglebox">';
+					addString += '<input type="checkbox" class="checkbox" id="mission' +(String)(i) +'" onclick="CompleteMission(this,event)" idx="'+result[i].IDX_SORT+'" target="'+result[i].MISSION_NM + '"';
+					if(result[i].CHK == 'Y'){
+						addString += ' checked disabled>';
+					}
+					else{
+						addString += '>';
+					}
+					addString += '<label for="mission' +(String)(i) +'"></label>';
+					addString += '</div>';
+					addString += '</div>';
+				}
+				
+        		
+	            $(".mission_pop_div").append(addString);
+		 			
+		 			
+	 			
+        	
+				
+			}
+		})
+}
 function selectCharacter(){
 	 var selectdata = {
 				COD_MEMB : "ehdgjs"
@@ -1097,6 +1255,38 @@ function selectCharacter(){
 			}
 		})
 }
+function CompleteMission(target,event){
+	console.log(target,event);
+	
+	if(confirm("해당 미션을 완료 처리하시겠습니까?")){
+	var idx = $(target).attr("idx");
+	var name = $(target).attr("target");
+	 
+	 var date = new Date();
+	 var today = returndate(date);
+	 var selectdata = {
+			COD_MEMB : "ehdgjs",
+			DAY_KEY : today,
+			IDX_SORT : idx,
+	};
+	$.ajax({
+		url: "TodaysMission_Complete.do",
+		data: selectdata,
+		type: "POST",
+		async: false,
+		success: function(data){		
+//			var result = JSON.parse(data);
+			selectCharacter()
+			$(target).prop("disabled",true)
+		}
+	})
+	}
+	else{
+		event.preventDefault();
+	}
+}
+
+
 
 function checkTodoNum() {
 	$('.count_num').text($(".to_do_board_body > .to_do_board_con_grid > .to_do_board_con").length);
@@ -1121,5 +1311,29 @@ function popReset(){
 	$(".pop_input > .clr-field").css("color","#ff4e43")
 
 	$("#pop_Calendar_update").hide();
+	$("#pop_Calendar_delete").hide();
 	$("#pop_Calendar_save").show();
 }
+function returndate(date){	
+	var month = (date.getMonth() + 1 < 10) ? "0"+ (String)(date.getMonth() + 1)
+				:(String)(date.getMonth() + 1);
+	var dates = (date.getDate() < 10) ? "0"+ (String)(date.getDate())
+			:(String)(date.getDate());
+	
+	var today = date.getFullYear() + "-" + month + "-" + dates;
+	
+	
+	return today;
+}
+document.addEventListener('keydown', (event) => {
+    if(event.key == 'Escape'){
+    	$(".popup").each(function(){
+    		if($(this).css("display") == "block"){
+    			
+    			$(".popup").hide();
+    			popReset();
+    			return false;
+    		}
+    	})
+    }
+});
