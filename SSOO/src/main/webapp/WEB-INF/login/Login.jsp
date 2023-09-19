@@ -15,153 +15,145 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 	<style type="text/css">
-			:root {
-                --green-color: #1abc9c;
-                --blue-color: rgb(57, 35, 252);
-                --light-gray: rgb(197, 197, 197);
-            }
+	:root {
+              --green-color: #1abc9c;
+              --blue-color: rgb(57, 35, 252);
+              --light-gray: rgb(197, 197, 197);
+          }
 
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-            body {
-                background-color: var(--green-color);
-                font-family: "Source Sans Pro", sans-serif;
-            }
+          * 
+          {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+          }
+          body 
+          {
+              font-family: "Source Sans Pro", sans-serif;              
+          }
 
-            .main-container {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                background: white;
-            }
-
-            .container {
-                width: 400px;
-                height: 300px;
-                border-radius: 7px;
-                box-shadow: 0 6px 12px rgba(179, 179, 179, 0.7);
-                z-index: 1;
-                overflow: hidden;
-            }
-
-            .form {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                padding: 0px !important;
-                flex-direction: column;
-                align-items: center;
-                background-color: white;
-                justify-content: space-evenly;
-            }
-
-            a {
-                text-decoration: none;
-                cursor: pointer;
-                color: black;
-            }
-
-            a:focus,
-            a:hover {
-                color: var(--blue-color);
-                font-weight: bold;
-            }
-
-            .input {
-                position: relative;
-            }
-
-            .input input,
-            .login-btn {
-                width: 260px;
-                height: 45px;
-                outline: none;
-                padding: 0 0.7rem;
-                border-radius: 3px;
-                transition: 0.2s;
-                font-weight: bold;
-                z-index: 1;
-            }
-
-            .input input {
-                border: none;
-                border-bottom: 1px solid #8c8c8c;
-            }
-            .login-btn {
-                border: 1px solid #8c8c8c;
-                background: var(--green-color);
-                cursor: pointer;
-                font-size: 20px;
-                color: #fff;
-                text-transform: uppercase;
-            }
-
-            .login-btn:focus,
-            .login-btn:hover {
-                background: #fff;
-                cursor: pointer;
-                color: var(--green-color);
-                text-transform: uppercase;
-                border: 1px solid var(--green-color);
-                transition: ease-in-out 0.2s;
-            }
-
-            .input label {
-                position: absolute;
-                top: 28%;
-                left: 10px;
-                font-size: 0.9rem;
-                transition: 0.2s;
-                font-weight: bold;
-                padding: 0 0.1rem;
-            }
-
-            .input input:focus {
-                border-bottom: 1px solid var(--green-color);
-            }
-
-            .input input:focus ~ label,
-            .input input:valid ~ label {
-                transform: translateY(-25px);
-                font-size: 15px;
-                color: var(--green-color);
-                background: #fff;
-            }
+          .main-container 
+		{
+		    background-image: url(./images/login/login_bg.svg);
+		    min-height: 100vh;
+		    width: 100%;
+		    background-repeat: no-repeat;
+		    background-position: center;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		}
+		
+		.container
+		{
+		    position: relative;      
+		}
+		
+		.form 
+		{
+		    position: absolute;
+		    top:50%;
+		    left: 48%;
+		    transform:translate(-50%,-50%);
+		    text-align: center;
+		}
+		
+		input 
+		{
+		    width: 400px;
+		    height: 50px;
+		    border: 1px solid #dadada;
+		    border-radius: 5px;   
+		    padding-left: 10px;
+		    margin-bottom: 20px;
+		}
+		
+		.logo 
+		{
+		    margin-bottom: 60px;
+		    text-align: center;
+		}
+		
+		input::placeholder 
+		{
+		    color: #ccc;
+		}
+		
+		.id_save 
+		{
+		    display: flex;    
+		    width: 400px;
+		    margin: 10px 0 30px;
+		    align-items: center;
+		}
+		
+		.id_save_check 
+		{
+		    width: 18px;
+		    height: 18px;
+		    border: 1px solid #dadada;
+		    border-radius: 5px;
+		    margin-right: 10px;
+		    margin-bottom:0;
+		}
+		
+		.id_save_h3
+		{
+		    color: #999;
+		    font-weight: 300;
+		    font-size: 16px;
+		}
+		
+		#btn_signin 
+		{
+		    width: 400px;
+		    height: 55px;
+		    background: #FF4E43;
+		    color: #fff;
+		    font-size: 18px;
+		    font-weight: 900;
+		    border-radius: 5px;
+		    border:0;
+		}
+		
+		.bottom_con 
+		{
+		    width: 400px; 
+		    display: flex; 
+		    justify-content: space-between;
+		    margin-top: 30px;       
+		}
+		
+		.bottom_con > a 
+		{
+		    color: #999;
+		    font-weight: 400;
+		    font-size: 16px; 
+		}
 	</style>
 </head>
 
 <body>
-    <div class="main-container">
+    <div class="main-container">    	
         <div class="container">
-            <div>
-            	<div class="form">
-					<div>
-					    <h1>로그인</h1>
-					</div>
-					
-					<div class="input">
-					    <input type="text" name="username" id="username" required
-					        title="Please enter your Username here" />
-					    <label for="username">ID</label>
-					</div>
-					
-					<div class="input">
-					    <input type="password" name="password" id="password" required
-					        title="Please enter your Password here" />
-					    <label for="username">비밀번호</label>
-					</div>
-					
-					<input type="submit" value="로그인" id="btn_signin" class="login-btn" />
-					<div style="width: 65%; display: flex; justify-content: space-between;">
-						<a href="./Find.do">ID / 비밀번호 찾기</a>
-						<a href="./Join.do">회원가입</a>
-					</div>
-				</div>
-            </div>
+            <img src="./images/login/note_s.png" alt="#" class="note">
+            <div class="form">
+                
+                <h1 class="logo">
+                    <img src="./images/login/logo.svg" alt="#">
+                </h1>            
+                <input type="text" name="username" id="username" required title="Please enter your Username here" placeholder="아이디">
+                <input type="password" name="password" id="password" required title="Please enter your Password here" placeholder="비밀번호">                               
+                <div class="id_save">
+                    <input type="checkbox" class="id_save_check">
+                    <h3 class="id_save_h3">아이디 저장</h3>
+                </div>
+                <button type="submit" value="로그인" id="btn_signin" class="login-btn">로그인</button>
+                <div class="bottom_con">
+                    <a href="./Find.do">ID / 비밀번호 찾기</a>
+                    <a href="./Join.do">회원가입</a>
+                </div>
+			</div>            
         </div>
     </div>
 </body>
