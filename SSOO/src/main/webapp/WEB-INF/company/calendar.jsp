@@ -198,24 +198,24 @@
             <div class="left_div">
                 <div class="bookmark">
                     <div class="bk">
-                        <input type='text' class="hidden" value="" />
-                        <img src="../images/add.png" alt="#">
-                        <p></p>
+                        <input type='text' class="bk_url hidden" value="" />
+                        <img src="../images/add.png" alt="#" class="bk_fav">
+                        <p class="bk_name"></p>
                     </div>
                     <div class="bk">
-                        <input type='text' class="hidden" value="" />
-                        <img src="../images/add.png" alt="#">
-                        <p></p>
+                        <input type='text' class="bk_url hidden" value="" />
+                        <img src="../images/add.png" alt="#" class="bk_fav">
+                        <p class="bk_name"></p>
                     </div>
                     <div class="bk">
-                        <input type='text' class="hidden" value="https://www.naver.com" />
-                        <img src="https://www.naver.com/favicon.ico" alt="#">
-                        <p>네이버</p>
+                        <input type='text' class="bk_url hidden" value="" />
+                        <img src="../images/add.png" alt="#" class="bk_fav">
+                        <p class="bk_name"></p>
                     </div>
                     <div class="bk">
-                        <input type='text' class="hidden" value="https://papago.naver.com" />
-                        <img src="https://papago.naver.com/favicon.ico" alt="#">
-                        <p>파파고</p>
+                        <input type='text' class="bk_url hidden" value="" />
+                        <img src="../images/add.png" alt="#" class="bk_fav">
+                        <p class="bk_name"></p>
                     </div>
                 </div>
                 <div class="calendar_div">
@@ -315,11 +315,19 @@
     var calendarEl, calendar;
     var isAllDay = false;
     var cnt = 0;
+    var firstClick;
 
     let today = new Date();
 
-    document.addEventListener('DOMContentLoaded', function() {
-        calendarEl = document.getElementById('calendar');
+    $(document).ready(function () {
+    	window.addEventListener("keydown", function(e){
+            if(e.code == "Tab"){
+                // 개인으로 이동
+                $('.btn.ps').click();
+            }
+        });
+    	
+    	calendarEl = document.getElementById('calendar');
         calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             selectable: true,
@@ -331,31 +339,39 @@
                     click: function(){ }
                 }
             },
-            /* headerToolbar: {
-                center: 'addButton'
-            }, */
             dateClick: function(i){
-                console.log(i);
-                $('.container').css('z-index',-1);
-                $(".modal").css('display','block');
-                $('#startDay').val(i.dateStr);
-                $('#startHH').val(today.getHours());
-                $('#startMM').val(today.getMinutes());
+                console.log(i.jsEvent);
+                
+                if(firstClick == i.dateStr){
+                   console.log('dblclick');
+                   
+                   $('.container').css('z-index',-1);
+                    $(".modal").css('display','block');
+                    $('#startDay').val(i.dateStr);
+                    $('#startHH').val(today.getHours());
+                    $('#startMM').val(today.getMinutes());
 
-                $('#endDay').val(i.dateStr);
-                $('#endHH').val(today.getHours()+1);
-                $('#endMM').val(today.getMinutes());
+                    $('#endDay').val(i.dateStr);
+                    $('#endHH').val(today.getHours()+1);
+                    $('#endMM').val(today.getMinutes());
+                }else{
+                   console.log('click');
+                }
+                
+                firstClick = i.dateStr;
+                
             }
         });
         calendar.render();
-    });
-
-    $(document).ready(function () {
-    	   	
+    	
+    	start();
+    	loadBK();
+    	
 	    $('input.hh').timepicker({
             timeFormat: 'HH',
             interval: 1,
             startHour: '00',
+            maxHour: '24',
             dynamic: false,
             dropdown: true,
             scrollbar: true
@@ -365,6 +381,7 @@
             timeFormat: 'mm',
             interval: 1,
             startMinutes: '00',
+            maxMinutes: '59',
             dynamic: false,
             dropdown: true,
             scrollbar: true
@@ -375,55 +392,96 @@
             var start = $('#startDay').val()+'T'+$('#startHH').val()+':'+$('#startMM').val()+':00';
             var end = $('#endDay').val()+'T'+$('#endHH').val()+':'+$('#endMM').val()+':00';
 
-			if(!isAllDay){
-				calendar.addEvent({
-	                title: title,
-	                start: start,
-	                end: end
-	            });
-            }else{
-            	calendar.addEvent({
-                    title: title,
-                    start: start,
-                    end: end,
-                    allDay: true
-                });
+			if(!isAllDay){				
+				$.ajax({
+            		type: "POST",
+    				url : "./Calendar_Insert.do",
+    				data: {
+    					USERID: 'admin',
+    					TEAM : 'c60bf717',
+    					TITLE : title,
+    					DAY_FROM : start.split('T')[0],
+    					DAY_TO : end.split('T')[0],
+    					TIME_FROM : start.split('T')[1],
+    					TIME_TO : end.split('T')[1],
+    					ALLDAY : 'N'
+    				},
+    				async: false,
+    				success:function(data){
+    					alert(JSON.parse(data).RESULTMSG);
+    					location.reload(true);
+    				},
+    				error:function(err){
+    					alert('등록이 실패했습니다.');
+    				}
+            	});
+				
+            }else{            	
+            	$.ajax({
+            		type: "POST",
+    				url : "./Calendar_Insert.do",
+    				data: {
+    					USERID: 'admin',
+    					TEAM : 'c60bf717',
+    					TITLE : title,
+    					DAY_FROM : start.split('T')[0],
+    					DAY_TO : end.split('T')[0],
+    					TIME_FROM : start.split('T')[1],
+    					TIME_TO : end.split('T')[1],
+    					ALLDAY : 'Y'
+    				},
+    				async: false,
+    				success:function(data){
+    					alert(JSON.parse(data).RESULTMSG);
+    					location.reload(true);
+    				},
+    				error:function(err){
+    					alert('등록이 실패했습니다.');
+    				}
+            	});
             }
             
             $(".close").click();
-            
-            // 스케줄리스트에 추가
-            $('.schedule_div').append('<div class="schedule_item"><h3>'+title+'</h3><div class="delete"><img src="../images/delete.png" alt="#"></div></div>');
-            
         });
-        
         
 
         // 북마크
         $('.bk').on('click',function(){
             var url = $(this)[0].childNodes[1].value;
-
+			console.log(url);
             if(url != ''){ 
                 window.location.href = $(this)[0].childNodes[1].value;
-            }else{
-                /* url = prompt('즐겨찾기 URL를 입력해주세요.');
-                $(this)[0].childNodes[1].value = url;
-                $(this)[0].childNodes[3].src = url+'favicon.ico';
-                $(this)[0].childNodes[5].innerText = '테스트'; */
-                
+            }else{                
             	$(".modal2").css('display','block');
                 $('.container').css('z-index',-1);
-                
-                $('#url_addEvt').on('click',function(){
-                	url = $('#bk_url').val();
-                    
-                    $(".close2").click();
-                });
-                
-
-                console.log(url);
             }
+        });
+        
+        // 자주가는 사이트 등록
+        $('#url_addEvt').on('click',function(){
+        	var insertData = {
+				USERID: 'admin',
+				TEAM: 'c60bf717',
+				URL: $('#bk_url').val(),
+				BK_NAME: $('#bk_name').val()
+			}
 
+            $.ajax({
+            	type: "POST",
+				url : "./BK_INSERT.do",
+				data: insertData,
+				async: false,
+				success:function(data){
+					var result = JSON.parse(data);
+					alert(result.RESULTMSG);
+					loadBK();
+				},
+				error: function(err){
+					console.log(err);
+				}
+            });
+            
+            $(".close2").click();
         });
 
         // 달성률 관련
@@ -443,7 +501,7 @@
             to: {color: '#ED6A5A'},
 
             // Set default step function for all animate calls
-            step: (state, semiCircle) => {
+            step: function(state, semiCircle){
                 semiCircle.path.setAttribute('stroke', state.color);
                 var value = Math.round(semiCircle.value() * 100);
 
@@ -482,20 +540,22 @@
         $(".close").click(function(){
             $(".modal").css('display','none');
             $('.container').css('z-index',1);
+            firstClick = "";
+            dialog_reset();
         });
         
         $(".close2").click(function(){
             $(".modal2").css('display','none');
             $('.container').css('z-index',1);
+            
+            $('.bk_url').val('');
+            $('.bk_name').val('');
         });
         
         $('.btn.ps').on('click',function(){
-            alert('개인화면으로 이동');
+        	location.href = "../Individual.do";
         });
         
-        $('.delete').on('click',function(){
-        	alert('해당 스케줄을 삭제하시겠습니까?');
-        });
         
         $('input[type=checkbox][name=allDay]').change(function() {
             if ($(this).is(':checked')) {
@@ -510,13 +570,34 @@
             }
         });
     });
-    
-    window.addEventListener("keydown", function(e){
-        if(e.code == "Tab"){
-            // 개인으로 이동
-            $('.btn.ps').click();
-        }
-    });
+        
+    function deleteEvt(title){
+    	if(confirm('해당 일정을 삭제하시겠습니까?')){
+	    	document.getElementById(title).remove();
+	    	
+	    	var Evt = calendar.getEventById(title);
+	    	Evt.remove();
+	    	
+	    	$.ajax({
+            	type: "POST",
+				url : "./Calendar_Delete.do",
+				data: {
+					USERID: 'admin',
+					TEAM: 'c60bf717',
+					TITLE: title
+				},
+				async: false,
+				success:function(data){
+					alert('삭제가 완료되었습니다.');
+				},
+				error: function(err){
+					console.log(err);
+				}
+            });
+    	}else{
+    		alert('삭제를 취소했습니다.');
+    	}
+    }
     
     function changeTeam(){
     	var teamSelect = document.getElementById("teamList");  
@@ -528,6 +609,81 @@
     	window.location.href = "./calendar.do#"+selectValue;
     }
 
-
+    function dialog_reset(){
+    	$('#title').val('');
+    	$('#startDay').val('');
+    	$('#startHH').val('');
+    	$('#startMM').val('');
+    	
+    	$('#endDay').val('');
+    	$('#endHH').val('');
+    	$('#endMM').val('');
+    }
+    
+	function start(){
+		$.ajax({
+    		type: "POST",
+			url : "./Calendar_Select.do",
+			data: {
+				USERID: "admin",
+				TEAM: "c60bf717",
+				MONTH: '2023-09'
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				console.log(result);
+				
+				for(var i=0 ; i<result.length; i++){
+					if(result[i].ALLDAY == 'N '){			            
+						calendar.addEvent({ 
+							id: result[i].TITLE,
+							title: result[i].TITLE,
+							start: result[i].DAY_FROM+"T"+result[i].TIME_FROM,
+							end: result[i].DAY_TO+"T"+result[i].TIME_TO
+						})
+						
+					}else if(result[i].ALLDAY == 'Y '){
+						calendar.addEvent({ 
+							id: result[i].TITLE,
+							title: result[i].TITLE,
+							start: result[i].DAY_FROM,
+							end: result[i].DAY_TO,
+							allDay: true
+						})
+					}
+					$('.schedule_div').append('<div id="'+result[i].TITLE+'" class="schedule_item"><h3>'+result[i].TITLE+'</h3><button class="btn delete" onClick="deleteEvt(\''+result[i].TITLE+'\')"><img src="../images/delete.png" alt="#"></button></div>');
+				}
+			},
+			error:function(err){
+				console.log(err);
+			}
+    	});
+	}
+	
+	function loadBK(){
+		$.ajax({
+        	type: "POST",
+			url : "./BK_SEARCH.do",
+			data: {
+				USERID: 'admin',
+				TEAM: 'c60bf717'
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				console.log(result);
+				
+				for(var i = 0; i < result.length; i++){
+					$('.bk_url')[i].value = result[i].URL;
+					$('.bk_fav')[i].src = result[i].URL+'favicon.ico';
+					$('.bk_name')[i].innerText = result[i].BK_NAME;
+				}
+			},
+			error: function(err){
+				console.log(err);
+			}
+        });
+	}
   </script>
 </html>

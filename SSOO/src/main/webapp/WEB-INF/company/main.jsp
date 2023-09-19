@@ -48,6 +48,10 @@
             text-decoration: none;
             color: #000;
         }
+        
+        .hidden{
+        	display: none;
+        }
 
         /* 기본 세팅값 설정 끝 */
 
@@ -433,6 +437,10 @@
             border: 1px solid #383838;
             margin-top: 80px;
         }
+        
+        .swiper-wrapper{
+        	width: 1500px;
+        }
     </style>
 </head>
 <body>
@@ -454,39 +462,15 @@
                     <div class="menu_div">
                         <h2>팀 리스트</h2>
                     </div>
-                                        
-                    <div class="menu_div">
-                        <div id="t1" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 1</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t2" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 2</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t3" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 3</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t4" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 4</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t5" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 5</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t6" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 6</h5>
-                    </div>
+                    
                 </div>
             </nav>
 
             <section>
                 <div class="header_div">
                     <div>
-                        <input type="text" class="searchBar">
-                        <img src="../images/search.png" alt="#">
+                        <input type="text" class="searchBar" placeholder="링크를 입력해주세요.">
+                        <img id="search_team" src="../images/search.png" alt="#">
                     </div>
                     
                     <div style="display: none">
@@ -498,12 +482,7 @@
                     <!-- <div class="no_prj">프로젝트가 없습니다.</div> -->
                     <div class="swiper">
                     	<div class="swiper-wrapper">
-		                    <div class="team_div swiper-slide">TEAM 1</div>
-		                    <div class="team_div swiper-slide">TEAM 2</div>
-		                    <div class="team_div swiper-slide">TEAM 3</div>
-		                    <div class="team_div swiper-slide">TEAM 4</div>
-		                    <div class="team_div swiper-slide">TEAM 5</div>
-		                    <div class="team_div swiper-slide">TEAM 6</div>
+		                    <div class="msg">가입된 팀이 없습니다.</div>
 		                </div>
 		                <div class="swiper-button-next"></div>
 					    <div class="swiper-button-prev"></div>
@@ -537,8 +516,8 @@
 	        </div>
 	
 	        <div class="btn_div">
-	            <button class="btn save1">생성하기1</button>
-	            <button class="btn save2">생성하기2</button>
+	            <button class="btn save1">생성하기</button>
+	            <button class="btn save2 hidden">생성하기2</button>
 	        </div>
 	    </div>
 	</div>
@@ -564,10 +543,30 @@
                 console.log(rand);
                 
                 $('#prj_link').val('https://www.jtm.com/'+rand);
+                
+                $.ajax({
+            		type: "POST",
+    				url : "./TEAM_CREATE.do",
+    				data: {
+    					ID: rand,
+    					NAME: $('#prj_name').val(),
+    					LINK: 'https://www.jtm.com/'+rand,
+    					OWNER: 'admin'
+    				},
+    				async: false,
+    				success:function(data){
+    					console.log(data);
+    					alert('팀 생성이 완료되었습니다.');
+    				},
+    				error:function(err){
+    					alert('팀 생성에 실패했습니다.');
+    				}
+            	});
+                
         	}else{
         		alert('프로젝트명을 입력해주세요!');
         	}
-        	
+
         });
         
         $('.btn.save2').on('click',function(){
@@ -602,11 +601,40 @@
         	location.replace("calendar.do");
         });
         
+        $('#search_team').on('click',function(){
+        	console.log($('.searchBar').val());
+        	
+        	$.ajax({
+				type: "POST",
+				url : "./TEAM_SEARCH.do",
+				data: {
+					LINK: $('.searchBar').val()
+				},
+				async: false,
+				success:function(data){
+					var result = JSON.parse(data);
+					
+					if(confirm('['+result.resultMsg+']에 가입하시겠습니까?')){
+						$('.nav_menu_section').append("<div class='menu_div'><div id='t4' class='marker'></div><h5 class='menu_txt'>"+result.resultMsg+"</h5></div>");
+						$('.swiper-wrapper').append("<div class='team_div swiper-slide'>"+result.resultMsg+"</div>");
+						$('.msg').css('display','none');
+						alert('가입이 완료되었습니다');
+					}else{
+						alert('가입을 취소했습니다.');
+					}
+				},
+				error:function(err){
+					alert('잘못된 링크입니다.');
+				}
+			});
+        });
+        
         // swipe 설정
         const swiper = new Swiper('.swiper',{
         	slidesPerView: 4,
 			spaceBetween: 20,
 			loop: true,
+			loopedSlides: 1,
 			navigation: {
 				nextEl: ".swiper-button-next",
 				prevEl: ".swiper-button-prev"
