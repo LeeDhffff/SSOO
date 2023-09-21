@@ -10,9 +10,23 @@
 		)}
 	</select>
 	
+	<select id="TEAM_JOIN" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 팀_가입 (
+			#{TEAM},
+			#{USER},
+			#{TYPE}
+		)}
+	</select>
+	
 	<select id="TEAM_SEARCH" parameterType="hashmap" resultType="hashmap">
 		{ call 팀_조회(
 			#{LINK}		
+		) }
+	</select>
+	
+	<select id="TEAM_SELECT" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{ call 팀_소속조회(
+			#{USER}		
 		) }
 	</select>
 	
@@ -56,6 +70,7 @@
 		{call BK_INSERT (
 			#{USERID},
 			#{TEAM},
+			#{SLOT},
 			#{URL},
 			#{BK_NAME}
 		)}

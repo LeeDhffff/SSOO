@@ -21,14 +21,24 @@ public class CompanyServiceImpl implements CompanyService {
 		// TODO Auto-generated method stub
 		return CompanyMapper.TEAM_CREATE(inputMap);
 	}
-	
+	// 팀 가입
+	@Override
+	public HashMap<String, String> TEAM_JOIN(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.TEAM_JOIN(inputMap);
+	}
 	// 팀 조회
 	@Override
 	public HashMap<String, String> TEAM_SEARCH(HashMap<String, Object> inputMap) throws Exception {
 		// TODO Auto-generated method stub
 		return CompanyMapper.TEAM_SEARCH(inputMap);
 	}
-	
+	// 소속팀 조회
+	@Override
+	public List<HashMap<String, String>> TEAM_SELECT(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.TEAM_SELECT(inputMap);
+	}
 	
 	@Override
 	public List<HashMap<String, String>> Company_Calendar_Select(HashMap<String, Object> inputMap) throws Exception {

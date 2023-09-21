@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang='en'>
   <head>
+  	<title>회사</title>
     <meta charset='utf-8' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
@@ -185,9 +186,7 @@
     <div class="container">
     	<header>
             <select id="teamList" onChange="changeTeam()">
-                <option value="TEAM1">TEAM 1</option>
-                <option value="TEAM2">TEAM 2</option>
-                <option value="TEAM3">TEAM 3</option>
+                
             </select>
             <div class="btn_div">
                 <button class="btn ps">개인</button>
@@ -197,22 +196,22 @@
         <section>
             <div class="left_div">
                 <div class="bookmark">
-                    <div class="bk">
+                    <div class="bk slot0">
                         <input type='text' class="bk_url hidden" value="" />
                         <img src="../images/add.png" alt="#" class="bk_fav">
                         <p class="bk_name"></p>
                     </div>
-                    <div class="bk">
+                    <div class="bk slot1">
                         <input type='text' class="bk_url hidden" value="" />
                         <img src="../images/add.png" alt="#" class="bk_fav">
                         <p class="bk_name"></p>
                     </div>
-                    <div class="bk">
+                    <div class="bk slot2">
                         <input type='text' class="bk_url hidden" value="" />
                         <img src="../images/add.png" alt="#" class="bk_fav">
                         <p class="bk_name"></p>
                     </div>
-                    <div class="bk">
+                    <div class="bk slot3">
                         <input type='text' class="bk_url hidden" value="" />
                         <img src="../images/add.png" alt="#" class="bk_fav">
                         <p class="bk_name"></p>
@@ -315,7 +314,7 @@
     var calendarEl, calendar;
     var isAllDay = false;
     var cnt = 0;
-    var firstClick;
+    var firstClick, slot;
 
     let today = new Date();
 
@@ -448,7 +447,8 @@
         // 북마크
         $('.bk').on('click',function(){
             var url = $(this)[0].childNodes[1].value;
-			console.log(url);
+            slot = $(this)[0].classList[1];
+			
             if(url != ''){ 
                 window.location.href = $(this)[0].childNodes[1].value;
             }else{                
@@ -462,6 +462,7 @@
         	var insertData = {
 				USERID: 'admin',
 				TEAM: 'c60bf717',
+				SLOT: slot.substr(slot.length-1, 1),
 				URL: $('#bk_url').val(),
 				BK_NAME: $('#bk_name').val()
 			}
@@ -622,6 +623,28 @@
     
 	function start(){
 		$.ajax({
+			type: "POST",
+			url : "./TEAM_SELECT.do",
+			data: {
+				USER: 'admin'
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				console.log(result);
+				if(result.length > 0){
+					for(var i = 0; i < result.length; i++){
+						$('#teamList').append("<option value='"+result[i].TEAM_ID+"'>"+result[i].TEAM_NAME+"</option>")
+					}
+				}
+				
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
+		
+		$.ajax({
     		type: "POST",
 			url : "./Calendar_Select.do",
 			data: {
@@ -675,9 +698,9 @@
 				console.log(result);
 				
 				for(var i = 0; i < result.length; i++){
-					$('.bk_url')[i].value = result[i].URL;
-					$('.bk_fav')[i].src = result[i].URL+'favicon.ico';
-					$('.bk_name')[i].innerText = result[i].BK_NAME;
+					$('.bk_url')[result[i].SLOT].value = result[i].URL;
+					$('.bk_fav')[result[i].SLOT].src = result[i].URL+'favicon.ico';
+					$('.bk_name')[result[i].SLOT].innerText = result[i].BK_NAME;
 				}
 			},
 			error: function(err){
