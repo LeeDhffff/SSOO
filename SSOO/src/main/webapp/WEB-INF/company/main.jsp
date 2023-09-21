@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>회사</title>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
@@ -524,7 +524,8 @@
 </body>
 <script>
     $(document).ready(function() {
-
+    	start();
+    	
         var rand = '';
 
         $(".add_prj").click(function(){
@@ -557,6 +558,21 @@
     				success:function(data){
     					console.log(data);
     					alert('팀 생성이 완료되었습니다.');
+    					$.ajax({
+    						type: "POST",
+    						url : "./TEAM_JOIN.do",
+    						data: {
+    							TEAM: rand,
+    							USER: 'admin',
+    							TYPE: 'O'
+    						},
+    						async: false,
+    						success:function(data){
+    							$(".close").trigger('click');
+    							start();
+    						},
+    						error:function(err){ console.log(err); }
+    					});
     				},
     				error:function(err){
     					alert('팀 생성에 실패했습니다.');
@@ -588,13 +604,10 @@
                 console.log(err);
             })
         });
-
-        $('#t2').css('background-color','#b34880');
-        $('#t3').css('background-color','#0d1775');
         
-        $('.menu_txt').on('click',function(){
-        	// location.replace("calendar.do#TEAM1");
-        	window.location.href = "./calendar.do#TEAM1";
+        $('.menu_div').on('click',function(event){
+        	var tid = event.currentTarget.id;
+        	window.location.href = "./calendar.do#"+tid;
         });
         
         $('.btn.cp').on('click',function(){
@@ -615,10 +628,8 @@
 					var result = JSON.parse(data);
 					
 					if(confirm('['+result.resultMsg+']에 가입하시겠습니까?')){
-						$('.nav_menu_section').append("<div class='menu_div'><div id='t4' class='marker'></div><h5 class='menu_txt'>"+result.resultMsg+"</h5></div>");
-						$('.swiper-wrapper').append("<div class='team_div swiper-slide'>"+result.resultMsg+"</div>");
-						$('.msg').css('display','none');
 						alert('가입이 완료되었습니다');
+						start();
 					}else{
 						alert('가입을 취소했습니다.');
 					}
@@ -641,5 +652,32 @@
 			}
         });
     });
+    
+    function start(){
+    	$.ajax({
+			type: "POST",
+			url : "./TEAM_SELECT.do",
+			data: {
+				USER: 'ojw024'
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				console.log(result);
+				if(result.length > 0){
+					for(var i = 0; i < result.length; i++){
+						$('.nav_menu_section').append("<div id='"+result[i].TEAM_ID+"' class='menu_div'><div id='t"+i+"' class='marker'></div><h5 class='menu_txt'>"+result[i].TEAM_NAME+"</h5></div>");
+						$('.swiper-wrapper').append("<div class='team_div swiper-slide'>"+result[i].TEAM_NAME+"</div>");
+						$('.marker')[i].style.backgroundColor = '#'+result[i].TEAM_ID.substr(0,6);
+						$('.msg').css('display','none');
+					}
+				}
+				
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
+    }
 </script>
 </html>
