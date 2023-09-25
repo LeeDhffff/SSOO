@@ -109,4 +109,9 @@ public class IndividualServiceImpl implements IndividualService {
 		// TODO Auto-generated method stub
 		return IndividualMapper.TodaysMission_Complete(inputMap);
 	}
+	@Override
+	public String TodaysMission_Delete(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return IndividualMapper.TodaysMission_Delete(inputMap);
+	}
 }

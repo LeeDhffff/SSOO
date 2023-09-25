@@ -59,20 +59,36 @@ $(document).ready(function(){
 	                                
 	   if($(".to_do_board_header > .to_do_board_con").length < 4){
 		   
+		   
+
+		 	var form = new FormData();
+		 
+		 	form.append("COD_MEMB","ehdgjs");
+		 	form.append("TXT_TITLE",title);
+		 	form.append("DAY_KEY",$("#todo_date").text() + " 00:00");
+		 	form.append("LOCATION","Location");
+		 	form.append("COLOR","");
+		 	form.append("CHK_POINT","None");
+		 	form.append("uploadFile",null);
+		 	
+		 	
 		   var insertdata = {
 					COD_MEMB : "ehdgjs",
 					TXT_TITLE : title,
 					DAY_KEY : $("#todo_date").text() + " 00:00",
 					LOCATION : "Location",
 					COLOR : "",
-					CHK_POINT : "None"
+					CHK_POINT : "None",
+					uploadFile : null
 			}
 			
 			$.ajax({
 				url: "Individual_Todo_Insert.do",
-				data: insertdata,
+				data: form,
 				type: "POST",
 				async: false,
+				processData : false,
+				contentType : false,
 				success: function(data){
 					selectTodo()
 					dragopen()
@@ -153,12 +169,25 @@ $(document).ready(function(){
 					COLOR : "",
 					CHK_POINT : "None"
 			}
+
+		 	var form = new FormData();
+		 
+		 	form.append("COD_MEMB","ehdgjs");
+		 	form.append("TXT_TITLE",title);
+		 	form.append("DAY_KEY",$("#todo_date").text() + " " + time);
+		 	form.append("LOCATION",location);
+		 	form.append("COLOR","");
+		 	form.append("CHK_POINT","None");
+		 	form.append("uploadFile",$("#pop_TODO_file")[0].files[0]);
+		 	
 			
 			$.ajax({
 				url: "Individual_Todo_Insert.do",
-				data: insertdata,
+				data: form,
 				type: "POST",
 				async: false,
+				processData : false,
+				contentType : false,
 				success: function(data){
 					selectTodo()
 					dragopen()
@@ -241,9 +270,95 @@ $(document).ready(function(){
 			$(".mission_pop").hide();
 		}
 		
-	})
+	});
 	
-	
+	$("#mission_update").on("click",function(){
+
+		if($(".mission_pop_div_update").css("display") == "none"){
+			$(".mission_pop_div_update").show();	
+			$("#mission_add").show();	
+			$(".mission_pop_div").hide();
+		
+		
+		}else{
+			$(".mission_pop_div_update").hide();	
+			$("#mission_add").hide();	
+			$(".mission_pop_div").show();
+		}
+		
+		
+	});
+	$("#mission_add").on("click",function(){
+
+
+		var addString2 = "";
+			addString2 += '<div class="mission_div">';
+			addString2 += '<input class="Mission_input" value="" idx="0">';
+			addString2 += '<button class="Mission_remove"  idx="0">-</button>';
+			addString2 += '</div>';
+//			addString2 += '<button id="Mission_save">SAVE</button>';
+		
+		
+        $(".mission_pop_div_update").append(addString2);
+        $(".mission_pop_div_update").append($("#Mission_save"));
+	});
+	$(document).on("click",".Mission_remove",function(){
+		
+		if($(this).attr("idx") == '0'){
+			$(this).parent('.mission_div').remove();
+		}
+		else if(confirm("해당 미션을 삭제하시겠습니까?")){
+			var selectdata2 = {
+					COD_MEMB : "ehdgjs",
+					IDX_SORT :  $(this).attr("idx")
+			};
+			$.ajax({
+				url: "TodaysMission_Delete.do",
+				data: selectdata2,
+				type: "POST",
+				async: false,
+				success: function(data2){		
+					var result2 = JSON.parse(data2);
+
+					alert("삭제되었습니다.");
+					$(".mission_pop_div_update").empty();
+					
+					selectMission();
+				}
+			})
+		}
+		
+	});
+	$(document).on("click","#Mission_save",function(){
+
+		
+		$(".Mission_input").each(function(){
+			if($(this).val() != ''){
+
+				var selectdata2 = {
+						COD_MEMB : "ehdgjs",
+						IDX_SORT :  $(this).attr("idx"),
+						MISSION_NM : $(this).val()
+				};
+				
+				$.ajax({
+					url: "TodaysMission_Update.do",
+					data: selectdata2,
+					type: "POST",
+					async: false,
+					success: function(data2){		
+						var result2 = JSON.parse(data2);
+
+						$(".mission_pop_div_update").empty();
+						
+						selectMission();
+					}
+				})
+			}
+		})
+		
+		alert("저장되었습니다.");
+	});
 	/*===============================================================================================*/
 	/*==========================================기타==================================================*/
 	/*===============================================================================================*/
@@ -286,6 +401,9 @@ $(document).on('click','.option_list.update',function(){
 	$(parent).find('.location_txt').hide();
 	$(parent).find('.cont_U_time').show();
 	$(parent).find('.U_Title').attr('type','text');
+	$(parent).find('.add_file_txt').hide();
+	$(parent).find('.add_file_upload').show();
+	
 	//$(parent).find('.U_Time').attr('type','text');
 	$(parent).find('.U_Location').attr('type','text');
 	$(this).removeClass('update')
@@ -325,12 +443,26 @@ $(document).on('click','.option_list.save',function(){
 				COLOR : "",
 				CHK_POINT : ""
 		}
+	 	
+	 	var form = new FormData();
+	 
+	 	form.append("COD_MEMB","ehdgjs");
+	 	form.append("IDX_SORT",idx);
+	 	form.append("TXT_TITLE",title);
+	 	form.append("DAY_KEY",$("#todo_date").text() + " " + time + ":" + minute);
+	 	form.append("LOCATION",location);
+	 	form.append("COLOR","");
+	 	form.append("CHK_POINT","");
+	 	form.append("uploadFile",$(parent).find(".add_file_files")[0].files[0]);
+	 	
 		
 		$.ajax({
 			url: "Individual_Todo_Update.do",
-			data: insertdata,
+			data: form,
 			type: "POST",
 			async: false,
+			processData : false,
+			contentType : false,
 			success: function(data){
 				selectTodo();
 				dragopen();
@@ -929,7 +1061,13 @@ function selectTodo(){
 					AddTODO += '	<h3 class="add_file">';
 					AddTODO += '	 <img src="./images/individual/add.png" alt="add_file">';
 					AddTODO += '	 </h3>';
-					AddTODO += '	<h3 class="con_txt add_file_txt">파일 없음</h3>';
+					if(result[i].FILE_NAME == ''){
+						AddTODO += '	<h3 class="con_txt add_file_txt">파일 없음</h3>';
+					}
+					else{
+						AddTODO += '	<h3 class="con_txt add_file_txt">'+result[i].FILE_NAME+'</h3>';
+					}
+					AddTODO += '	<form class="add_file_upload" style="display:none;"><input type="file" class="add_file_files"></form>';
 					AddTODO += '	</div>';
 					AddTODO += '</div>';
 				                                
@@ -1043,7 +1181,12 @@ function TrashTodo(){
 					AddTODO += '	<h3 class="add_file">';
 					AddTODO += '	 <img src="./images/individual/add.png" alt="add_file">';
 					AddTODO += '	 </h3>';
-					AddTODO += '	<h3 class="con_txt add_file_txt">파일 없음</h3>';
+					if(result[i].FILE_NAME == ''){
+						AddTODO += '	<h3 class="con_txt add_file_txt">파일 없음</h3>';
+					}
+					else{
+						AddTODO += '	<h3 class="con_txt add_file_txt">'+result[i].FILE_NAME+'</h3>';
+					}
 					AddTODO += '	</div>';
 					AddTODO += '</div>';
 				                                
@@ -1145,7 +1288,12 @@ function selectMiniTodo(){
 					AddTODO += '	<h3 class="add_file">';
 					AddTODO += '	 <img src="./images/individual/add.png" alt="add_file">';
 					AddTODO += '	 </h3>';
-					AddTODO += '	<h3 class="con_txt add_file_txt">파일 없음</h3>';
+					if(result[i].FILE_NAME == ''){
+						AddTODO += '	<h3 class="con_txt add_file_txt">파일 없음</h3>';
+					}
+					else{
+						AddTODO += '	<h3 class="con_txt add_file_txt">'+result[i].FILE_NAME+'</h3>';
+					}
 					AddTODO += '	</div>';
 					AddTODO += '</div>';
 				    
@@ -1224,15 +1372,42 @@ function selectMission(){
 					addString += '<label for="mission' +(String)(i) +'"></label>';
 					addString += '</div>';
 					addString += '</div>';
+					
+
+					
 				}
 				
         		
 	            $(".mission_pop_div").append(addString);
 		 			
-		 			
-	 			
-        	
+			}
+		})
+		var selectdata2 = {
+				COD_MEMB : "ehdgjs",
+				DAY_KEY :  'MODEL'
+		};
+		
+		$.ajax({
+			url: "ListMission.do",
+			data: selectdata2,
+			type: "POST",
+			async: false,
+			success: function(data2){		
+				var result2 = JSON.parse(data2);
 				
+				var addString2 = "";
+				console.log(result2);
+				for(var i=0; i<result2.length ; i++){
+
+					addString2 += '<div class="mission_div">';
+					addString2 += '<input class="Mission_input" value="'+result2[i].MISSION_NM+'" idx="'+result2[i].IDX_SORT+'">';
+					addString2 += '<button class="Mission_remove" idx="'+result2[i].IDX_SORT+'">-</button>';
+					addString2 += '</div>';
+					
+				}
+				addString2 += '<button id="Mission_save">SAVE</button>';
+        		
+	            $(".mission_pop_div_update").append(addString2);
 			}
 		})
 }

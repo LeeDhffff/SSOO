@@ -549,6 +549,21 @@ section
 	background: #D9D9D9;
 	cursor : pointer;
 }
+#mission_update{
+	width: 30px;
+	height: 30px;
+    border-radius: 100px;
+	background: #D9D9D9;
+	cursor : pointer;
+}
+#mission_add{
+	width: 30px;
+	height: 30px;
+    border-radius: 100px;
+    background: var(--main-color);
+    color: white;
+	cursor : pointer;
+}
 .mission_pop{
     width: 300px;
     height: 243px;
@@ -561,8 +576,23 @@ section
     border: 5px solid #f58383;
     position: absolute;
     margin-left: 50px;
+    overflow-y: auto;
 }
-
+.Mission_remove{
+    background: var(--main-color);
+    border-radius: 100px;
+    width: 20px;
+    height: 20px;
+    color: white;
+}
+#Mission_save{
+    width: 50px;
+    background: var(--main-color);
+    color: white;
+    height: 25px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
 .mission_div{
 	display: flex;
     justify-content: space-around;

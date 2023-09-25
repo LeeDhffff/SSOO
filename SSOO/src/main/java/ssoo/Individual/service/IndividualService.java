@@ -43,6 +43,8 @@ public interface IndividualService {
 	
 	String TodaysMission_Update(HashMap<String, Object> inputMap) throws Exception;
 	
+	String TodaysMission_Delete(HashMap<String, Object> inputMap) throws Exception;
+	
 	String TodaysMission_Complete(HashMap<String, Object> inputMap) throws Exception;
 	
 }

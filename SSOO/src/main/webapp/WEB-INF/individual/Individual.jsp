@@ -278,12 +278,16 @@
     				
 	            	<div class="character_status">
 	            	<button id="mission"><img src="./images/individual/mitball.png" alt="mission"></button>
-	            	<div class="mission_pop" style="display:none;">
-	            		<div class="mission_pop_div">
-			            	
-		            	</div>
-	            	<div class="character_image"></div>
-	            	</div>
+	            	<button id="character_change">+</button>
+	            		<div class="mission_pop" style="display:none;">
+			            	<button id="mission_update"><img src="./images/individual/mitball.png" alt="mission"></button>
+			            	<button id="mission_add" style="display:none;">+</button>
+		            		<div class="mission_pop_div">
+			            	</div>
+			            	<div class="mission_pop_div_update" style="display:none;">
+			            	</div>
+		            		<div class="character_image"></div>
+	            		</div>
 	            	</div>
 	            	<h3 class="character_owner">허공에 궁쓴다잉</h3>
             		<div class="level_number">

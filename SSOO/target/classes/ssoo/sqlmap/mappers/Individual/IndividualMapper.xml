@@ -58,7 +58,10 @@
 			#{DAY_KEY},
 			#{LOCATION},
 			#{COLOR},
-			#{CHK_POINT}
+			#{CHK_POINT},
+			#{PATH_TODO},
+			#{FILE_NAME},
+			#{PATH_TODO_NM}
 		)}
 	</select>
 	
@@ -70,7 +73,10 @@
 			#{DAY_KEY},
 			#{LOCATION},
 			#{COLOR},
-			#{CHK_POINT}
+			#{CHK_POINT},
+			#{PATH_TODO},
+			#{FILE_NAME},
+			#{PATH_TODO_NM}
 		)}
 	</select>
 	
@@ -151,6 +157,13 @@
 			#{COD_MEMB},
 			#{IDX_SORT},
 			#{MISSION_NM}
+		)}
+	</select>
+	
+	<select id="TodaysMission_Delete" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 개인_MISSION_DELETE (
+			#{COD_MEMB},
+			#{IDX_SORT}
 		)}
 	</select>
 	
