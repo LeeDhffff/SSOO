@@ -1,7 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ssoo.Company.service.impl.CompanyMapper">
-	<select id="ListDays" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
-		SELECT * FROM INDIVIDUAL
+	<select id="TEAM_CREATE" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 팀_생성 (
+			#{ID},
+			#{NAME},
+			#{LINK},
+			#{OWNER}
+		)}
+	</select>
+	
+	<select id="TEAM_JOIN" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 팀_가입 (
+			#{TEAM},
+			#{USER},
+			#{TYPE}
+		)}
+	</select>
+	
+	<select id="TEAM_SEARCH" parameterType="hashmap" resultType="hashmap">
+		{ call 팀_조회(
+			#{LINK}		
+		) }
+	</select>
+	
+	<select id="TEAM_SELECT" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{ call 팀_소속조회(
+			#{USER}		
+		) }
+	</select>
+	
+	<select id="Company_Calendar_Select" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 회사_일정조회 (
+			#{USERID},
+			#{TEAM},
+			#{MONTH}
+		)}
+	</select>
+	
+	<select id="Company_Calendar_Insert" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 회사_일정등록 (
+			#{USERID},
+			#{TEAM},
+			#{TITLE},
+			#{DAY_FROM},
+			#{DAY_TO},
+			#{TIME_FROM},
+			#{TIME_TO},
+			#{ALLDAY}
+		)}
+	</select>
+	
+	<select id="Company_Calendar_Delete" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 회사_일정삭제 (
+			#{USERID},
+			#{TEAM},
+			#{TITLE}
+		)}
+	</select>
+	
+	<select id="Company_BK_SEARCH" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call BK_SELECT (
+			#{USERID},
+			#{TEAM}
+		)}
+	</select>
+	
+	<select id="Company_BK_INSERT" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call BK_INSERT (
+			#{USERID},
+			#{TEAM},
+			#{SLOT},
+			#{URL},
+			#{BK_NAME}
+		)}
 	</select>
 </mapper>

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>회사</title>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
@@ -47,6 +47,10 @@
         {
             text-decoration: none;
             color: #000;
+        }
+        
+        .hidden{
+        	display: none;
         }
 
         /* 기본 세팅값 설정 끝 */
@@ -433,6 +437,10 @@
             border: 1px solid #383838;
             margin-top: 80px;
         }
+        
+        .swiper-wrapper{
+        	width: 1500px;
+        }
     </style>
 </head>
 <body>
@@ -454,39 +462,15 @@
                     <div class="menu_div">
                         <h2>팀 리스트</h2>
                     </div>
-                                        
-                    <div class="menu_div">
-                        <div id="t1" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 1</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t2" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 2</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t3" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 3</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t4" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 4</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t5" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 5</h5>
-                    </div>
-                    <div class="menu_div">
-                        <div id="t6" class="marker"></div>
-                        <h5 class="menu_txt">TEAM 6</h5>
-                    </div>
+                    
                 </div>
             </nav>
 
             <section>
                 <div class="header_div">
                     <div>
-                        <input type="text" class="searchBar">
-                        <img src="../images/search.png" alt="#">
+                        <input type="text" class="searchBar" placeholder="링크를 입력해주세요.">
+                        <img id="search_team" src="../images/search.png" alt="#">
                     </div>
                     
                     <div style="display: none">
@@ -498,12 +482,7 @@
                     <!-- <div class="no_prj">프로젝트가 없습니다.</div> -->
                     <div class="swiper">
                     	<div class="swiper-wrapper">
-		                    <div class="team_div swiper-slide">TEAM 1</div>
-		                    <div class="team_div swiper-slide">TEAM 2</div>
-		                    <div class="team_div swiper-slide">TEAM 3</div>
-		                    <div class="team_div swiper-slide">TEAM 4</div>
-		                    <div class="team_div swiper-slide">TEAM 5</div>
-		                    <div class="team_div swiper-slide">TEAM 6</div>
+		                    <div class="msg">가입된 팀이 없습니다.</div>
 		                </div>
 		                <div class="swiper-button-next"></div>
 					    <div class="swiper-button-prev"></div>
@@ -537,15 +516,16 @@
 	        </div>
 	
 	        <div class="btn_div">
-	            <button class="btn save1">생성하기1</button>
-	            <button class="btn save2">생성하기2</button>
+	            <button class="btn save1">생성하기</button>
+	            <button class="btn save2 hidden">생성하기2</button>
 	        </div>
 	    </div>
 	</div>
 </body>
 <script>
     $(document).ready(function() {
-
+    	start();
+    	
         var rand = '';
 
         $(".add_prj").click(function(){
@@ -564,10 +544,45 @@
                 console.log(rand);
                 
                 $('#prj_link').val('https://www.jtm.com/'+rand);
+                
+                $.ajax({
+            		type: "POST",
+    				url : "./TEAM_CREATE.do",
+    				data: {
+    					ID: rand,
+    					NAME: $('#prj_name').val(),
+    					LINK: 'https://www.jtm.com/'+rand,
+    					OWNER: 'admin'
+    				},
+    				async: false,
+    				success:function(data){
+    					console.log(data);
+    					alert('팀 생성이 완료되었습니다.');
+    					$.ajax({
+    						type: "POST",
+    						url : "./TEAM_JOIN.do",
+    						data: {
+    							TEAM: rand,
+    							USER: 'admin',
+    							TYPE: 'O'
+    						},
+    						async: false,
+    						success:function(data){
+    							$(".close").trigger('click');
+    							start();
+    						},
+    						error:function(err){ console.log(err); }
+    					});
+    				},
+    				error:function(err){
+    					alert('팀 생성에 실패했습니다.');
+    				}
+            	});
+                
         	}else{
         		alert('프로젝트명을 입력해주세요!');
         	}
-        	
+
         });
         
         $('.btn.save2').on('click',function(){
@@ -589,17 +604,40 @@
                 console.log(err);
             })
         });
-
-        $('#t2').css('background-color','#b34880');
-        $('#t3').css('background-color','#0d1775');
         
-        $('.menu_txt').on('click',function(){
-        	// location.replace("calendar.do#TEAM1");
-        	window.location.href = "./calendar.do#TEAM1";
+        $('.menu_div').on('click',function(event){
+        	var tid = event.currentTarget.id;
+        	window.location.href = "./calendar.do#"+tid;
         });
         
         $('.btn.cp').on('click',function(){
         	location.replace("calendar.do");
+        });
+        
+        $('#search_team').on('click',function(){
+        	console.log($('.searchBar').val());
+        	
+        	$.ajax({
+				type: "POST",
+				url : "./TEAM_SEARCH.do",
+				data: {
+					LINK: $('.searchBar').val()
+				},
+				async: false,
+				success:function(data){
+					var result = JSON.parse(data);
+					
+					if(confirm('['+result.resultMsg+']에 가입하시겠습니까?')){
+						alert('가입이 완료되었습니다');
+						start();
+					}else{
+						alert('가입을 취소했습니다.');
+					}
+				},
+				error:function(err){
+					alert('잘못된 링크입니다.');
+				}
+			});
         });
         
         // swipe 설정
@@ -607,11 +645,39 @@
         	slidesPerView: 4,
 			spaceBetween: 20,
 			loop: true,
+			loopedSlides: 1,
 			navigation: {
 				nextEl: ".swiper-button-next",
 				prevEl: ".swiper-button-prev"
 			}
         });
     });
+    
+    function start(){
+    	$.ajax({
+			type: "POST",
+			url : "./TEAM_SELECT.do",
+			data: {
+				USER: 'ojw024'
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				console.log(result);
+				if(result.length > 0){
+					for(var i = 0; i < result.length; i++){
+						$('.nav_menu_section').append("<div id='"+result[i].TEAM_ID+"' class='menu_div'><div id='t"+i+"' class='marker'></div><h5 class='menu_txt'>"+result[i].TEAM_NAME+"</h5></div>");
+						$('.swiper-wrapper').append("<div class='team_div swiper-slide'>"+result[i].TEAM_NAME+"</div>");
+						$('.marker')[i].style.backgroundColor = '#'+result[i].TEAM_ID.substr(0,6);
+						$('.msg').css('display','none');
+					}
+				}
+				
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
+    }
 </script>
 </html>

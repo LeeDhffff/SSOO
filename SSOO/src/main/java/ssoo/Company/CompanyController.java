@@ -38,17 +38,107 @@ public class CompanyController {
 		return "company/calendar";
 	}
 	
-	// DB 테스트
-	/*@RequestMapping(value = "/Company/test.do", produces = "application/text; charset=utf-8")
+	@RequestMapping(value = "/Company/TEAM_CREATE.do", produces = "application/text; charset=utf-8")
 	@ResponseBody
-	public String ListDays(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request,
-			HttpSession session) throws Exception {
-
-		System.out.println("ListDays: " + inputMap);
-		List<HashMap<String, String>> ListDays = CompanyService.ListDays(inputMap);
-		System.out.println("ListDays: " + ListDays);
+	public String TEAM_CREATE(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		HashMap<String, String> team = CompanyService.TEAM_CREATE(inputMap);
+		
 		ObjectMapper mapper = new ObjectMapper();
-		String jsonStr = mapper.writeValueAsString(ListDays);
+		String jsonStr = mapper.writeValueAsString(team);
+		
 		return jsonStr;
-	}*/
+	}
+	
+	@RequestMapping(value = "/Company/TEAM_JOIN.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String TEAM_JOIN(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		HashMap<String, String> team = CompanyService.TEAM_JOIN(inputMap);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(team);
+		
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/TEAM_SEARCH.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String TEAM_SEARCH(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		HashMap<String, String> LoginList = CompanyService.TEAM_SEARCH(inputMap);
+		System.out.println(LoginList.get("resultMsg"));
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(LoginList);
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/TEAM_SELECT.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String TEAM_SELECT(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		List<HashMap<String, String>> LoginList = CompanyService.TEAM_SELECT(inputMap);
+		System.out.println(LoginList);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(LoginList);
+		return jsonStr;
+	}
+	
+	
+	@RequestMapping(value = "/Company/Calendar_Select.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String Company_Calendar_Select(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		List<HashMap<String, String>> LoginList = CompanyService.Company_Calendar_Select(inputMap);
+		System.out.println(LoginList);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(LoginList);
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/Calendar_Insert.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String Company_Calendar_Insert(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		HashMap<String, String> team = CompanyService.Company_Calendar_Insert(inputMap);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(team);
+		
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/Calendar_Delete.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String Company_Calendar_Delete(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		HashMap<String, String> team = CompanyService.Company_Calendar_Delete(inputMap);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(team);
+		
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/BK_SEARCH.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String Company_BK_SEARCH(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		List<HashMap<String, String>> LoginList = CompanyService.Company_BK_SEARCH(inputMap);
+		System.out.println(LoginList);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(LoginList);
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/BK_INSERT.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String Company_BK_INSERT(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		HashMap<String, String> team = CompanyService.Company_BK_INSERT(inputMap);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(team);
+		
+		return jsonStr;
+	}
 }
