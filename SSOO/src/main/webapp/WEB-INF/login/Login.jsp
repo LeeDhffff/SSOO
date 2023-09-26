@@ -229,21 +229,21 @@
                    </div>
 
 					<div class="input">
-                       <input type="text" name="username" id="username" required
+                       <input type="text" name="findid_username" id="findid_username" required
                            title="Please enter your Username here" />
-                       <label for="username">이름</label>
+                       <label for="findid_username">이름</label>
                    </div>
 
                    <div class="input">
-                       <input type="email" name="email" id="email" required
+                       <input type="email" name="findid_email" id="findid_email" required
                            title="Please enter your E-Mail here" />
-                       <label for="email">메일</label>
+                       <label for="findid_email">메일</label>
                    </div>
                    
                    <div class="input">
-                       <input type="tel" name="phone" id="phone" required
+                       <input type="tel" name="findid_phone" id="findid_phone" required
                            title="Please enter your Phone Number here" />
-                       <label for="phone">전화번호</label>
+                       <label for="findid_phone">전화번호</label>
                    </div>
                 
                    <input type="submit" value="ID찾기" class="id_btn" />
@@ -255,27 +255,27 @@
                    </div>
 				   
                    <div class="input">
-                       <input type="text" name="id" id="id" required
+                       <input type="text" name="findpw_id" id="findpw_id" required
                            title="Please enter your ID here" />
-                       <label for="id">ID</label>
+                       <label for="findpw_id">ID</label>
                    </div>
 
 					<div class="input">
-                       <input type="text" name="username" id="username" required
+                       <input type="text" name="findpw_username" id="findpw_username" required
                            title="Please enter your Username here" />
-                       <label for="username">이름</label>
+                       <label for="findpw_username">이름</label>
                    </div>
 
                    <div class="input">
-                       <input type="email" name="email" id="email" required
+                       <input type="email" name="findpw_email" id="findpw_email" required
                            title="Please enter your E-Mail here" />
-                       <label for="email">메일</label>
+                       <label for="findpw_email">메일</label>
                    </div>
                    
                    <div class="input">
-                       <input type="tel" name="phone" id="phone" required
+                       <input type="tel" name="findpw_phone" id="findpw_phone" required
                            title="Please enter your Phone Number here" />
-                       <label for="phone">전화번호</label>
+                       <label for="findpw_phone">전화번호</label>
                    </div>
 				   
                    <input type="submit" value="비밀번호 찾기" class="pw_btn" />
@@ -418,6 +418,52 @@ var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
 			
 		});
 		
+	$('.id_btn').on('click',function(){
+			
+			var submitData = {
+				NAME: $('#findid_username').val(),
+				EMAIL: $('#findid_email').val()
+			};
+			console.log(submitData);
+			$.ajax({
+				type: "POST",
+				url : "find_id.do",
+				data: submitData,
+				async: false,
+				success:function(data){
+					var result = JSON.parse(data);
+					console.log(result);
+					alert('회원님의 ID는 '+result.resultMsg+'입니다.');
+				},
+				error:function(err){
+					alert('해당 정보와 일치하는 ID가 없습니다.');
+				}
+			});
+		});
+		
+		$('.pw_btn').on('click',function(){
+			
+			var submitData = {
+				ID: $('#findpw_id').val(),
+				NAME: $('#findpw_username').val(),
+				EMAIL: $('#findpw_email').val()
+			};
+			console.log(submitData);
+			$.ajax({
+				type: "POST",
+				url : "find_pw.do",
+				data: submitData,
+				async: false,
+				success:function(data){
+					var result = JSON.parse(data);
+					console.log(result);
+					alert('회원님의 비밀번호는 '+result.resultMsg+'입니다.');
+				},
+				error:function(err){
+					alert('해당 정보와 일치하는 비밀번호가 없습니다.');
+				}
+			});
+		});
 	});
 </script>
 </html>
