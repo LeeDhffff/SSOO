@@ -223,7 +223,7 @@
 			}
 			
 			var submitData = {
-				ID: $('#username').val(),
+				ID: $('#id').val(),
 				PW: $('#password').val(),
 				NAME: $('#username').val(),
 				EMAIL: $('#email').val(),
@@ -241,7 +241,7 @@
 				success:function(data){
 					alert('회원가입이 완료되었습니다.');
 					// 로그인 페이지로 이동
-					location.href = "/Login.do";
+					location.href = "Login.do";
 				},
 				error:function(err){
 					alert('회원가입에 실패했습니다.');

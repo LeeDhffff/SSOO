@@ -25,12 +25,16 @@
             --font-green: #185709;
             --button-red: #ffa2a2;
             --font-red: #9a0000;
+            --nav-background : #FFC5C1;
+            --individual: #0F31A7;
+            --company: #FF4E43;
         }
 
         *
         {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         html,body 
@@ -60,40 +64,27 @@
         .container 
         {
             height: 100vh;
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            position: relative;
-        }
-
-        .dashboard 
-        {
-            width: 100%;
-            height: 100%;
-            position:absolute;
-            top:50%;
-            left: 50%;
-            transform:translate(-50%,-50%);
-            background: #fff;
-            border-radius: 5px;
-            box-shadow: 5px 5px 10px rgba(0,0,0,0.4);
-            display: flex;
-        }
+            display: flex;            
+        }       
 
         /* .container, .dashboard 끝 */
 
         /* .dashboard > nav 시작 */
         nav
         {
-            width: 260px;
+            width: 270px;
             height: 100%;
             border-right: 1px solid var(--border-color);
             position:relative;
+            background-color: var(--nav-background);
+            box-sizing: border-box;
         }
 
         .logo 
         {
             width: 70px;
             height: 30px;
+            background-image:url(../images/logo.svg);
             background-position:center;
             background-size: 100% 100%;
             background-repeat: no-repeat;
@@ -102,7 +93,7 @@
 
         .nav_menu_section 
         {
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid #fff;
         }
 
         .menu_div 
@@ -144,15 +135,38 @@
             text-align: center;
         }
 
-        .admin> * 
+        .profile_img 
         {
-            margin-bottom: 20px;
+        	width: 80px;
+		    height: 80px;
+		    margin: 20px auto;
+		    border-radius: 50%;
+		    background: #fff;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;	
         }
         .profile_name
         {
-            font-size: 14px;
+            font-size: 18px;
             white-space: nowrap;
+            font-weight: 500;
+            margin-right: 5px;
         }
+        
+        button.btn.add_prj 
+        {
+        	background: #fff;
+        	border:0;
+        	border-radius: 5px;
+        	font-size: 16px;
+        	font-weight: 600;
+        	margin: 50px 0;
+        	width: 200px;
+        	height: 50px;
+        	cursor: pointer;
+        }
+        
         .profile_sub_txt 
         {
             margin-top: 10px;
@@ -170,8 +184,8 @@
 
         section 
         {
-            background: #F5F5F5;
-            width: calc(100% - 160px);
+            background: #fff;
+            width: calc(100% - 270px);
         }
 
         .section_title 
@@ -375,15 +389,7 @@
             display: flex;
             justify-content: space-between;
             margin-top: 70px;
-        }
-
-        .btn {
-            width: 150px;
-            height: 50px;
-            font-size: 16px;
-            border: none;
-            border-radius: 10px;
-        }
+        }       
 
         .add_menu {
             width: 90px;
@@ -402,31 +408,141 @@
             background-color: #0074c2;
         }
 
-        .header_div{
-            border-bottom: 1px solid var(--border-color);
-            padding: 30px 40px;
+		/* header */
+        .header
+        {
+            height: 80px;
+            border-bottom: 1px solid #dadada;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    		align-items: center;
+        }		
 
-        .searchBar{
-            width: 500px;
-            height: 48px;
-            border: none;
-        }
-
+		#team 
+		{
+			width: 400px;
+            height: 50px;
+            border: 1px solid #dadada;
+            border-radius: 30px;
+    		margin-left: 20px;
+    		-webkit-appearance:none; /* for chrome */
+   			-moz-appearance:none; /*for firefox*/
+   			appearance:none;
+   			background:url(../images/arrow_down.svg) no-repeat 95% 50%/12px auto;
+   			padding: 0 20px;
+   			font-size: 16px;
+		}
+		
+		.favicon_div 
+		{
+			display: flex;
+			align-items: center;
+			margin-left: auto;
+			margin-right: 80px;
+		}
+		
+		.favicon_button 
+		{
+			box-shadow: 0 0 3px rgb(0 0 0 / 40%);
+		    border-radius: 10px;
+		    width: 50px;
+		    height: 50px;
+		    margin-right: 20px;
+		    cursor:pointer;
+		}
+		
+		.favicon_add 
+		{
+			width: 20px;
+			height: 20px;
+			background-image:url(../images/favicon_add.svg);
+			background-repeat: no-repeat;
+			cursor:pointer;
+		}
+		
+		.change_mode 
+		{
+			margin-top: 40px;
+    		margin-right: 80px;
+		}
+		
+		.change_mode>button 
+		{
+			width: 90px;
+			height: 40px;
+			border-radius: 15px 15px 0 0;
+			color: #fff;
+			font-size: 16px;
+			font-weight: 500;
+			margin-left: 20px;
+			border:0;			
+		}
+		
+		.change_mode>button.btn.ps
+		{
+			background-color: var(--individual);
+		}
+		
+		.change_mode>button.btn.cp
+		{
+			background-color: var(--company);
+		}
+		
         .profile_txt{
             display: flex;
             justify-content: center;
         }
 
-        .content_div{
-            text-align: center;
+		/* -----content div----- */        
+        .content_div
+        {
             display: flex;
-            justify-content: space-around;
+   			align-items: center;
+    		height: calc(100vh - 81px);  
+        }
+        
+        .content_con_div
+        {
+        	width:80%;
+        	margin: 0 auto;        	    		
         }
 
+		/* 팀이 없을 때 팀 가입 url 검색 링크창 */
+		.search_div 
+		{
+			display: flex;
+    		align-items: center;
+    		margin-top: 80px;
+    		position: relative;
+		}
+		
+		.empty_div 
+		{
+			text-align: center;
+		    padding: 200px 0;
+		}
+		
+		.msg 
+		{
+			font-size: 16px;
+    		font-weight: 500;
+    		margin-top: 10px;
+		}
+		
+        .searchBar
+        {
+            width: 100%;
+            height: 50px;
+            border: 1px solid #dadada;
+            border-radius: 30px;
+            padding-left: 20px;               			
+        }
+        
+        #search_team 
+        {
+        	position: absolute;
+        	right: 20px;
+        }
+        
         .no_prj{
             font-size: 40px;
         }
@@ -438,19 +554,21 @@
             margin-top: 80px;
         }
         
-        .swiper-wrapper{
+        .swiper-wrapper
+        {
         	width: 1500px;
+        	text-align: center;
         }
+        
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="dashboard">
+    <div class="container">        
             <nav>
                 <h1 class="logo"></h1>
                 <div class="admin">
                     <div class="profile_img">
-                        <img src="../images/profile.png" alt="#">
+                        <img src="../images/admin.png" alt="#">
                     </div>
                     <div class="profile_txt">
                         <h3 class="profile_name">사용자명</h3>
@@ -467,40 +585,57 @@
             </nav>
 
             <section>
-                <div class="header_div">
-                    <div>
-                        <input type="text" class="searchBar" placeholder="링크를 입력해주세요.">
-                        <img id="search_team" src="../images/search.png" alt="#">
-                    </div>
-                    
-                    <div style="display: none">
+                <header class="header">
+                    <select name="team" id="team">
+					  <option value="design">디자인팀</option>
+					  <option value="planning">기획팀</option>
+					  <option value="planning_second">기획2팀</option>
+					</select>					
+					<div class="favicon_div">
+						<div class="favicon_button"></div>
+						<div class="favicon_button"></div>
+						<div class="favicon_button"></div>
+						<div class="favicon_button"></div>
+						<div class="favicon_button"></div>
+						<div class="favicon_add"></div>
+					</div>                    
+                    <div class="change_mode">
                         <button class="btn ps">개인</button>
                         <button class="btn cp">회사</button>
                     </div>
-                </div>
+                </header>
                 <div class="content_div">
-                    <!-- <div class="no_prj">프로젝트가 없습니다.</div> -->
-                    <div class="swiper">
-                    	<div class="swiper-wrapper">
-		                    <div class="msg">가입된 팀이 없습니다.</div>
+                	<div class="content_con_div">
+	                		
+	                    <div class="search_div">
+	                        <input type="text" class="searchBar" placeholder="링크를 입력해주세요.">
+	                        <img id="search_team" src="../images/search.png" alt="#">
+	                    </div>
+	                    <div class="empty_div">
+	                		<img id="empty_img" src="../images/empty.svg" alt="#">
+			                <div class="msg">가입된 팀이 없습니다.</div>
+	                	</div>
+	                    <div class="swiper">
+	                    	<div class="swiper-wrapper">
+	                    		                    		
+			                </div>
+			                <div class="swiper-button-next"></div>
+						    <div class="swiper-button-prev"></div>
 		                </div>
-		                <div class="swiper-button-next"></div>
-					    <div class="swiper-button-prev"></div>
-	                </div>
+                	</div>                    
                 </div>
-            </section>
-        </div>
+            </section>        
     </div>
     <div class="modal">
 	    <div class="modal_body">
-	        <div style="display: flex; justify-content: space-between;">
+	        <div style="display:flex; justify-content:space-between;">
 	            <p>프로젝트 생성하기</p>
 	            <img src="../images/close.png" class="close">
 	        </div>
 	        
 	        <hr>
 	        
-	        <div style="display: flex; justify-content: center;">
+	        <div style="display: flex; justify-content:center;">
 	            <div class="input_div">
 	                <div>
 	                    <label for="name">프로젝트 이름</label>
@@ -658,7 +793,9 @@
 			type: "POST",
 			url : "./TEAM_SELECT.do",
 			data: {
-				USER: 'ojw024'
+				USER: 'admin'
+				//ojw024 : 팀 없음
+				//admin : 팀있음
 			},
 			async: false,
 			success:function(data){
@@ -670,6 +807,7 @@
 						$('.swiper-wrapper').append("<div class='team_div swiper-slide'>"+result[i].TEAM_NAME+"</div>");
 						$('.marker')[i].style.backgroundColor = '#'+result[i].TEAM_ID.substr(0,6);
 						$('.msg').css('display','none');
+						$('.empty_div').css('display','none');
 					}
 				}
 				

@@ -289,7 +289,7 @@
 		            		<div class="character_image"></div>
 	            		</div>
 	            	</div>
-	            	<h3 class="character_owner">허공에 궁쓴다잉</h3>
+	            	<h3 class="character_owner"><%=(String)session.getAttribute("SESSION_NAM_KOR")%></h3>
             		<div class="level_number">
 	            		<h5 class="character_h5">Level</h5>
 		            	<h5 class="watch">
@@ -319,7 +319,14 @@
   var calendar;
   var calendar2;
 
-  $(document).ready(function(){
+  var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
+
+
+  	$(document).ready(function(){
+
+		if(uid == '' || uid == 'null' || uid == null){
+			location.href = "Login.do";
+		}
 
 	  var clickCnt = 0;
     var calendarEl = $('#calendar')[0];

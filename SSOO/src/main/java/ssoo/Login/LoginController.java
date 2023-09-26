@@ -40,6 +40,7 @@ public class LoginController {
 	@ResponseBody
 	public String signin(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 
+		System.out.println("inputMap:"+inputMap);
 		HashMap<String, String> LoginList = loginService.signin(inputMap);
 		System.out.println(LoginList.get("resultMsg"));
 
@@ -51,6 +52,7 @@ public class LoginController {
 		}else {
 			HttpSession httpSession = request.getSession(true);
 			httpSession.setAttribute("SESSION_COD_MEMB", LoginList.get("ID"));
+			httpSession.setAttribute("SESSION_NAM_KOR", LoginList.get("USERNAME"));
 			httpSession.setMaxInactiveInterval(24*60*60);
 			
 			System.out.println("inputMap:: "+inputMap);

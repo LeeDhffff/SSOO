@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssoo.Login.service.impl.LoginMapper">
 	
-	<select id="signin" parameterType="hashmap" resultType="hashmap">
+	<select id="signin" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
 		{ call 로그인_체크(
 			#{ID},
 			#{PW}			

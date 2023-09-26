@@ -1,0 +1,674 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css");
+
+:root {
+  --main-color: #ff4e43;
+  --sub-color1: #fd8c85;
+  --sub-color2: #ffc5c1;
+  --sub-color3: #fff1f0;
+  --sub-color4: #004275;
+  --sub-color5: #dcf0ff;
+  --font-color: #222;
+  --subfont-color1 : #999;
+  --subfont-color2 : #777;
+  --subfont-color3 : #666;
+  --subfont-color4 : #444;
+  --background-color: #f7f7f7;
+  --input-color: #dadada;
+}
+
+*
+{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+body
+{
+  min-height: 100vh;
+  font-family: 'Pretendard Variable';
+  background-color: var(--background-color);
+}
+
+button 
+{
+  background: none;
+  border: none;
+}
+/* ---------기본 설정값 끝----------- */
+
+header 
+{
+  width: 100%;
+  height: 60px;
+  background-color: var(--sub-color3);
+  padding:0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tab_div
+{
+  display: flex;
+  align-items:end;
+  height: 100%;
+}
+
+.tab 
+{
+  height: 100%;
+  align-items: flex-end;
+  display: flex;
+  margin-left: 20px;
+  position: relative;
+  cursor:pointer;
+}
+
+.tab::before 
+{
+  content: "개인";
+  width: 56px;
+  height: 20px;
+  position: absolute;
+  background-color:var(--main-color);
+  top:59px;
+  color: #fff;
+  text-align: center;
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 0 0 5px 5px;
+}
+
+.tab.company::before
+{
+  content: "회사";
+  background-color:var(--sub-color4);
+}
+
+/* ---------header 끝----------- */
+
+section 
+{
+  width: 100%;
+  height: calc(100vh - 60px);
+  padding: 40px;
+}
+
+.to_do 
+{
+  width: 1355px;
+  height: 100%;
+  float: left;
+}
+
+.calendar 
+{
+  width: 1355px;
+  height: 100%;
+  float: left;
+}
+.to_do_header 
+{
+  height: 30px;
+}
+
+.to_do_title_div, .to_do_input_div, .to_do_icon_div, .diary_title_div 
+{
+  display: flex;
+  align-items: center;
+  float: left;
+}
+
+.watch
+{
+  display: flex;
+  align-items: center;
+}
+
+.board_name, .count_num 
+{
+  margin-left: 10px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.count_num 
+{
+  color: var(--main-color);
+}
+/* ----to_do_title_div 끝------ */
+
+.to_do_input_div
+{
+  margin-left: 20px;
+}
+
+.to_do_input_div > input 
+{
+  width: 450px;
+  height: 30px;
+  border: 1px solid var(--input-color);
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  padding-left: 10px
+}
+
+.to_do_input_div > input::placeholder 
+{
+  color: var(--input-color);
+  font-size: 14px;
+/*   padding-left: 10px; */
+}
+
+.creat 
+{
+  padding:5px 20px;
+  color: #fff;
+  background : var(--main-color);
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+/* ----to_do_input_div 끝------ */
+
+.to_do_icon_div 
+{
+  float: right;
+}
+
+.plus, .trash, .plus_c 
+{
+  width: 30px;
+  height: 30px;
+  background-color: var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-left: 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+}
+
+/* ----to_do_icon_div 끝------ */
+
+.to_do_section 
+{
+  width: 100%;
+  height: calc(100% - 40px);
+  margin-top: 10px;
+  background: #fff;
+  padding: 40px 30px;
+  position: relative;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+}
+.calendar_section{
+  width: 100%;
+  height: calc(100% - 10px);
+  margin-top: 10px;
+  background: #fff;
+  padding: 40px 30px;
+  position: relative;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+	
+}
+.to_do_board_header
+{
+  width: 100%;
+  height: 180px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(290px, auto));
+  grid-gap: 0 45px;
+}
+.to_do_board_con 
+{
+  padding: 20px;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  height: 150px;
+  background-color: #fff;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+  position: relative;
+}
+.pop_dialog_trash > .to_do_board_con{
+  margin-top : 10px;
+  margin-bottom : 10px;
+}
+
+
+.to_do_board_con_grid{
+  height: 150px;
+}
+.board_con_header 
+{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.option_div 
+{
+  position: relative;
+}
+
+.option 
+{
+  display :flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.option_pop
+{
+  width: 80px;
+  position:absolute;
+  color: #fff;
+  background-color: var(--main-color);
+  border-radius: 5px;
+  text-align: center;
+  left: 50%;
+  top: 30px;
+  transform:translateX(-50%);
+  padding: 5px 10px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+  display: none;
+}
+
+.option_pop.active 
+{
+  display: block;
+}
+
+.option_pop:before 
+{
+  content: "";
+    border-bottom: 10px solid var(--main-color);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.option_list 
+{
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.option_list:hover 
+{
+  background-color: #fff;
+  color: var(--main-color);
+}
+
+.con 
+{
+  display: flex;
+}
+
+.con>h3>img 
+{
+  width: 20px;
+  height: 20px;
+}
+
+.con_txt
+{
+  font-size: 14px;
+  color: var(--font-color);
+  margin-left: 10px;
+}
+/* ----board_header 끝------ */
+
+.to_do_board_body 
+{
+  background-color:var(--background-color);
+  width: 100%;
+  height: calc(100% - 170px);
+  border-radius: 5px;
+  border: 1px solid var(--input-color);
+  display: grid;
+  grid-template-columns: 290px 290px 290px 290px;
+  padding: 20px;
+  grid-gap: calc(calc(100% - 450px)/2) 30px;  
+}
+
+/* ----board_body 끝------ */
+
+.to_do_change.toggle
+{
+  background-color: var(--main-color);
+  width: 20px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  right:-20px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+}
+
+.calendar_change.toggle
+{
+  background-color: var(--main-color);
+  width: 20px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  right:-20px;
+  top: 40px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+}
+/* change : toggle 끝*/
+
+
+/* ---------------.to_do 끝-------------- */
+
+.diary, .character 
+{
+  float: right;
+  width: 450px;
+  border-radius: 5px;
+}
+
+.diary 
+{
+  height: 55%;
+}
+
+.diary_header 
+{
+  overflow: hidden;
+}
+
+.diary_section 
+{
+  width: 100%;
+  height: calc(100% - 40px);
+  background: #fff;
+  margin-top: 10px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+}
+#side_todo_section{
+  overflow-y: scroll;
+}
+.character
+{
+  margin-top: 40px;
+  background-color: #fff;
+  height: calc(45% - 40px);
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+} 
+
+.U_Time_time{
+    width: 40px;
+}
+.U_Time_minute{
+    width: 40px;
+}
+.U_Time_AMPM{
+    margin-left: 4px;
+}
+.cont_U_time{
+	display: flex;
+}
+.mosuri{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    /* float: right; */
+    top: 0%;
+    right: 0%;
+}
+.popup{
+	display:none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+}
+.popup_trash{
+	display:none;
+    position: absolute;
+    z-index: 2000;
+    width: 300px;
+    min-height: 180px;
+ 	max-height: 450px;
+ 	overflow-y:scroll;
+    background: white;
+    left: 1235px;
+    top: 132px;
+    border: 1px solid red;
+}
+.black{
+	background : rgba(0, 0, 0, 0.2);
+    height: 100%;
+}
+.pop_dialog{
+    width: 500px;
+    height: 500px;
+    background: white;
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid red;
+    font-size: 1.5em;
+}
+.pop_head{
+	display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.pop_input{
+	display: flex;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+.popup_X{
+    width: 30px;
+    height: 30px;
+    content: 'X';
+    background: var(--main-color);
+    border-radius: 100%;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+}
+.popup_Save{
+	width: 90px;
+    height: 30px;
+    background: var(--main-color);
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    margin-left: 20px;
+}
+.popup_Update{
+	display:none;
+	width: 90px;
+    height: 30px;
+    background: var(--main-color);
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    margin-left: 20px;
+}
+.popup_Delete{
+	display:none;
+	width: 90px;
+    height: 30px;
+    background: var(--main-color);
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    margin-left: 20px;
+}
+
+.character_div{
+    text-align: center;
+	width : 100%;
+	height : 100%;
+}
+.character_status{
+	width : 90%;
+	height : 73%;
+    margin: auto;
+}
+#mission{
+	width: 30px;
+	height: 30px;
+    border-radius: 100px;
+	background: #D9D9D9;
+	cursor : pointer;
+}
+#mission_update{
+	width: 30px;
+	height: 30px;
+    border-radius: 100px;
+	background: #D9D9D9;
+	cursor : pointer;
+}
+#mission_add{
+	width: 30px;
+	height: 30px;
+    border-radius: 100px;
+    background: var(--main-color);
+    color: white;
+	cursor : pointer;
+}
+.mission_pop{
+    width: 300px;
+    height: 243px;
+    background: white;
+    margin: auto;
+    color: black;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 20px;
+    border: 5px solid #f58383;
+    position: absolute;
+    margin-left: 50px;
+    overflow-y: auto;
+}
+.Mission_remove{
+    background: var(--main-color);
+    border-radius: 100px;
+    width: 20px;
+    height: 20px;
+    color: white;
+}
+#Mission_save{
+    width: 50px;
+    background: var(--main-color);
+    color: white;
+    height: 25px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+.mission_div{
+	display: flex;
+    justify-content: space-around;
+    margin-top : 10px;
+    margin-bottom : 10px;
+}
+.character_owner{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#character_exp{
+	width : 50%;
+	height : 20px;
+	appearance: none;
+}
+
+#character_exp::-webkit-progress-bar {
+    background:#004358;
+    border-radius:100px;
+}
+#character_exp::-webkit-progress-value {
+    border-radius:100px;
+    background: #FF4243;
+}
+
+.level_number{
+	display:flex;
+	justify-content: space-around;
+}
+
+
+/* 모바일 checkbox 모양 */
+.togglebox {
+    position: relative;
+    display: inline-block;
+}
+.togglebox input {
+    display: none;
+}
+.togglebox label {
+    display: block;
+    width: 48px;
+    height: 24px;
+    text-indent: -250%; /* 라벨 텍스트 왼쪽으로 이동*/
+    user-select: none; /* 라벨 텍스트 선택 차단 */
+}
+.togglebox label::before,
+.togglebox label::after {
+    content: "";
+    display: block;
+    position: absolute;
+    cursor: pointer;
+}
+.togglebox label::before { /* 배경 */
+    width: 100%;
+    height: 24px;
+    background-color: #636363;
+    border-radius: 1em;
+    -webkit-transition: background-color 0.25s ease;
+    transition: background-color 0.25s ease;/* 배경색 애니메이션*/
+}
+.togglebox label::after { /* 스위치 */
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.45);
+    -webkit-transition: left 0.25s ease;
+    transition: left 0.25s ease; /* 스위치 이동 애니메이션 */
+}
+.togglebox input:checked + label::before {
+    background-color: #ff4e43; /* 켠 상태 배경색 */
+}
+.togglebox input:checked + label::after { /* 켠 상태 스위치 위치 */
+    left: 24px;
+}
+

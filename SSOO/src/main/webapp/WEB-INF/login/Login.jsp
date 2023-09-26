@@ -39,6 +39,7 @@
 		    width: 100%;
 		    background-repeat: no-repeat;
 		    background-position: center;
+		    background-size: cover;
 		    display: flex;
 		    align-items: center;
 		    justify-content: center;
@@ -135,7 +136,7 @@
 
 <body>
     <div class="main-container">    	
-        <div class="container">
+        <div class="container login">
             <img src="./images/login/note_s.png" alt="#" class="note">
             <div class="form">
                 
@@ -150,15 +151,148 @@
                 </div>
                 <button type="submit" value="로그인" id="btn_signin" class="login-btn">로그인</button>
                 <div class="bottom_con">
-                    <a href="./Find.do">ID / 비밀번호 찾기</a>
-                    <a href="./Join.do">회원가입</a>
+                    <a id="gofind" href="#">ID / 비밀번호 찾기</a>
+                    <a id="gojoin" href="#">회원가입</a>
                 </div>
 			</div>            
+        </div>
+        <div class="container join" style="display:none;">
+            <div>
+                <form>
+                    <div>
+                        <h1>회원가입</h1>
+                    </div>
+
+                    <div class="input">
+                        <input type="text" name="Join_id" id="Join_id" required
+                            title="Please enter your Id here" />
+                        <label for="Join_id">ID</label>
+                        <p class="warning"></p>
+                    </div>
+
+                    <div class="input">
+                        <input type="password" name="Join_password" id="Join_password" required
+                            title="Please enter your Password here" />
+                        <label for="Join_password">비밀번호</label>
+                    </div>
+                    
+                    <div class="input">
+                        <input type="password" name="password_confirm" id="password_confirm" required
+                            title="Please enter your Password here" />
+                        <label for="password_confirm">비밀번호 확인</label>
+                    </div>
+                    
+                    <div class="input">
+                        <input type="text" name="username" id="username" required
+                            title="Please enter your Username here" />
+                        <label for="username">이름</label>
+                    </div>
+                    
+                    <div class="input">
+                        <input type="email" name="email" id="email" required
+                            title="Please enter your E-Mail here" />
+                        <label for="email">메일</label>
+                    </div>
+                    
+                    <div class="input">
+                        <input type="tel" name="phone" id="phone" required
+                            title="Please enter your Phone Number here" />
+                        <label for="phone">전화번호</label>
+                    </div>
+                    
+                    <div class="input">
+                        <input type="text" name="addr" id="addr" required
+                            title="Please enter your Address here" />
+                        <label for="addr">주소</label>
+                    </div>
+
+					<div class="input">
+                        <input type="text" name="perpose" id="perpose" required
+                            title="Please enter your Perpose here" />
+                        <label for="perpose">사용목적(선택)</label>
+                    </div>
+                    
+                    <div class="input">
+                        <input type="text" name="contact" id="contact" required
+                            title="Please enter your Contact here" />
+                        <label for="contact">알게된 경로(선택)</label>
+                    </div>
+
+                    <input type="submit" value="가입하기" class="join-btn" />
+                </form>
+            </div>
+        </div>
+        <div class="container find" style="display:none;">
+               <div class="find_id form">
+                   <div>
+                       <h1>ID 찾기</h1>
+                   </div>
+
+					<div class="input">
+                       <input type="text" name="username" id="username" required
+                           title="Please enter your Username here" />
+                       <label for="username">이름</label>
+                   </div>
+
+                   <div class="input">
+                       <input type="email" name="email" id="email" required
+                           title="Please enter your E-Mail here" />
+                       <label for="email">메일</label>
+                   </div>
+                   
+                   <div class="input">
+                       <input type="tel" name="phone" id="phone" required
+                           title="Please enter your Phone Number here" />
+                       <label for="phone">전화번호</label>
+                   </div>
+                
+                   <input type="submit" value="ID찾기" class="id_btn" />
+               </div>
+               
+               <div class="find_pw form">
+               	   <div>
+                       <h1>비밀번호 찾기</h1>
+                   </div>
+				   
+                   <div class="input">
+                       <input type="text" name="id" id="id" required
+                           title="Please enter your ID here" />
+                       <label for="id">ID</label>
+                   </div>
+
+					<div class="input">
+                       <input type="text" name="username" id="username" required
+                           title="Please enter your Username here" />
+                       <label for="username">이름</label>
+                   </div>
+
+                   <div class="input">
+                       <input type="email" name="email" id="email" required
+                           title="Please enter your E-Mail here" />
+                       <label for="email">메일</label>
+                   </div>
+                   
+                   <div class="input">
+                       <input type="tel" name="phone" id="phone" required
+                           title="Please enter your Phone Number here" />
+                       <label for="phone">전화번호</label>
+                   </div>
+				   
+                   <input type="submit" value="비밀번호 찾기" class="pw_btn" />
+               </div>
         </div>
     </div>
 </body>
 <script>
+
+var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
+
+
 	$(document).ready(function(){
+
+		if(uid != '' && uid != null && uid != 'null'){
+			location.href = "Main.do";
+		}
 		
 		$("#btn_signin").on("click", function(){
     		signin();
@@ -188,7 +322,7 @@
 	    			var relt = JSON.parse(result);
 	    			console.log(relt);
 	    			if(relt.resultMsg == "1"){
-	    				location.href = "/SSOO";
+	    				location.href = "Main.do";
 	    			}else if (relt.resultMsg == "0"){
 	    				alert("아이디 또는 비밀번호를 확인하세요.");
 	    			}
@@ -199,6 +333,91 @@
 			});
 			
 		}
+		
+		
+		$("#gojoin").on("click",function(){
+			
+			$(".container.login").hide();
+			$(".container.join").show();
+			
+		})
+		
+		$("#gofind").on("click",function(){
+			
+			$(".container.login").hide();
+			$(".container.find").show();
+			
+		})
+		
+		
+		$('.join-btn').on('click',function(){
+			var perpose, contact;
+			
+			if($('#perpose').val() != ""){
+				perpose = $('#perpose').val();
+			}else{
+				perpose = "";
+			}
+			
+			if($('#contact').val() != ""){
+				contact = $('#contact').val();
+			}else{
+				contact = "";
+			}
+			
+			var submitData = {
+				ID: $('#Join_id').val(),
+				PW: $('#Join_password').val(),
+				NAME: $('#username').val(),
+				EMAIL: $('#email').val(),
+				TEL: $('#phone').val().replaceAll('-',''),
+				ADDR: $('#addr').val(),
+				PERPOSE: perpose,
+				CONTACT: contact
+			};
+			console.log(submitData);
+			$.ajax({
+				type: "POST",
+				url : "signUp.do",
+				data: submitData,
+				async: false,
+				success:function(data){
+					alert('회원가입이 완료되었습니다.');
+					// 로그인 페이지로 이동
+					location.href = "Login.do";
+				},
+				error:function(err){
+					alert('회원가입에 실패했습니다.');
+				}
+			});
+		});
+		
+		// ID중복체크
+		$('#Join_id').on('change',function(evt,ui){
+			var id = $('#Join_id').val();
+			
+			if(id == ""){
+				$('.warning').text("");
+			}else{
+				$.ajax({
+					type: "POST",
+					url : "id_chk.do",
+					data: { ID : id },
+					async: false,
+					success:function(data){
+						var result = JSON.parse(data);
+						
+						if(result.resultMsg == 0) $('.warning').text("사용 가능한 ID입니다.");
+						else if(result.resultMsg == 1) $('.warning').text("중복된 ID입니다.");
+					},
+					error:function(err){
+						console.log(err);
+					}
+				});
+			}
+			
+		});
+		
 	});
 </script>
 </html>
