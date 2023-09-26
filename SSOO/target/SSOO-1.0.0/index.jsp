@@ -12,6 +12,7 @@
     
     <title>JMT - 스케쥴러</title>
 </head>
+ <jsp:forward page="/Login.do"/>
 <style>
 body{
 	margin: auto;

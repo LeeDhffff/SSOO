@@ -384,7 +384,15 @@ document.querySelector("body").addEventListener("click", function(e) {
 	    }
 	}
 })
-	
+
+	$("#character_change").on("click",function(){
+		$(".character_menu").show();
+		
+	})
+	$(".character_menu_toggle").on("click",function(){
+		$(".character_menu").hide();
+		
+	})
 }); //documet 끝
 
 

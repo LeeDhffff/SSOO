@@ -63,7 +63,7 @@ $(document).ready(function(){
 
 		 	var form = new FormData();
 		 
-		 	form.append("COD_MEMB","ehdgjs");
+		 	form.append("COD_MEMB",uid);
 		 	form.append("TXT_TITLE",title);
 		 	form.append("DAY_KEY",$("#todo_date").text() + " 00:00");
 		 	form.append("LOCATION","Location");
@@ -73,7 +73,7 @@ $(document).ready(function(){
 		 	
 		 	
 		   var insertdata = {
-					COD_MEMB : "ehdgjs",
+					COD_MEMB : uid,
 					TXT_TITLE : title,
 					DAY_KEY : $("#todo_date").text() + " 00:00",
 					LOCATION : "Location",
@@ -162,7 +162,7 @@ $(document).ready(function(){
 	   if($(".to_do_board_header > .to_do_board_con").length < 4){
 		   
 		   var insertdata = {
-					COD_MEMB : "ehdgjs",
+					COD_MEMB : uid,
 					TXT_TITLE : title,
 					DAY_KEY : $("#todo_date").text() + " " + time,
 					LOCATION : location,
@@ -172,7 +172,7 @@ $(document).ready(function(){
 
 		 	var form = new FormData();
 		 
-		 	form.append("COD_MEMB","ehdgjs");
+		 	form.append("COD_MEMB",uid);
 		 	form.append("TXT_TITLE",title);
 		 	form.append("DAY_KEY",$("#todo_date").text() + " " + time);
 		 	form.append("LOCATION",location);
@@ -309,7 +309,7 @@ $(document).ready(function(){
 		}
 		else if(confirm("해당 미션을 삭제하시겠습니까?")){
 			var selectdata2 = {
-					COD_MEMB : "ehdgjs",
+					COD_MEMB : uid,
 					IDX_SORT :  $(this).attr("idx")
 			};
 			$.ajax({
@@ -336,7 +336,7 @@ $(document).ready(function(){
 			if($(this).val() != ''){
 
 				var selectdata2 = {
-						COD_MEMB : "ehdgjs",
+						COD_MEMB : uid,
 						IDX_SORT :  $(this).attr("idx"),
 						MISSION_NM : $(this).val()
 				};
@@ -435,7 +435,7 @@ $(document).on('click','.option_list.save',function(){
 	
 	
 	 var insertdata = {
-				COD_MEMB : "ehdgjs",
+				COD_MEMB : uid,
 				IDX_SORT : idx,
 				TXT_TITLE : title,
 				DAY_KEY : $("#todo_date").text() + " " + time + ":" + minute,
@@ -446,7 +446,7 @@ $(document).on('click','.option_list.save',function(){
 	 	
 	 	var form = new FormData();
 	 
-	 	form.append("COD_MEMB","ehdgjs");
+	 	form.append("COD_MEMB",uid);
 	 	form.append("IDX_SORT",idx);
 	 	form.append("TXT_TITLE",title);
 	 	form.append("DAY_KEY",$("#todo_date").text() + " " + time + ":" + minute);
@@ -501,7 +501,7 @@ $(document).on('click','.option_list.delete',function(){
 	if(confirm("해당 Todo 항목을 삭제하시겠습니까?")){
 
 		 var insertdata = {
-					COD_MEMB : "ehdgjs",
+					COD_MEMB : uid,
 					IDX_SORT : idx
 			}
 			
@@ -529,7 +529,7 @@ $(document).on('click','.option_list.recovery',function(){
 	if(confirm("해당 Todo 항목을 복구하시겠습니까?")){
 
 		 var insertdata = {
-					COD_MEMB : "ehdgjs",
+					COD_MEMB : uid,
 					IDX_SORT : idx,
 					GUBUN : 'R'
 			}
@@ -583,7 +583,7 @@ function dragopen() {
 
 
 					 var insertdata = {
-								COD_MEMB : "ehdgjs",
+								COD_MEMB : uid,
 								IDX_SORT : idx,
 								GUBUN : 'D'
 						};
@@ -631,7 +631,7 @@ function dragopen() {
 						 }
 						if(chkd == "H"){
 							insertdata = {
-										COD_MEMB : "ehdgjs",
+										COD_MEMB : uid,
 										IDX_SORT : idx,
 										DAY_KEY : $("#todo_date").text(),
 										CHK_POINT : 'None'
@@ -639,7 +639,7 @@ function dragopen() {
 						}
 						else if(chkd == "G"){
 							 insertdata = {
-										COD_MEMB : "ehdgjs",
+										COD_MEMB : uid,
 										IDX_SORT : idx,
 										DAY_KEY : $("#todo_date").text(),
 										CHK_POINT : $(element5[3]).attr("idx")
@@ -975,7 +975,7 @@ function handleOnInput4(el, maxlength) {
 function selectTodo(){
 	
 	 var selectdata = {
-				COD_MEMB : "ehdgjs",
+				COD_MEMB : uid,
 				DAY_KEY : $("#todo_date").text(),
 				GUBUN : 'S'
 		};
@@ -1097,7 +1097,7 @@ function selectTodo(){
 function TrashTodo(){
 	
 	 var selectdata = {
-				COD_MEMB : "ehdgjs",
+				COD_MEMB : uid,
 				DAY_KEY : $("#todo_date").text()
 		};
 	 	$(".pop_dialog_trash").empty();
@@ -1201,7 +1201,7 @@ function TrashTodo(){
 function selectMiniTodo(){
 	
 	 var selectdata = {
-				COD_MEMB : "ehdgjs",
+				COD_MEMB : uid,
 				DAY_KEY : $("#todo_date").text(),
 				GUBUN : 'M'
 		};
@@ -1316,7 +1316,7 @@ function insertTodayMission(callback){
 	var today = date.getFullYear() + "-" + month + "-" + dates;
 	
 	 var selectdata = {
-				COD_MEMB : "ehdgjs",
+				COD_MEMB : uid,
 				DAY_KEY : today
 		};
 	 
@@ -1343,7 +1343,7 @@ function selectMission(){
 	var today = date.getFullYear() + "-" + month + "-" + dates;
 	
 	 var selectdata = {
-				COD_MEMB : "ehdgjs",
+				COD_MEMB : uid,
 				DAY_KEY : today
 		};
 	 
@@ -1383,7 +1383,7 @@ function selectMission(){
 			}
 		})
 		var selectdata2 = {
-				COD_MEMB : "ehdgjs",
+				COD_MEMB : uid,
 				DAY_KEY :  'MODEL'
 		};
 		
@@ -1413,7 +1413,7 @@ function selectMission(){
 }
 function selectCharacter(){
 	 var selectdata = {
-				COD_MEMB : "ehdgjs"
+				COD_MEMB : uid
 		};
 	 
 		$.ajax({
@@ -1440,7 +1440,7 @@ function CompleteMission(target,event){
 	 var date = new Date();
 	 var today = returndate(date);
 	 var selectdata = {
-			COD_MEMB : "ehdgjs",
+			COD_MEMB : uid,
 			DAY_KEY : today,
 			IDX_SORT : idx,
 	};

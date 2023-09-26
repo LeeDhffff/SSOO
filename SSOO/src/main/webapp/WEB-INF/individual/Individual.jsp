@@ -30,7 +30,6 @@
   <!-- fullcalendar 언어 CDN -->
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
 	
-    <script type="text/javascript" src="./js/individual/index.js"></script>
     
 
 <style>
@@ -50,6 +49,66 @@
   }
   #todo_date{
     margin-left: 20px;
+  }
+  .character_menu{
+  
+    background: #ffd9d9;
+    width: 30%;
+    height: 100%;
+    z-index: 2000;
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    padding: 20px 20px 20px 20px;
+    border-left: 10px solid #ff9f9f;
+    
+  }
+  .character_menu_toggle{
+    background: var(--main-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: -3%;
+  }
+  #character_change{
+    background: var(--main-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    color: white;
+  }
+  .character_table_div{
+  	background:white;
+  }
+  .character_table_div > table{
+    border: 1px solid black;
+    width: 500px;
+    margin: auto;
+    border-collapse: collapse;
+}
+  .character_table_div > table > tbody > tr > td,
+  .character_table_div > table > thead > tr > th{
+    width: 33.3%;
+    height: 50px;
+    border: 1px solid #444444;
+  }
+  
+  .character_table_div > table > tbody > tr > td{
+    height: 166px;
+  }
+  .character_table_div > table > thead > tr > th{
+    background: var(--main-color);
+    color: white;
+  }
+  #nowCharacter{
+  
+    width: 250px;
+    height: 250px;
+    border: 1px solid;
+    margin: auto;
   }
 </style>
 <body>
@@ -303,7 +362,32 @@
             		</div>
 	            </div>
             </div>
-
+			<div class="character_menu" style="display:none;">
+				<button class="character_menu_toggle">></button>
+				<div class="character_table_div">
+					<table id="character_table">
+						<thead>
+							<tr><th colspan="3">캐릭터 선택</th></tr>
+						</thead>
+						<tbody>
+							<tr><td></td><td></td><td></td></tr>
+							<tr><td></td><td></td><td></td></tr>
+						</tbody>
+					</table>
+					<table id="background_table">
+						<thead>
+							<tr><th colspan="3">배경 선택</th></tr>
+						</thead>
+						<tbody>
+							<tr><td></td><td></td><td></td></tr>
+							<tr><td></td><td></td><td></td></tr>
+						</tbody>
+					</table>
+					<div id="nowCharacter">
+						
+					</div>
+				</div>
+			</div>
         </section>
         
    </div>
@@ -323,7 +407,7 @@
 
 
   	$(document).ready(function(){
-
+		console.log(uid);
 		if(uid == '' || uid == 'null' || uid == null){
 			location.href = "Login.do";
 		}
@@ -382,7 +466,7 @@
 	    	 console.log(obj.event._def.extendedProps,startday,endday)
 
 	 		var updatedata = {
-	 				COD_MEMB : "ehdgjs",
+	 				COD_MEMB : uid,
 	 				IDX_SORT : obj.event._def.extendedProps.idx,
 	 				TXT_TITLE : obj.event.title,
 	 				DAY_FROM : startday,
@@ -558,7 +642,7 @@
     selectCalendar();
     selectTodo();
 // 	 var selectdata = {
-// 				COD_MEMB : "ehdgjs"
+// 				COD_MEMB : uid
 // 		}
 		
 // 		$.ajax({
@@ -631,7 +715,7 @@
 		console.log(time);
 		
 		var insertdata = {
-				COD_MEMB : "ehdgjs",
+				COD_MEMB : uid,
 				TXT_TITLE : $("#pop_Calendar_Title").val(),
 				DAY_FROM : $("#pop_Calendar_FROM").val() + " " +  totime,
 				DAY_TO : $("#pop_Calendar_TO").val() + " " + totime2,
@@ -694,7 +778,7 @@
 		console.log(time);
 		
 		var updatedata = {
-				COD_MEMB : "ehdgjs",
+				COD_MEMB : uid,
 				IDX_SORT : $("#pop_IDX_SORT").val(),
 				TXT_TITLE : $("#pop_Calendar_Title").val(),
 				DAY_FROM : $("#pop_Calendar_FROM").val() + " " +  totime,
@@ -727,7 +811,7 @@
 			$(".popup").hide();
 			
 			var updatedata = {
-					COD_MEMB : "ehdgjs",
+					COD_MEMB : uid,
 					IDX_SORT : $("#pop_IDX_SORT").val()
 			}
 			
@@ -756,7 +840,7 @@
   
   function selectCalendar(){
 	  var selectdata = {
-				COD_MEMB : "ehdgjs"
+				COD_MEMB : uid
 		}
 		
 		$.ajax({
@@ -801,4 +885,6 @@
 	
 
 </script>
+
+    <script type="text/javascript" src="./js/individual/index.js"></script>
 </html>

@@ -50,7 +50,7 @@
 		    position: relative;      
 		}
 		
-		.form 
+		.login > .form 
 		{
 		    position: absolute;
 		    top:50%;
@@ -58,7 +58,20 @@
 		    transform:translate(-50%,-50%);
 		    text-align: center;
 		}
-		
+		.find{
+			display:flex;
+		}
+		.find > .form 
+		{
+			   background: white;
+			   text-align: center;
+			   width: 600px;
+    			padding: 20px;
+		}
+		.join > div{
+			   background: white;
+    			padding: 20px;
+		}
 		input 
 		{
 		    width: 400px;
@@ -183,9 +196,9 @@
                     </div>
                     
                     <div class="input">
-                        <input type="text" name="username" id="username" required
+                        <input type="text" name="Join_username" id="Join_username" required
                             title="Please enter your Username here" />
-                        <label for="username">이름</label>
+                        <label for="Join_username">이름</label>
                     </div>
                     
                     <div class="input">
@@ -368,7 +381,7 @@ var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
 			var submitData = {
 				ID: $('#Join_id').val(),
 				PW: $('#Join_password').val(),
-				NAME: $('#username').val(),
+				NAME: $('#Join_username').val(),
 				EMAIL: $('#email').val(),
 				TEL: $('#phone').val().replaceAll('-',''),
 				ADDR: $('#addr').val(),
