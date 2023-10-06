@@ -122,7 +122,7 @@
 		{call 개인_캐릭터_UPDATE (
 			#{COD_MEMB},
 			#{CHARACTER},
-			#{PARTS},
+			#{BACKGROUND},
 			#{ADD_EXP}
 		)}
 	</select>

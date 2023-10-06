@@ -97,7 +97,13 @@
   }
   
   .character_table_div > table > tbody > tr > td{
-    height: 166px;
+    height: 144px;
+    background: radial-gradient(#ff9696, transparent);
+    text-align: center;
+  }
+  .character_table_div > table > tbody > tr > td > img{
+    cursor : pointer;
+    height: 100%;
   }
   .character_table_div > table > thead > tr > th{
     background: var(--main-color);
@@ -105,10 +111,17 @@
   }
   #nowCharacter{
   
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     border: 1px solid;
     margin: auto;
+    background : #ffd2e4;
+  }
+  .character_image{
+    height: 100%;
+  }
+  .character_image > img{
+    height: 100%;
   }
 </style>
 <body>
@@ -345,8 +358,9 @@
 			            	</div>
 			            	<div class="mission_pop_div_update" style="display:none;">
 			            	</div>
-		            		<div class="character_image"></div>
 	            		</div>
+	            	<div class="character_image">
+	            	</div>
 	            	</div>
 	            	<h3 class="character_owner"><%=(String)session.getAttribute("SESSION_NAM_KOR")%></h3>
             		<div class="level_number">
@@ -370,17 +384,17 @@
 							<tr><th colspan="3">캐릭터 선택</th></tr>
 						</thead>
 						<tbody>
-							<tr><td></td><td></td><td></td></tr>
-							<tr><td></td><td></td><td></td></tr>
+							<tr><td id="character1"><img src="./images/Character/1.svg"></td><td id="character1_1"><img src="./images/Character/1_1.svg"></td><td id="character1_2"><img src="./images/Character/1_2.svg"></td></tr>
+							<tr><td id="character1_3"><img src="./images/Character/1_3.svg"></td><td id="character1_4"></td><td id="character1_5"></td></tr>
 						</tbody>
 					</table>
 					<table id="background_table">
 						<thead>
-							<tr><th colspan="3">배경 선택</th></tr>
+							<tr><th colspan="3">포즈 선택</th></tr>
 						</thead>
 						<tbody>
-							<tr><td></td><td></td><td></td></tr>
-							<tr><td></td><td></td><td></td></tr>
+							<tr><td id="pose1"></td><td id="pose2"></td><td id="pose3"></td></tr>
+							<tr><td id="pose4"></td><td id="pose5"></td><td id="pose6"></td></tr>
 						</tbody>
 					</table>
 					<div id="nowCharacter">
@@ -640,7 +654,6 @@
 	
 	
     selectCalendar();
-    selectTodo();
 // 	 var selectdata = {
 // 				COD_MEMB : uid
 // 		}

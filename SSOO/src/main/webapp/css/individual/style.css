@@ -540,7 +540,8 @@ section
 .character_status{
 	width : 90%;
 	height : 73%;
-    margin: auto;
+    margin: auto;    
+    background: #ffd2e4;
 }
 #mission{
 	width: 30px;
@@ -601,7 +602,7 @@ section
 }
 .character_owner{
     margin-top: 10px;
-    margin-bottom: 10px;
+/*     margin-bottom: 10px; */
 }
 #character_exp{
 	width : 50%;
