@@ -19,7 +19,7 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
     <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
-    
+
 <!-- 	<link href='./js/individual/core/main.css' rel='stylesheet' /> -->
 <!-- 	<link href='./js/individual/daygrid/main.css' rel='stylesheet' /> -->
 <!-- 	<script src='./js/individual/core/main.js'></script> -->
@@ -33,96 +33,6 @@
     
 
 <style>
-
-  #calendar {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  #calendar_mini{
-    font-size: 0.7em;
-  }
-  #clr-picker{
-  	z-index:2000;
-  }
-  #pop_Calendar_Color{
-  	width: 100px;
-  }
-  #todo_date{
-    margin-left: 20px;
-  }
-  .character_menu{
-  
-    background: #ffd9d9;
-    width: 30%;
-    height: 100%;
-    z-index: 2000;
-    position: absolute;
-    top: 0%;
-    right: 0%;
-    padding: 20px 20px 20px 20px;
-    border-left: 10px solid #ff9f9f;
-    
-  }
-  .character_menu_toggle{
-    background: var(--main-color);
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: -3%;
-  }
-  #character_change{
-    background: var(--main-color);
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    color: white;
-  }
-  .character_table_div{
-  	background:white;
-  }
-  .character_table_div > table{
-    border: 1px solid black;
-    width: 500px;
-    margin: auto;
-    border-collapse: collapse;
-}
-  .character_table_div > table > tbody > tr > td,
-  .character_table_div > table > thead > tr > th{
-    width: 33.3%;
-    height: 50px;
-    border: 1px solid #444444;
-  }
-  
-  .character_table_div > table > tbody > tr > td{
-    height: 144px;
-    background: radial-gradient(#ff9696, transparent);
-    text-align: center;
-  }
-  .character_table_div > table > tbody > tr > td > img{
-    cursor : pointer;
-    height: 100%;
-  }
-  .character_table_div > table > thead > tr > th{
-    background: var(--main-color);
-    color: white;
-  }
-  #nowCharacter{
-  
-    width: 200px;
-    height: 200px;
-    border: 1px solid;
-    margin: auto;
-    background : #ffd2e4;
-  }
-  .character_image{
-    height: 100%;
-  }
-  .character_image > img{
-    height: 100%;
-  }
 </style>
 <body>
 
@@ -349,16 +259,16 @@
             	<div class="character_div">
     				
 	            	<div class="character_status">
-	            	<button id="mission"><img src="./images/individual/mitball.png" alt="mission"></button>
-	            	<button id="character_change">+</button>
-	            		<div class="mission_pop" style="display:none;">
-			            	<button id="mission_update"><img src="./images/individual/mitball.png" alt="mission"></button>
-			            	<button id="mission_add" style="display:none;">+</button>
-		            		<div class="mission_pop_div">
-			            	</div>
-			            	<div class="mission_pop_div_update" style="display:none;">
-			            	</div>
-	            		</div>
+	            	<button id="mission">오늘의 미션</button>
+	            	<button id="character_change">Custom</button>
+            		<div class="mission_pop" style="display:none;">
+		            	<button id="mission_update">미션 편집</button>
+		            	<button id="mission_add" style="display:none;">+</button>
+	            		<div class="mission_pop_div">
+		            	</div>
+		            	<div class="mission_pop_div_update" style="display:none;">
+		            	</div>
+            		</div>
 	            	<div class="character_image">
 	            	</div>
 	            	</div>

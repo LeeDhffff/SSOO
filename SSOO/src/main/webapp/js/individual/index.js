@@ -627,10 +627,28 @@ $(document).on('click','.option_list.recovery',function(){
 	}
 		
 })
+
+$(document).on("click",".filedown",function(){
+	
+	var thisname = $(this).attr("name");
+	var filePath = "\\\\"+thisname;
+	location.href="fileDownload.do?fileName="+encodeURI(filePath);
+	
+})
+
+
+$(document).on("change",".add_file_files",function(){
+	  var fileName = $(this).val().split('/').pop().split('\\').pop();
+	  var label = $(this).parent(".add_file_upload").find(".uploaded_file");
+	  $(this).parent(".add_file_upload").find(".uploaded_file").val(fileName);
+});
+
+
 function dragopen() {
 	$( '.to_do').find('.to_do_board_con').draggable({
 		scroll : false,
 		containment : '.to_do', //부모 요소 안에서만 이동 범위 제한
+		handle :".handle",
 //			snap: '.div',
 // 		 snapMode: "inner",
 			  snapTolerance: 50,
@@ -1092,6 +1110,10 @@ function selectTodo(){
 					
 					var AddTODO = '';
 					AddTODO += '<div class="to_do_board_con" idx="' + result[i].IDX_SORT + '">';
+					AddTODO += '<div class="handle" id="handle1"></div>';
+					AddTODO += '<div class="handle" id="handle2"></div>';
+					AddTODO += '<div class="handle" id="handle3"></div>';
+					AddTODO += '<div class="handle" id="handle4"></div>';
 					AddTODO += '<div class="mosuri"></div>';
 					AddTODO += '	<div class="board_con_header">';
 					AddTODO += '		<h3 class="board_con_title">'+ result[i].TXT_TITLE +'</h3>';
@@ -1102,8 +1124,8 @@ function selectTodo(){
 					AddTODO += '			</h3>';
 					AddTODO += '			<div class="option_pop">';
 					AddTODO += '				<h3 class="option_list update">수정</h3>';
-					AddTODO += '				<h3 class="option_list">파일첨부</h3>';
-					AddTODO += '				<h3 class="option_list">파일삭제</h3>';
+//					AddTODO += '				<h3 class="option_list">파일첨부</h3>';
+//					AddTODO += '				<h3 class="option_list">파일삭제</h3>';
 					AddTODO += '			</div>';
 					AddTODO += '		</div>';
 					AddTODO += '	</div>';
@@ -1142,9 +1164,19 @@ function selectTodo(){
 						AddTODO += '	<h3 class="con_txt add_file_txt">파일 없음</h3>';
 					}
 					else{
-						AddTODO += '	<h3 class="con_txt add_file_txt">'+result[i].FILE_NAME+'</h3>';
+						AddTODO += '	<a class="filedown" name="'+result[i].FILE_SAVE_NAME+'"><h3 class="con_txt add_file_txt">'+result[i].FILE_NAME+'</h3></a>';
 					}
-					AddTODO += '	<form class="add_file_upload" style="display:none;"><input type="file" class="add_file_files"></form>';
+					AddTODO += '	<form class="add_file_upload" style="display:none;">';
+					AddTODO += '	<input type="file" class="add_file_files" style="display:none;" id="todo_'+i+'" name="todo_'+i+'">';
+
+					if(result[i].FILE_NAME == ''){
+						AddTODO += '	<input class="uploaded_file" id="name_todo_'+i+'" value="'+result[i].FILE_NAME+'" placeholder = "첨부파일" readOnly>';
+					}
+					else{
+						AddTODO += '	<input class="uploaded_file" id="name_todo_'+i+'" value="'+result[i].FILE_NAME+'" placeholder = "첨부파일" readOnly>';
+					}
+					AddTODO += '	<label for="todo_'+i+'">업로드</label>';
+					AddTODO += '	</form>';
 					AddTODO += '	</div>';
 					AddTODO += '</div>';
 				                                
@@ -1262,8 +1294,19 @@ function TrashTodo(){
 						AddTODO += '	<h3 class="con_txt add_file_txt">파일 없음</h3>';
 					}
 					else{
-						AddTODO += '	<h3 class="con_txt add_file_txt">'+result[i].FILE_NAME+'</h3>';
+						AddTODO += '	<a class="filedown" name="'+result[i].FILE_SAVE_NAME+'"><h3 class="con_txt add_file_txt">'+result[i].FILE_NAME+'</h3></a>';
 					}
+					AddTODO += '	<form class="add_file_upload" style="display:none;">';
+					AddTODO += '	<input type="file" class="add_file_files" style="display:none;" id="trash_'+i+'" name="trash_'+i+'">';
+
+					if(result[i].FILE_NAME == ''){
+						AddTODO += '	<input class="uploaded_file" id="name_trash_'+i+'" value="'+result[i].FILE_NAME+'" placeholder = "첨부파일" readOnly>';
+					}
+					else{
+						AddTODO += '	<input class="uploaded_file" id="name_trash_'+i+'" value="'+result[i].FILE_NAME+'" placeholder = "첨부파일" readOnly>';
+					}
+					AddTODO += '	<label for="trash_'+i+'">업로드</label>';
+					AddTODO += '	</form>';
 					AddTODO += '	</div>';
 					AddTODO += '</div>';
 				                                
@@ -1329,8 +1372,8 @@ function selectMiniTodo(){
 					AddTODO += '			</h3>';
 					AddTODO += '			<div class="option_pop">';
 					AddTODO += '				<h3 class="option_list update">수정</h3>';
-					AddTODO += '				<h3 class="option_list">파일첨부</h3>';
-					AddTODO += '				<h3 class="option_list">파일삭제</h3>';
+//					AddTODO += '				<h3 class="option_list">파일첨부</h3>';
+//					AddTODO += '				<h3 class="option_list">파일삭제</h3>';
 					AddTODO += '			</div>';
 					AddTODO += '		</div>';
 					AddTODO += '	</div>';
@@ -1369,8 +1412,19 @@ function selectMiniTodo(){
 						AddTODO += '	<h3 class="con_txt add_file_txt">파일 없음</h3>';
 					}
 					else{
-						AddTODO += '	<h3 class="con_txt add_file_txt">'+result[i].FILE_NAME+'</h3>';
+						AddTODO += '	<a class="filedown" name="'+result[i].FILE_SAVE_NAME+'"><h3 class="con_txt add_file_txt">'+result[i].FILE_NAME+'</h3></a>';
 					}
+					AddTODO += '	<form class="add_file_upload" style="display:none;">';
+					AddTODO += '	<input type="file" class="add_file_files" style="display:none;" id="select_'+i+'" name="select_'+i+'">';
+
+					if(result[i].FILE_NAME == ''){
+						AddTODO += '	<input class="uploaded_file" id="name_select_'+i+'" value="'+result[i].FILE_NAME+'" placeholder = "첨부파일" readOnly>';
+					}
+					else{
+						AddTODO += '	<input class="uploaded_file" id="name_select_'+i+'" value="'+result[i].FILE_NAME+'" placeholder = "첨부파일" readOnly>';
+					}
+					AddTODO += '	<label for="select_'+i+'">업로드</label>';
+					AddTODO += '	</form>';
 					AddTODO += '	</div>';
 					AddTODO += '</div>';
 				    

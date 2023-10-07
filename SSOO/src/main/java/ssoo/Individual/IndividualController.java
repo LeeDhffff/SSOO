@@ -1,12 +1,16 @@
 package ssoo.Individual;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -422,4 +426,30 @@ public class IndividualController {
 		
 		return jsonStr;
 	}
+	
+	@RequestMapping(value="fileDownload.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public void doDownload(Model model, HttpServletResponse response, @RequestParam String fileName) throws Exception{
+		
+		try {
+			String path = "D:\\upload\\todoFile"+fileName;
+			File file = new File(path);
+			System.out.println("도면 getName : " + file.getName().substring(15, file.getName().length()));
+			response.setHeader("Content-Disposition", "attachment; filename="+ URLEncoder.encode(file.getName().substring(15, file.getName().length()), "UTF-8"));
+			
+			
+			FileInputStream fileInputStream = new FileInputStream(path);
+			OutputStream out = response.getOutputStream();
+			
+			int read=0;
+			byte[] buffer = new byte[1024];
+			while((read = fileInputStream.read(buffer)) != -1) {
+				out.write(buffer, 0, read);
+			}
+			
+		}catch(Exception e) {
+			throw new Exception("download Error");
+		}
+	}
+	
 }
