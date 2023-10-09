@@ -22,7 +22,6 @@
   padding:0;
   box-sizing: border-box;
 }
-
 body
 {
   min-height: 100vh;
@@ -34,6 +33,7 @@ button
 {
   background: none;
   border: none;
+  cursor: pointer;
 }
 /* ---------기본 설정값 끝----------- */
 
@@ -577,12 +577,14 @@ section
     margin: auto;
     color: black;
     text-align: left;
-    padding-left: 20px;
-    padding-top: 20px;
+/*     padding-left: 20px; */
+/*     padding-top: 20px; */
+	padding: 20px 0px 20px 20px;
     border: 5px solid #f58383;
     position: absolute;
-    margin-left: 50px;
+/*     margin-left: 50px; */
     overflow-y: auto;
+    z-index: 100;
 }
 .Mission_remove{
     background: var(--main-color);
@@ -750,13 +752,15 @@ section
   }
   
   .character_table_div > table > tbody > tr > td{
-    height: 144px;
-    background: radial-gradient(#ff9696, transparent);
+    height: 144px;    
+    background-image: url(../../images/background/1.svg);
+    background-position: center;
     text-align: center;
   }
   .character_table_div > table > tbody > tr > td > img{
     cursor : pointer;
     height: 100%;
+    width: 100%;
   }
   .character_table_div > table > thead > tr > th{
     background: var(--main-color);
@@ -764,18 +768,22 @@ section
   }
   #nowCharacter{
   
-    width: 200px;
+    width: 305px;
     height: 200px;
     border: 1px solid;
     margin: auto;
-    background : #ffd2e4;
+    position:relative;
+    background-image: url("../../images/background/1.svg");
   }
   .character_image{
     height: 89%;    
-    background: #ffd2e4;
+/*     background: #ffd2e4; */
+    position: relative;
+    background-image: url("../../images/background/1.svg");
   }
   .character_image > img{
     height: 100%;
+    width: 100%;
   }
   
   .Mission_input{
@@ -831,3 +839,48 @@ section
     padding: 6px;
     font-size: 14px;
   }
+  .tablediv{
+  	position : relative;
+  }
+  #change_table{
+  
+    color: white;
+    background: var(--sub-color1);
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;    
+    position: absolute;
+    right: 5%;
+    top: 33%;
+    cursor: pointer;
+	}
+  #change_table2{
+  
+    color: white;
+    background: var(--sub-color1);
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;    
+    position: absolute;
+    left: 5%;
+    top: 33%;
+    cursor: pointer;
+	}
+	
+	.main_img{
+	    height:100%;
+   		width: 100%;
+	}
+	.mission_div > h4{
+		width: 100px;
+	}
+	
+	.mission_div > h4 > span{
+	       font-size: 12px;
+		    color: red;
+		    margin-left: 5px;
+	}
+	.character_button{
+	    display: flex;
+	    justify-content: space-between;
+	}
