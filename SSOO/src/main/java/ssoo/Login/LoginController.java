@@ -1,23 +1,31 @@
 package ssoo.Login;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ssoo.TempKey;
 import ssoo.Login.service.LoginService;
 
 @Controller
 public class LoginController {
+	private JavaMailSender javaMailSender;
+	
 	@Resource(name = "LoginService")
 	private LoginService loginService;
 	
@@ -111,4 +119,42 @@ public class LoginController {
 		String jsonStr = mapper.writeValueAsString(LoginList);
 		return jsonStr;
 	}
+	
+	@RequestMapping(value = "emailCheck.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void mailSending(@RequestParam String email,HttpServletResponse res) {
+		System.out.println(email);
+		String setfrom = "bear00002@gmail.com";       
+	 	String key = new TempKey().getKey(50, false);
+	 	
+	    String tomail  = email;     // 받는 사람 이메일
+	    String title = "인증번호 발송";
+	    String content = new StringBuffer().
+	    		append("제공되는 키를 회원가입창에 입력해주세요 키값은 : ").
+	    		append(key).
+	    		append(" 입니다.").
+	    		toString();
+
+	    try {
+	    	
+	     res.setContentType("UTF-8");
+		      
+		 PrintWriter writer = res.getWriter();
+		      
+		  writer.print(key);	
+	      MimeMessage message = javaMailSender.createMimeMessage();
+	      MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+	 
+	      messageHelper.setFrom(setfrom,"JTM");  // 보내는사람 생략하거나 하면 정상작동을 안함 두번째 인자값은 보낼때의 이름이다.
+	      messageHelper.setTo(tomail);     // 받는사람 이메일
+	      messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+	      messageHelper.setText(content);  // 메일 내용
+	     
+	      javaMailSender.send(message);
+	      
+	    } catch(Exception e){
+	      System.out.println(e);
+	    }
+	   
+	  }
 }
