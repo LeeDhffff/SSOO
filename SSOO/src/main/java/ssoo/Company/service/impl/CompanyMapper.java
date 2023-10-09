@@ -22,4 +22,8 @@ public interface CompanyMapper {
 	
 	List<HashMap<String,String>> Company_BK_SEARCH(HashMap<String, Object> inputMap) throws Exception;
 	HashMap<String, String> Company_BK_INSERT(HashMap<String, Object> inputMap) throws Exception;
+	
+	List<HashMap<String,String>> Today_Schedule(HashMap<String, Object> inputMap) throws Exception;
+	
+	HashMap<String, String> edit_profile(HashMap<String, Object> inputMap) throws Exception;
 }

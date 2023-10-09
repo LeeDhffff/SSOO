@@ -75,4 +75,17 @@
 			#{BK_NAME}
 		)}
 	</select>
+	
+	<select id="Today_Schedule" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 오늘일정_조회 (
+			#{USERID}
+		)}
+	</select>
+	
+	<select id="edit_profile" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 개인정보수정 (
+			#{USERID},
+			#{USERNAME}
+		)}
+	</select>
 </mapper>

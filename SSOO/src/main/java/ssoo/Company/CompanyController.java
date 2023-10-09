@@ -141,4 +141,27 @@ public class CompanyController {
 		
 		return jsonStr;
 	}
+	
+	@RequestMapping(value = "/Company/Today_Schedule.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String Today_Schedule(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		List<HashMap<String, String>> LoginList = CompanyService.Today_Schedule(inputMap);
+		System.out.println(LoginList);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(LoginList);
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/edit_profile.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String edit_profile(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		HashMap<String, String> team = CompanyService.edit_profile(inputMap);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(team);
+		
+		return jsonStr;
+	}
 }

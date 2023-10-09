@@ -23,6 +23,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css">
     
     <style type="text/css">
+        :root {
+            --main-color: #0E51BB;
+            --font-color: #636363;
+            --border-color: #d6d6d6;
+            --white-color: #fff;
+            --button-color: #ececec;
+            --button-green: #ceffc2;
+            --font-green: #185709;
+            --button-red: #ffa2a2;
+            --font-red: #9a0000;
+            --nav-background : #FFC5C1;
+            --individual: #0F31A7;
+            --company: #FF4E43;
+        }
+        
         .container{
             height: 100vh;
             position: relative;
@@ -36,7 +51,7 @@
         }
 
 		header {
-            height: 30px;
+            height: 50px;
             font-size: 30px;
             font-weight: bold;
             text-align: center;
@@ -53,22 +68,87 @@
         .right_div{
             width: 23%;
         }
+        
+        #teamList{
+        	width: 200px;
+            height: 30px;
+            border: 1px solid #dadada;
+            border-radius: 30px;
+    		margin-left: 20px;
+    		-webkit-appearance:none; /* for chrome */
+   			-moz-appearance:none; /*for firefox*/
+   			appearance:none;
+   			background:url(../images/arrow_down.svg) no-repeat 95% 50%/12px auto;
+   			padding: 0 20px;
+   			font-size: 16px;
+        }
 
-        .bookmark{
+        .favicon_div{
             display: flex;
-            justify-content: space-around;
-            margin-bottom: 45px;
+            align-items: center;
+			margin-left: auto;
+			margin-right: 80px;
+            /* justify-content: space-around;
+            margin-bottom: 45px; */
         }
 
         .bk{
-            width: 200px;
+            /* width: 200px;
             border: 1px solid #c5c5c5;
-            text-align: center;
+            text-align: center; */
+            
+            box-shadow: 0 0 3px rgb(0 0 0 / 40%);
+		    border-radius: 10px;
+		    width: 50px;
+		    height: 50px;
+		    margin-right: 20px;
+		    cursor:pointer;
         }
+        
+        .bk_add 
+		{
+			box-shadow: 0 0 3px rgb(0 0 0 / 40%);
+		    border-radius: 10px;
+		    width: 50px;
+		    height: 50px;
+		    margin-right: 20px;
+		    cursor:pointer;
+		}
+        
         .bk a{
             text-decoration-line: none;
             color: black;
         }
+
+
+		.change_mode 
+		{
+			margin-top: 40px;
+    		margin-right: 80px;
+		}
+		
+		.change_mode>button 
+		{
+			width: 90px;
+			height: 40px;
+			border-radius: 15px 15px 0 0;
+			color: #fff;
+			font-size: 16px;
+			font-weight: 500;
+			margin-left: 20px;
+			border:0;			
+		}
+		
+		.change_mode>button.btn.ps
+		{
+			background-color: var(--individual);
+		}
+		
+		.change_mode>button.btn.cp
+		{
+			background-color: var(--company);
+		}
+
 
         .graph_div{
             border: 1px solid #c5c5c5;
@@ -181,42 +261,57 @@
         	background-color: #fff4f4;
         } */
     </style>
+    <script>
+		var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
+		var tid = '<%=request.getParameter("team")%>';
+		console.log(tid, uid);
+	</script>
   </head>
   <body>
+  	<header>
+		<select id="teamList" onChange="changeTeam()"></select>
+         
+        <div class="favicon_div">
+			<div class="bk slot0">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
+			<div class="bk slot1">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
+			<div class="bk slot2">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
+			<div class="bk slot3">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
+			<div class="bk slot4">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
+			<div class="bk_add">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="../images/add.png" alt="#" class="bk_fav">
+			</div>
+		</div> 
+         <div class="change_mode">
+             <button class="btn ps">개인</button>
+             <button class="btn cp">회사</button>
+    	</div>
+    </header>
     <div class="container">
-    	<header>
-            <select id="teamList" onChange="changeTeam()">
-                
-            </select>
-            <div class="btn_div">
-                <button class="btn ps">개인</button>
-                <button class="btn cp">회사</button>
-            </div>
-        </header>
+    	
         <section>
             <div class="left_div">
-                <div class="bookmark">
-                    <div class="bk slot0">
-                        <input type='text' class="bk_url hidden" value="" />
-                        <img src="../images/add.png" alt="#" class="bk_fav">
-                        <p class="bk_name"></p>
-                    </div>
-                    <div class="bk slot1">
-                        <input type='text' class="bk_url hidden" value="" />
-                        <img src="../images/add.png" alt="#" class="bk_fav">
-                        <p class="bk_name"></p>
-                    </div>
-                    <div class="bk slot2">
-                        <input type='text' class="bk_url hidden" value="" />
-                        <img src="../images/add.png" alt="#" class="bk_fav">
-                        <p class="bk_name"></p>
-                    </div>
-                    <div class="bk slot3">
-                        <input type='text' class="bk_url hidden" value="" />
-                        <img src="../images/add.png" alt="#" class="bk_fav">
-                        <p class="bk_name"></p>
-                    </div>
-                </div>
+                
                 <div class="calendar_div">
                     <div id='calendar'></div>
                     <div class="schedule_div">
@@ -234,12 +329,12 @@
                 </div>
                 <div class="notice_div">
                     <div class="notice_header">
-                        <img src="../images/arrow_right.png" alt="#" style="width: 24px; height: 24px;">
+                        <img class="btn_notice" src="../images/arrow_left.png" alt="#" style="width: 24px; height: 24px;">
                         <h2>공지사항</h2>
                     </div>
                     <div class="notice_body">
-                        <h3>공지사항 제목</h3>
-                        <p>공지사항 내용</p>
+                        <h3>[전체] 공지사항</h3>
+                        <p>10월 02일(월)은 대체공휴일입니다.</p>
                     </div>
                 </div>
             </div>
@@ -317,8 +412,12 @@
     var firstClick, slot;
 
     let today = new Date();
+	var year = today.getFullYear();
+	var month = today.getMonth()+1;
 
     $(document).ready(function () {
+    	if(month < 10) month = "0"+month;
+    	
     	window.addEventListener("keydown", function(e){
             if(e.code == "Tab"){
                 // 개인으로 이동
@@ -340,11 +439,12 @@
             },
             dateClick: function(i){
                 console.log(i.jsEvent);
+                $('#sch_addEvt')[0].innerText = "등록하기";
                 
                 if(firstClick == i.dateStr){
                    console.log('dblclick');
                    
-                   $('.container').css('z-index',-1);
+                   	$('.container').css('z-index',-1);
                     $(".modal").css('display','block');
                     $('#startDay').val(i.dateStr);
                     $('#startHH').val(today.getHours());
@@ -358,7 +458,36 @@
                 }
                 
                 firstClick = i.dateStr;
+            },
+            eventClick: function(i) {
+            	$('.container').css('z-index',-1);
+                $(".modal").css('display','block');
                 
+                $('#title').val(i.event.title);
+                                
+                console.log(i.event);
+                
+                if(i.event.allDay){
+                	$('#allDay').prop("checked",true);
+                	$('#startDay').val(i.event.startStr);
+                	$('#endDay').val(i.event.endStr);
+                	$('.timepicker').css('display','none');
+                }else{
+                	$('#allDay').prop("checked",false);
+                	
+                	$('#startDay').val(i.event.startStr.split('T')[0]);
+                	$('#endDay').val(i.event.endStr.split('T')[0]);
+                	
+                	$('#startHH').val(i.event.startStr.split('T')[1].split(':')[0]);
+                    $('#startMM').val(i.event.startStr.split('T')[1].split(':')[1]);
+                	
+                    $('#endHH').val(i.event.endStr.split('T')[1].split(':')[0]);
+                    $('#endMM').val(i.event.endStr.split('T')[1].split(':')[1]);
+                    
+                	$('.timepicker').css('display','');
+                }
+                
+                $('#sch_addEvt')[0].innerText = "수정하기";
             }
         });
         calendar.render();
@@ -390,55 +519,81 @@
             var title = $('#title').val();
             var start = $('#startDay').val()+'T'+$('#startHH').val()+':'+$('#startMM').val()+':00';
             var end = $('#endDay').val()+'T'+$('#endHH').val()+':'+$('#endMM').val()+':00';
-
-			if(!isAllDay){				
-				$.ajax({
-            		type: "POST",
-    				url : "./Calendar_Insert.do",
-    				data: {
-    					USERID: 'admin',
-    					TEAM : 'c60bf717',
-    					TITLE : title,
-    					DAY_FROM : start.split('T')[0],
-    					DAY_TO : end.split('T')[0],
-    					TIME_FROM : start.split('T')[1],
-    					TIME_TO : end.split('T')[1],
-    					ALLDAY : 'N'
-    				},
-    				async: false,
-    				success:function(data){
-    					alert(JSON.parse(data).RESULTMSG);
-    					location.reload(true);
-    				},
-    				error:function(err){
-    					alert('등록이 실패했습니다.');
-    				}
-            	});
-				
-            }else{            	
+            
+            console.log($('#allDay').is(":checked"));
+            
+            if($('#sch_addEvt')[0].innerText == "수정하기"){
+            	console.log("삭제:: ", title);
             	$.ajax({
-            		type: "POST",
-    				url : "./Calendar_Insert.do",
+                	type: "POST",
+    				url : "./Calendar_Delete.do",
     				data: {
-    					USERID: 'admin',
-    					TEAM : 'c60bf717',
-    					TITLE : title,
-    					DAY_FROM : start.split('T')[0],
-    					DAY_TO : end.split('T')[0],
-    					TIME_FROM : start.split('T')[1],
-    					TIME_TO : end.split('T')[1],
-    					ALLDAY : 'Y'
+    					USERID: uid,
+    					TEAM: tid,
+    					TITLE: title
     				},
     				async: false,
     				success:function(data){
-    					alert(JSON.parse(data).RESULTMSG);
-    					location.reload(true);
+    					console.log('삭제가 완료되었습니다.');
+    					document.getElementById(title).remove();
     				},
-    				error:function(err){
-    					alert('등록이 실패했습니다.');
+    				error: function(err){
+    					console.log(err);
     				}
-            	});
+                });
             }
+            
+           	if($('#allDay').is(":checked")){				
+           		$.ajax({
+	        		type: "POST",
+					url : "./Calendar_Insert.do",
+					data: {
+						USERID: uid,
+						TEAM : tid,
+						TITLE : title,
+						DAY_FROM : start.split('T')[0],
+						DAY_TO : end.split('T')[0],
+						TIME_FROM :'00:00:00',
+						TIME_TO : '12:00:00',
+						ALLDAY : 'Y'
+					},
+					async: false,
+					success:function(data){
+						alert(JSON.parse(data).RESULTMSG);
+						location.reload(true);
+					},
+					error:function(err){
+						alert('등록이 실패했습니다.');
+					}
+	        	});
+           		console.log(start, end);
+            }else{            	
+            	
+            	console.log(start, end);
+            	$.ajax({
+	        		type: "POST",
+					url : "./Calendar_Insert.do",
+					data: {
+						USERID: uid,
+						TEAM : tid,
+						TITLE : title,
+						DAY_FROM : start.split('T')[0],
+						DAY_TO : end.split('T')[0],
+						TIME_FROM : start.split('T')[1],
+						TIME_TO : end.split('T')[1],
+						ALLDAY : 'N'
+					},
+					async: false,
+					success:function(data){
+						alert(JSON.parse(data).RESULTMSG);
+						location.reload(true);
+					},
+					error:function(err){
+						alert('등록이 실패했습니다.');
+					}
+	        	});
+            }
+            
             
             $(".close").click();
         });
@@ -448,21 +603,44 @@
         $('.bk').on('click',function(){
             var url = $(this)[0].childNodes[1].value;
             slot = $(this)[0].classList[1];
+            console.log(url);
 			
             if(url != ''){ 
-                window.location.href = $(this)[0].childNodes[1].value;
+            	window.open(url, target="_blank");
+            	// window.location.href = $(this)[0].childNodes[1].value;
             }else{                
-            	$(".modal2").css('display','block');
-                $('.container').css('z-index',-1);
+                alert('등록된 사이트가 없습니다.');
             }
+        });
+        
+        $('.bk_add').on('click',function(){
+        	$('#bk_url').val('');
+			$('#bk_name').val('');
+			var cnt = 0;
+        	for(cnt = 0; cnt < 5; cnt++){
+        		var chk = $('.bk.slot'+cnt)[0].childNodes[1].value;
+        		if(chk == '' || chk == undefined || chk == null){
+        			console.log(cnt, '없음');
+        			slot = cnt;
+        			break
+        			
+        		}
+        	}
+        	
+        	if(cnt<5){
+	        	$(".modal2").css('display','block');
+    	        $('.container').css('z-index',-1);
+        	}else if(cnt>=5){
+        		alert('더 이상 등록할 수 없습니다.');
+        	}
         });
         
         // 자주가는 사이트 등록
         $('#url_addEvt').on('click',function(){
         	var insertData = {
-				USERID: 'admin',
-				TEAM: 'c60bf717',
-				SLOT: slot.substr(slot.length-1, 1),
+       			USERID: uid,
+   				TEAM: '',
+				SLOT: slot,
 				URL: $('#bk_url').val(),
 				BK_NAME: $('#bk_name').val()
 			}
@@ -475,7 +653,6 @@
 				success:function(data){
 					var result = JSON.parse(data);
 					alert(result.RESULTMSG);
-					loadBK();
 				},
 				error: function(err){
 					console.log(err);
@@ -483,6 +660,7 @@
             });
             
             $(".close2").click();
+            loadBK();
         });
 
         // 달성률 관련
@@ -570,6 +748,36 @@
             	isAllDay = false;
             }
         });
+        
+        $('.btn_notice').on('click',function(){
+        	$('.btn_notice').attr("src","../images/arrow_right.png");
+        	
+        	$('.notice_body').empty();
+        	$('.notice_body').append("<div id='000'><h3>[전체] 공지사항</h3></div><div id='001'><h3>[디자인팀] 공지사항</h3></div><div id='002'><h3>[개발팀] 공지사항</h3></div>");
+        	
+        	$('#000').on('click',function(){
+    			$('.btn_notice').attr("src","../images/arrow_left.png");
+            	
+            	$('.notice_body').empty();
+            	$('.notice_body').append("<h3>[전체] 공지사항</h3><p>10월 02일(월)은 대체공휴일입니다.</p>");
+            });
+            
+            $('#001').on('click',function(){
+    			$('.btn_notice').attr("src","../images/arrow_left.png");
+            	
+            	$('.notice_body').empty();
+            	$('.notice_body').append("<h3>[디자인팀] 공지사항</h3><p>디자인 시안 전달 양식이 변경되어 공지드립니다.</p>");
+            });
+            
+            $('#002').on('click',function(){
+    			$('.btn_notice').attr("src","../images/arrow_left.png");
+            	
+            	$('.notice_body').empty();
+            	$('.notice_body').append("<h3>[개발팀] 공지사항</h3><p>어? 소리 금지</p>");
+            });
+        });
+        
+        
     });
         
     function deleteEvt(title){
@@ -583,8 +791,8 @@
             	type: "POST",
 				url : "./Calendar_Delete.do",
 				data: {
-					USERID: 'admin',
-					TEAM: 'c60bf717',
+					USERID: uid,
+					TEAM: tid,
 					TITLE: title
 				},
 				async: false,
@@ -602,12 +810,21 @@
     
     function changeTeam(){
     	var teamSelect = document.getElementById("teamList");  
-    	  
-    	// select element에서 선택된 option의 value가 저장된다.  
     	var selectValue = teamSelect.options[teamSelect.selectedIndex].value;  
     	
-    	// location.replace("calendar.do#"+selectValue);
-    	window.location.href = "./calendar.do#"+selectValue;
+    	var frm = document.createElement("form");
+    	frm.setAttribute("charset", "UTF-8");
+    	frm.setAttribute("method", "POST");
+    	frm.setAttribute("action", "./calendar.do");
+    	
+    	var hiddenField = document.createElement("input");
+    	hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "team");
+        hiddenField.setAttribute("value", selectValue);
+        frm.appendChild(hiddenField);
+        
+        document.body.appendChild(frm);
+        frm.submit();
     }
 
     function dialog_reset(){
@@ -626,7 +843,7 @@
 			type: "POST",
 			url : "./TEAM_SELECT.do",
 			data: {
-				USER: 'admin'
+				USER: uid
 			},
 			async: false,
 			success:function(data){
@@ -634,7 +851,11 @@
 				console.log(result);
 				if(result.length > 0){
 					for(var i = 0; i < result.length; i++){
-						$('#teamList').append("<option value='"+result[i].TEAM_ID+"'>"+result[i].TEAM_NAME+"</option>")
+						if(result[i].TEAM_ID == tid){
+							$('#teamList').append("<option value='"+result[i].TEAM_ID+"' selected>"+result[i].TEAM_NAME+"</option>")
+						}else{
+							$('#teamList').append("<option value='"+result[i].TEAM_ID+"'>"+result[i].TEAM_NAME+"</option>")
+						}
 					}
 				}
 				
@@ -648,9 +869,9 @@
     		type: "POST",
 			url : "./Calendar_Select.do",
 			data: {
-				USERID: "admin",
-				TEAM: "c60bf717",
-				MONTH: '2023-09'
+				USERID: uid,
+				TEAM: tid,
+				MONTH: year+"-"+month
 			},
 			async: false,
 			success:function(data){
@@ -689,18 +910,18 @@
         	type: "POST",
 			url : "./BK_SEARCH.do",
 			data: {
-				USERID: 'admin',
-				TEAM: 'c60bf717'
+				USERID: uid,
+				TEAM: ''
 			},
 			async: false,
 			success:function(data){
 				var result = JSON.parse(data);
 				console.log(result);
-				
 				for(var i = 0; i < result.length; i++){
+					console.log(result[i].URL);
 					$('.bk_url')[result[i].SLOT].value = result[i].URL;
-					$('.bk_fav')[result[i].SLOT].src = result[i].URL+'favicon.ico';
-					$('.bk_name')[result[i].SLOT].innerText = result[i].BK_NAME;
+					$('.bk_fav')[result[i].SLOT].src = result[i].URL+'/favicon.ico';
+					// $('.bk_name')[result[i].SLOT].innerText = result[i].BK_NAME;
 				}
 			},
 			error: function(err){

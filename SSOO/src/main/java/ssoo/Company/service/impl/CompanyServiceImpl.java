@@ -70,4 +70,18 @@ public class CompanyServiceImpl implements CompanyService {
 		// TODO Auto-generated method stub
 		return CompanyMapper.Company_BK_INSERT(inputMap);
 	}
+	
+	
+	@Override
+	public List<HashMap<String, String>> Today_Schedule(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.Today_Schedule(inputMap);
+	}
+	
+	// 팀 가입
+		@Override
+		public HashMap<String, String> edit_profile(HashMap<String, Object> inputMap) throws Exception {
+			// TODO Auto-generated method stub
+			return CompanyMapper.edit_profile(inputMap);
+		}
 }

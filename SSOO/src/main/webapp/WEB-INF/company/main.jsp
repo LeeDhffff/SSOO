@@ -287,6 +287,17 @@
 
             background-color: rgba(0, 0, 0, 0.2);
         }
+        
+        .modal2 {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: none;
+        }
 
         .modal_body {
             position: absolute;
@@ -561,42 +572,64 @@
         }
         
     </style>
+    <script>
+	    var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
+	    
+	   if('<%=request.getParameter("SESSION_NAM_KOR")%>' != 'null'){
+		   var uname = '<%=request.getParameter("SESSION_NAM_KOR")%>';
+	   }else{
+		   var uname = '<%=(String)session.getAttribute("SESSION_NAM_KOR")%>';
+	   }
+	    
+		console.log(uid, uname);
+    </script>
 </head>
 <body>
     <div class="container">        
-            <nav>
-                <h1 class="logo"></h1>
-                <div class="admin">
-                    <div class="profile_img">
-                        <img src="../images/admin.png" alt="#">
-                    </div>
-                    <div class="profile_txt">
-                        <h3 class="profile_name">사용자명</h3>
-                        <img src="../images/edit.png" alt="#">
-                    </div>
-                    <button class="btn add_prj">새 프로젝트</button>
-                </div>
-                <div class="nav_menu_section">
-                    <div class="menu_div">
-                        <h2>팀 리스트</h2>
-                    </div>
-                    
-                </div>
-            </nav>
+	<nav>
+	    <h1 class="logo"></h1>
+	    <div class="admin">
+	        <div class="profile_img">
+	            <img src="../images/admin.png" alt="#">
+	        </div>
+	        <div class="profile_txt">
+	            <h3 class="profile_name">사용자명</h3>
+	            <img class="btn_edit" src="../images/edit.png" alt="#">
+	        </div>
+	        <button class="btn add_prj">새 프로젝트</button>
+	    </div>
+	    <div class="nav_menu_section">
+	        <div class="menu_div">
+	            <h2>팀 리스트</h2>
+	        </div>
+	        
+	    </div>
+	</nav>
 
             <section>
                 <header class="header">
-                    <select name="team" id="team">
-					  <option value="design">디자인팀</option>
-					  <option value="planning">기획팀</option>
-					  <option value="planning_second">기획2팀</option>
-					</select>					
+                    <select name="team" id="team"></select>					
 					<div class="favicon_div">
-						<div class="favicon_button"></div>
-						<div class="favicon_button"></div>
-						<div class="favicon_button"></div>
-						<div class="favicon_button"></div>
-						<div class="favicon_button"></div>
+						<div class="favicon_button slot0">
+							<input type='text' class="bk_url hidden" value="" />
+							<img src="" class="bk_fav">
+						</div>
+						<div class="favicon_button slot1">
+							<input type='text' class="bk_url hidden" value="" />
+							<img src="" class="bk_fav">
+						</div>
+						<div class="favicon_button slot2">
+							<input type='text' class="bk_url hidden" value="" />
+							<img src="" class="bk_fav">
+						</div>
+						<div class="favicon_button slot3">
+							<input type='text' class="bk_url hidden" value="" />
+							<img src="" class="bk_fav">
+						</div>
+						<div class="favicon_button slot4">
+							<input type='text' class="bk_url hidden" value="" />
+							<img src="" class="bk_fav">
+						</div>
 						<div class="favicon_add"></div>
 					</div>                    
                     <div class="change_mode">
@@ -652,25 +685,87 @@
 	
 	        <div class="btn_div">
 	            <button class="btn save1">생성하기</button>
-	            <button class="btn save2 hidden">생성하기2</button>
 	        </div>
 	    </div>
 	</div>
+	
+	<div class="modal2">
+    	<div class="modal_body">
+    		<div style="display: flex; justify-content: space-between;">
+                <h3>자주가는 페이지 등록</h3>
+                <img src="../images/close.png" class="close2">
+            </div>
+            
+            <div class="modal_content">
+            	<div>
+                    <label for="name">자주가는 페이지 URL</label>
+                    <input type="text" name="bk_url" id="bk_url">
+                </div>
+                
+                <div>
+                    <label for="name">자주가는 페이지 이름</label>
+                    <input type="text" name="bk_name" id="bk_name">
+                </div>
+            </div>
+            
+            <div class="btn_div">
+                <button id="url_addEvt" class="btn add">등록하기</button>
+            </div>
+    	</div>
+    </div>
 </body>
 <script>
     $(document).ready(function() {
     	start();
     	
         var rand = '';
+        
+        $('.profile_name')[0].innerText = uname+'님';
 
+        $('.btn_edit').on('click',function(){
+        	var new_name = prompt('변경할 이름을 입력해주세요','');
+        	
+        	$.ajax({
+        		type: "POST",
+				url : "./edit_profile.do",
+				data:{
+					USERID: uid,
+					USERNAME: new_name
+				},
+				async: false,
+				success:function(data){
+					console.log(data);
+					
+					var frm = document.createElement("form");
+		        	frm.setAttribute("charset", "UTF-8");
+		        	frm.setAttribute("method", "POST");
+		        	frm.setAttribute("action", "./main.do");
+		        	
+		        	var hiddenField = document.createElement("input");
+		        	hiddenField.setAttribute("type", "hidden");
+		            hiddenField.setAttribute("name", "SESSION_NAM_KOR");
+		            hiddenField.setAttribute("value", new_name);
+		            frm.appendChild(hiddenField);
+		            
+		            document.body.appendChild(frm);
+		            frm.submit();
+				},
+				error:function(err){
+					console.log(err);
+				}
+        	});
+        });
+        
         $(".add_prj").click(function(){
         	$('.container').css('z-index',-1);
+        	$('.swiper').css('z-index',-1);
             $(".modal").css('display','block');
         });
 
         $(".close").click(function(){
             $(".modal").css('display','none');
             $('.container').css('z-index',1);
+            $('.swiper').css('z-index',1);
         });
         
         $('.btn.save1').on('click',function(){
@@ -687,7 +782,7 @@
     					ID: rand,
     					NAME: $('#prj_name').val(),
     					LINK: 'https://www.jtm.com/'+rand,
-    					OWNER: 'admin'
+    					OWNER: uid
     				},
     				async: false,
     				success:function(data){
@@ -698,7 +793,7 @@
     						url : "./TEAM_JOIN.do",
     						data: {
     							TEAM: rand,
-    							USER: 'admin',
+    							USER: uname,
     							TYPE: 'O'
     						},
     						async: false,
@@ -720,15 +815,6 @@
 
         });
         
-        $('.btn.save2').on('click',function(){
-        	if($('#prj_name').val() != ''){
-        		                
-                $('#prj_link').val('https://www.jtm.com/'+$('#prj_name').val());
-        	}else{
-        		alert('프로젝트명을 입력해주세요!');
-        	}
-        	
-        });
 
         $(".copy").click(function(){
             var content = document.getElementById('prj_link').value;
@@ -742,7 +828,21 @@
         
         $('.menu_div').on('click',function(event){
         	var tid = event.currentTarget.id;
-        	window.location.href = "./calendar.do#"+tid;
+        	// window.location.href = "./calendar.do";
+        	
+        	var frm = document.createElement("form");
+        	frm.setAttribute("charset", "UTF-8");
+        	frm.setAttribute("method", "POST");
+        	frm.setAttribute("action", "./calendar.do");
+        	
+        	var hiddenField = document.createElement("input");
+        	hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "team");
+            hiddenField.setAttribute("value", tid);
+            frm.appendChild(hiddenField);
+            
+            document.body.appendChild(frm);
+            frm.submit();
         });
         
         $('.btn.cp').on('click',function(){
@@ -754,17 +854,33 @@
         	
         	$.ajax({
 				type: "POST",
-				url : "./TEAM_SEARCH.do",
+				url : "./TEAM_SEARCH.do",   // https://www.jtm.com/689b6c53
 				data: {
 					LINK: $('.searchBar').val()
 				},
 				async: false,
 				success:function(data){
 					var result = JSON.parse(data);
-					
+					console.log($('.searchBar').val().split('/'));
 					if(confirm('['+result.resultMsg+']에 가입하시겠습니까?')){
+						$.ajax({
+							
+    						type: "POST",
+    						url : "./TEAM_JOIN.do",
+    						data: {
+    							TEAM: $('.searchBar').val().split('/')[3],
+    							USER: uid,
+    							TYPE: 'M'
+    						},
+    						async: false,
+    						success:function(data){
+    							console.log(data);
+    						},
+    						error:function(err){ console.log(err); }
+	    					
+						});
 						alert('가입이 완료되었습니다');
-						start();
+						window.location.reload();
 					}else{
 						alert('가입을 취소했습니다.');
 					}
@@ -786,6 +902,79 @@
 				prevEl: ".swiper-button-prev"
 			}
         });
+        
+        
+        
+        
+        $('.favicon_button').on('click',function(){
+            var url = $(this)[0].childNodes[1].value;
+            slot = $(this)[0].classList[1];
+            console.log(url);
+			
+            if(url != ''){ 
+            	window.open(url, target="_blank");
+            }else{                
+                alert('등록된 사이트가 없습니다.');
+            }
+        });
+        
+        $('.favicon_add').on('click',function(){
+        	$('#bk_url').val('');
+			$('#bk_name').val('');
+			var cnt = 0;
+        	for(cnt = 0; cnt < 5; cnt++){
+        		var chk = $('.favicon_button.slot'+cnt)[0].childNodes[1].value;
+        		if(chk == '' || chk == undefined || chk == null){
+        			console.log(cnt, '없음');
+        			slot = cnt;
+        			break
+        		}
+        	}
+        	
+        	if(cnt<5){
+	        	$(".modal2").css('display','block');
+    	        $('.container').css('z-index',-1);
+    	        $('.swiper').css('z-index',-1);
+        	}else if(cnt>=5){
+        		alert('더 이상 등록할 수 없습니다.');
+        	}
+        });
+        
+        $(".close2").click(function(){
+            $(".modal2").css('display','none');
+            $('.container').css('z-index',1);
+            $('.swiper').css('z-index',1);
+            
+            $('.bk_url').val('');
+            $('.bk_name').val('');
+        });
+        
+        $('#url_addEvt').on('click',function(){
+        	var insertData = {
+          			USERID: uid,
+      				TEAM: '',
+   				SLOT: slot,
+   				URL: $('#bk_url').val(),
+   				BK_NAME: $('#bk_name').val()
+   			}
+
+              $.ajax({
+              	type: "POST",
+  				url : "./BK_INSERT.do",
+  				data: insertData,
+  				async: false,
+  				success:function(data){
+  					var result = JSON.parse(data);
+  					alert(result.RESULTMSG);
+  				},
+  				error: function(err){
+  					console.log(err);
+  				}
+              });
+                
+             $(".close2").click();
+             loadBK();
+         });
     });
     
     function start(){
@@ -793,9 +982,7 @@
 			type: "POST",
 			url : "./TEAM_SELECT.do",
 			data: {
-				USER: 'admin'
-				//ojw024 : 팀 없음
-				//admin : 팀있음
+				USER: uid
 			},
 			async: false,
 			success:function(data){
@@ -804,10 +991,12 @@
 				if(result.length > 0){
 					for(var i = 0; i < result.length; i++){
 						$('.nav_menu_section').append("<div id='"+result[i].TEAM_ID+"' class='menu_div'><div id='t"+i+"' class='marker'></div><h5 class='menu_txt'>"+result[i].TEAM_NAME+"</h5></div>");
-						$('.swiper-wrapper').append("<div class='team_div swiper-slide'>"+result[i].TEAM_NAME+"</div>");
+						$('.swiper-wrapper').append("<div id='"+result[i].TEAM_ID+"' class='team_div swiper-slide'><h3>"+result[i].TEAM_NAME+"</h3><hr></div>");
 						$('.marker')[i].style.backgroundColor = '#'+result[i].TEAM_ID.substr(0,6);
 						$('.msg').css('display','none');
 						$('.empty_div').css('display','none');
+						
+						$('#team').append("<option value='"+result[i].TEAM_ID+"'>"+result[i].TEAM_NAME+"</option>")
 					}
 				}
 				
@@ -816,6 +1005,55 @@
 				console.log(err);
 			}
 		});
+    	loadBK()
+    	todaySch()
+    }
+    
+    function loadBK(){
+		$.ajax({
+        	type: "POST",
+			url : "./BK_SEARCH.do",
+			data: {
+				USERID: uid,
+				TEAM: ''
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				console.log(result);
+				for(var i = 0; i < result.length; i++){
+					console.log(result[i].URL);
+					$('.bk_url')[result[i].SLOT].value = result[i].URL;
+					$('.bk_fav')[result[i].SLOT].src = result[i].URL+'/favicon.ico';
+					// $('.bk_name')[result[i].SLOT].innerText = result[i].BK_NAME;
+				}
+			},
+			error: function(err){
+				console.log(err);
+			}
+        });
+	}
+    
+    function todaySch(){
+    	$.ajax({
+        	type: "POST",
+			url : "./Today_Schedule.do",
+			data: {
+				USERID: uid
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				
+				for(var i = 0; i<result.length; i++){
+					console.log(result[i]);
+					$('#'+result[i].TEAM+'.team_div').append("<div>"+result[i].TITLE+"<p>("+result[i].TIME_FROM+"~"+result[i].TIME_TO+")</p></div>");
+				}
+			},
+			error: function(err){
+				console.log(err);
+			}
+        });
     }
 </script>
 </html>
