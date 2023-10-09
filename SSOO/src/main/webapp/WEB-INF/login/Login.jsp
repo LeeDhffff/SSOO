@@ -144,6 +144,10 @@
 		    font-weight: 400;
 		    font-size: 16px; 
 		}
+		
+		.hidden{
+			display: none;
+		}
 	</style>
 </head>
 
@@ -176,62 +180,72 @@
                         <h1>회원가입</h1>
                     </div>
 
-                    <div class="input">
+                    <div class="input userid">
                         <input type="text" name="Join_id" id="Join_id" required
                             title="Please enter your Id here" />
                         <label for="Join_id">ID</label>
                         <p class="warning"></p>
                     </div>
 
-                    <div class="input">
+                    <div class="input pwd">
                         <input type="password" name="Join_password" id="Join_password" required
                             title="Please enter your Password here" />
                         <label for="Join_password">비밀번호</label>
                     </div>
                     
-                    <div class="input">
+                    <div class="input confirm">
                         <input type="password" name="password_confirm" id="password_confirm" required
                             title="Please enter your Password here" />
                         <label for="password_confirm">비밀번호 확인</label>
                     </div>
                     
-                    <div class="input">
+                    <input type="button" value="다음" class="join-btn next" />
+                    
+                    <div class="input username hidden">
                         <input type="text" name="Join_username" id="Join_username" required
                             title="Please enter your Username here" />
                         <label for="Join_username">이름</label>
                     </div>
                     
-                    <div class="input">
+                    <div class="input mail hidden">
                         <input type="email" name="email" id="email" required
                             title="Please enter your E-Mail here" />
                         <label for="email">메일</label>
+                        <button type="button" class="btn_send">인증번호 받기</button>
                     </div>
                     
-                    <div class="input">
+                    <div class="input tel hidden">
                         <input type="tel" name="phone" id="phone" required
                             title="Please enter your Phone Number here" />
                         <label for="phone">전화번호</label>
                     </div>
                     
-                    <div class="input">
+                    <div class="input code hidden">
+                        <input type="text" name="code" id="code" required
+                            title="Please enter your Address here" />
+                        <label for="code">인증번호</label>
+                        <button type="button" class="btn_auth">인증</button>
+                    </div>
+                    
+                    <div class="input addr hidden">
                         <input type="text" name="addr" id="addr" required
                             title="Please enter your Address here" />
                         <label for="addr">주소</label>
                     </div>
 
-					<div class="input">
+					<div class="input perpose hidden">
                         <input type="text" name="perpose" id="perpose" required
                             title="Please enter your Perpose here" />
                         <label for="perpose">사용목적(선택)</label>
                     </div>
                     
-                    <div class="input">
+                    <div class="input contact hidden">
                         <input type="text" name="contact" id="contact" required
                             title="Please enter your Contact here" />
                         <label for="contact">알게된 경로(선택)</label>
                     </div>
 
-                    <input type="submit" value="가입하기" class="join-btn" />
+                    <input type="submit" value="가입하기" class="join-btn join hidden" />
                 </form>
             </div>
         </div>
@@ -362,8 +376,39 @@ var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
 			
 		})
 		
+		$('.join-btn.next').on('click',function(){
+			// $('.join-btn.next').css('display','none');
+			$('.input.userid').addClass('hidden');
+			$('.input.pwd').addClass('hidden');
+			$('.input.confirm').addClass('hidden');
+			$('.join-btn.next').addClass('hidden');
+			
+			$('.input.tel').removeClass('hidden');
+			$('.input.mail').removeClass('hidden');
+			$('.input.code').removeClass('hidden');
+			$('.input.addr').removeClass('hidden');
+			$('.input.perpose').removeClass('hidden');
+			$('.input.contact').removeClass('hidden');
+			
+			$('.join-btn.join').removeClass('hidden');
+		})
 		
-		$('.join-btn').on('click',function(){
+		$('.btn_send').on('click',function(){
+			console.log('인증번호 보내기');
+			var mail = $('#email').val();
+			
+			console.log(mail);
+			
+			$.ajax({
+				type: "POST",
+				url:"/api/member/email",
+				data: {userEmail:mail},
+				success: function(data){ console.log(data) },
+				error: function(err){ console.log(err) }
+			});
+		});
+		
+		$('.join-btn.join').on('click',function(){
 			var perpose, contact;
 			
 			if($('#perpose').val() != ""){
