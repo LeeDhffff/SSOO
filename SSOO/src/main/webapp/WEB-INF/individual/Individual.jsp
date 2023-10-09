@@ -259,8 +259,10 @@
             	<div class="character_div">
     				
 	            	<div class="character_status">
-	            	<button id="mission">오늘의 미션</button>
-	            	<button id="character_change">Custom</button>
+		            	<div class="character_button">
+			            	<button id="mission">오늘의 미션</button>
+			            	<button id="character_change">Custom</button>
+	            		</div>
             		<div class="mission_pop" style="display:none;">
 		            	<button id="mission_update">미션 편집</button>
 		            	<button id="mission_add" style="display:none;">+</button>
@@ -298,15 +300,26 @@
 							<tr><td id="character1_3"><img src="./images/Character/1_3.svg"></td><td id="character1_4"></td><td id="character1_5"></td></tr>
 						</tbody>
 					</table>
-					<table id="background_table">
-						<thead>
-							<tr><th colspan="3">포즈 선택</th></tr>
-						</thead>
-						<tbody>
-							<tr><td id="pose1"></td><td id="pose2"></td><td id="pose3"></td></tr>
-							<tr><td id="pose4"></td><td id="pose5"></td><td id="pose6"></td></tr>
-						</tbody>
-					</table>
+<!-- 					<div class="tablediv"> -->
+						<table id="pose_table">
+							<thead>
+								<tr><th colspan="3">포즈 선택 <button id="change_table">></button></th></tr>
+							</thead>
+							<tbody>
+								<tr><td id="pose1"></td><td id="pose2"></td><td id="pose3"></td></tr>
+								<tr><td id="pose4"></td><td id="pose5"></td><td id="pose6"></td></tr>
+							</tbody>
+						</table>
+						<table id="background_table" style="display:none;">
+							<thead>
+								<tr><th colspan="3"><button id="change_table2"><</button>배경 선택</th></tr>
+							</thead>
+							<tbody>
+								<tr><td id="back1"><img src="./images/background/1.svg" id="back_1"></td><td id="back2"><img src="./images/background/2.svg" id="back_2"></td><td id="back3"><img src="./images/background/3.svg" id="back_3"></td></tr>
+								<tr><td id="back4"><img src="./images/background/4.svg" id="back_4"></td><td id="back5"><img src="./images/background/5.svg" id="back_5"></td><td id="back6"><img src="./images/background/6.svg" id="back_6"></td></tr>
+							</tbody>
+						</table>
+<!-- 					</div> -->
 					<div id="nowCharacter">
 						
 					</div>
@@ -331,7 +344,6 @@
 
 
   	$(document).ready(function(){
-		console.log(uid);
 		if(uid == '' || uid == 'null' || uid == null){
 			location.href = "Login.do";
 		}
@@ -387,8 +399,7 @@
 	 		var startday = start_year + "-" + start_month + "-" + start_date + " " + start_hour + ":" + start_minute;
 	 		var endday = end_year + "-" + end_month + "-" + end_date + " " + end_hour + ":" + end_minute;
 
-	    	 console.log(obj.event._def.extendedProps,startday,endday)
-
+	    	
 	 		var updatedata = {
 	 				COD_MEMB : uid,
 	 				IDX_SORT : obj.event._def.extendedProps.idx,
@@ -635,7 +646,6 @@
 		
 // 		date.setDate(date.getDate());
 		
-		console.log(time);
 		
 		var insertdata = {
 				COD_MEMB : uid,
@@ -698,7 +708,6 @@
 		
 // 		date.setDate(date.getDate());
 		
-		console.log(time);
 		
 		var updatedata = {
 				COD_MEMB : uid,
@@ -775,7 +784,6 @@
 				
 				var result = JSON.parse(data);
 				
-				console.log(result);
 
 				calendar.removeAllEvents();
 				calendar2.removeAllEvents();

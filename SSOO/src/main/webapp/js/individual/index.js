@@ -206,7 +206,6 @@ $(document).ready(function(){
 	
 	
 	$(".trash").on("click",function(){
-		console.log($(this).hasClass("notopen"))
 		if($(".trash").hasClass("notopen") == false){
 			$("#popup_trash").hide();
 			$(".trash").addClass("notopen");
@@ -261,7 +260,6 @@ $(document).ready(function(){
 
 	
 	$("#mission").on("click",function(){
-		console.log($("#mission").css("display"))
 		if($(".mission_pop").css("display") == "none"){
 			$(".mission_pop").show();	
 		
@@ -404,42 +402,43 @@ document.querySelector("body").addEventListener("click", function(e) {
 		var Cat4 = ["1_3","1_7","1_11","1_15"];
 		
 		if(thisid == "character1" && $(this).has("img").length > 0){
-			$("#background_table > tbody > tr > td").empty();
+			$("#pose_table > tbody > tr > td").empty();
 			$("#pose1").append("<img src='./images/Character/"+Cat1[0]+".svg' id='"+Cat1[0]+"'>");
 			$("#pose2").append("<img src='./images/Character/"+Cat1[1]+".svg' id='"+Cat1[1]+"'>");
 			$("#pose3").append("<img src='./images/Character/"+Cat1[2]+".svg' id='"+Cat1[2]+"'>");
 			$("#pose4").append("<img src='./images/Character/"+Cat1[3]+".svg' id='"+Cat1[3]+"'>");
 		}
 		else if(thisid == "character1_1" && $(this).has("img").length > 0){
-			$("#background_table > tbody > tr > td").empty();
+			$("#pose_table > tbody > tr > td").empty();
 			$("#pose1").append("<img src='./images/Character/"+Cat2[0]+".svg' id='"+Cat2[0]+"'>");
 			$("#pose2").append("<img src='./images/Character/"+Cat2[1]+".svg' id='"+Cat2[1]+"'>");
 			$("#pose3").append("<img src='./images/Character/"+Cat2[2]+".svg' id='"+Cat2[2]+"'>");
 			$("#pose4").append("<img src='./images/Character/"+Cat2[3]+".svg' id='"+Cat2[3]+"'>");
 		}
 		else if(thisid == "character1_2" && $(this).has("img").length > 0){
-			$("#background_table > tbody > tr > td").empty();
+			$("#pose_table > tbody > tr > td").empty();
 			$("#pose1").append("<img src='./images/Character/"+Cat3[0]+".svg' id='"+Cat3[0]+"'>");
 			$("#pose2").append("<img src='./images/Character/"+Cat3[1]+".svg' id='"+Cat3[1]+"'>");
 			$("#pose3").append("<img src='./images/Character/"+Cat3[2]+".svg' id='"+Cat3[2]+"'>");
 			$("#pose4").append("<img src='./images/Character/"+Cat3[3]+".svg' id='"+Cat3[3]+"'>");
 		}
 		else if(thisid == "character1_3" && $(this).has("img").length > 0){
-			$("#background_table > tbody > tr > td").empty();
+			$("#pose_table > tbody > tr > td").empty();
 			$("#pose1").append("<img src='./images/Character/"+Cat4[0]+".svg' id='"+Cat4[0]+"'>");
 			$("#pose2").append("<img src='./images/Character/"+Cat4[1]+".svg' id='"+Cat4[1]+"'>");
 			$("#pose3").append("<img src='./images/Character/"+Cat4[2]+".svg' id='"+Cat4[2]+"'>");
 			$("#pose4").append("<img src='./images/Character/"+Cat4[3]+".svg' id='"+Cat4[3]+"'>");
 		}
-		
+
+		$("#pose_table").show();
+		$("#background_table").hide();
 	})
 	
 	// 포즈 선택 후 저장
-	$("#background_table > tbody > tr > td").on("click",function(){
+	$("#pose_table > tbody > tr > td").on("click",function(){
 		if($(this).has("img").length > 0){
 			var imgid = $(this).find("img").attr("id");
 			
-			console.log(imgid);
 			var selectdata2 = {
 					COD_MEMB : uid,
 					CHARACTER :  imgid,
@@ -461,6 +460,43 @@ document.querySelector("body").addEventListener("click", function(e) {
 			})
 		}
 		
+	})
+	
+	// 배경 선택 후 저장
+	$("#background_table > tbody > tr > td").on("click",function(){
+		if($(this).has("img").length > 0){
+			var imgid = $(this).find("img").attr("id").replaceAll("back_","");
+			
+			var selectdata2 = {
+					COD_MEMB : uid,
+					CHARACTER :  "",
+					BACKGROUND : imgid,
+					ADD_EXP : 0
+			};
+			
+			$.ajax({
+				url: "Character_Update.do",
+				data: selectdata2,
+				type: "POST",
+				async: false,
+				success: function(data2){		
+					var result2 = JSON.parse(data2);
+
+					
+					selectCharacter();
+				}
+			})
+		}
+		
+	})
+	
+	$("#change_table").on("click",function(){
+		$("#pose_table").hide();
+		$("#background_table").show();
+	})
+	$("#change_table2").on("click",function(){
+		$("#pose_table").show();
+		$("#background_table").hide();
 	})
 }); //documet 끝
 
@@ -542,6 +578,7 @@ $(document).on('click','.option_list.save',function(){
 			contentType : false,
 			success: function(data){
 				selectTodo();
+				selectMission();
 				dragopen();
 				checkTodoNum();
 			}
@@ -589,6 +626,7 @@ $(document).on('click','.option_list.delete',function(){
 				async: false,
 				success: function(data){
 					TrashTodo();
+					selectMission();
 				}
 				
 			})
@@ -668,7 +706,6 @@ function dragopen() {
 				
 		        const elementdel = document.elementsFromPoint(delx, dely);
 
-//				console.log(delx,dely,delx2,dely2,elementdel)
 
 				var dragnum = 0;
 				var draggrid = 0;
@@ -682,7 +719,6 @@ function dragopen() {
 								IDX_SORT : idx,
 								GUBUN : 'D'
 						};
-						console.log(insertdata)
 						$.ajax({
 							url: "Individual_Todo_Trash_Insert.do",
 							data: insertdata,
@@ -1336,7 +1372,6 @@ function selectMiniTodo(){
 				
 				var result = JSON.parse(data);
 				
-				console.log(result);
 				
 				for(var i=0 ; i<result.length; i++){
 					var date = (result[i].DAY_KEY).split(" ")
@@ -1487,11 +1522,16 @@ function selectMission(){
 				var result = JSON.parse(data);
 				
 				var addString = "";
-				console.log(result);
+				$(".mission_pop_div").empty();
 				for(var i=0; i<result.length ; i++){
-
+					console.log(result[i])
 					addString += '<div class="mission_div">';
-					addString += '<h4>'+result[i].MISSION_NM+'</h4>';
+					if(result[i].POINT > 10){
+						addString += '<h4>'+result[i].MISSION_NM+'<span>special!</span></h4>';
+					}
+					else{
+						addString += '<h4>'+result[i].MISSION_NM+'</h4>';
+					}
 					addString += '<div class="togglebox">';
 					addString += '<input type="checkbox" class="checkbox" id="mission' +(String)(i) +'" onclick="CompleteMission(this,event)" idx="'+result[i].IDX_SORT+'" target="'+result[i].MISSION_NM + '"';
 					if(result[i].CHK == 'Y'){
@@ -1527,7 +1567,7 @@ function selectMission(){
 				var result2 = JSON.parse(data2);
 				
 				var addString2 = "";
-				console.log(result2);
+				
 				for(var i=0; i<result2.length ; i++){
 
 					addString2 += '<div class="mission_div">';
@@ -1559,15 +1599,18 @@ function selectCharacter(){
 				$(".next_level").text(Number(result.LEVEL) + 1)
 				$("#character_exp").val(result.MIN_EXP)
 				$(".character_image").empty();
-				$(".character_image").append("<img src='./images/Character/"+result.CHARACTER+".svg'>");
 				$("#nowCharacter").empty();
-				$("#nowCharacter").append("<img src='./images/Character/"+result.CHARACTER+".svg'>");
+				if(result.BACKGROUND != ""){
+					$(".character_image").css("background-image" ,"url('./images/background/"+result.BACKGROUND+".svg')")
+					$("#nowCharacter").css("background-image" ,"url('./images/background/"+result.BACKGROUND+".svg')")
+				}
+				$(".character_image").append("<img class='main_img' src='./images/Character/"+result.CHARACTER+".svg'>");
+				$("#nowCharacter").append("<img class='main_img' src='./images/Character/"+result.CHARACTER+".svg'>");
 			}
 		})
 }
 function CompleteMission(target,event){
-	console.log(target,event);
-	
+
 	if(confirm("해당 미션을 완료 처리하시겠습니까?")){
 	var idx = $(target).attr("idx");
 	var name = $(target).attr("target");
