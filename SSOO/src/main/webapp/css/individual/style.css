@@ -98,14 +98,14 @@ section
 
 .to_do 
 {
-  width: 1355px;
+  width: /*1355px*/ 70%;
   height: 100%;
   float: left;
 }
 
 .calendar 
 {
-  width: 1355px;
+  width: /*1355px*/ 70%;
   height: 100%;
   float: left;
 }
@@ -202,16 +202,16 @@ section
   height: calc(100% - 40px);
   margin-top: 10px;
   background: #fff;
-  padding: 40px 30px;
+  padding: 0 30px;
   position: relative;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
 }
 .calendar_section{
   width: 100%;
-  height: calc(100% - 10px);
+  height: calc(100% - 40px);
   margin-top: 10px;
   background: #fff;
-  padding: 40px 30px;
+  padding: 0 30px;
   position: relative;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
 	
@@ -219,30 +219,32 @@ section
 .to_do_board_header
 {
   width: 100%;
-  height: 180px;
+  min-height: 200px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(290px, auto));
-  grid-gap: 0 45px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 0 20px;
+  padding: 20px 0;  
 }
 .to_do_board_con 
 {
-  padding: 20px;
+  padding: 10px 20px;
   border: 2px solid var(--main-color);
   border-radius: 5px;
-  height: 150px;
   background-color: #fff;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
   z-index: 1000;
   position: relative;
+  height: 100%;
 }
 .pop_dialog_trash > .to_do_board_con{
   margin-top : 10px;
   margin-bottom : 10px;
+  height: initial;
 }
 
 
 .to_do_board_con_grid{
-  height: 150px;
+  height: 100%;
 }
 .board_con_header 
 {
@@ -319,12 +321,36 @@ section
 .con 
 {
   display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.con:last-child 
+{
+	margin-bottom: 0;
+}
+
+.con>h3 
+{
+	height: 20px;
+	margin-right: 5px;
 }
 
 .con>h3>img 
 {
   width: 20px;
   height: 20px;
+}
+
+.con input 
+{
+	height: 25px;
+	width: 156px;
+}
+
+.board_con_update.U_Time_time, .board_con_update.U_Time_minute
+{
+	width: 50px !important;
 }
 
 .con_txt
@@ -337,15 +363,16 @@ section
 
 .to_do_board_body 
 {
-  background-color:var(--background-color);
+  background-color: var(--background-color);
   width: 100%;
-  height: calc(100% - 170px);
+  height: calc(100% - 220px);
   border-radius: 5px;
   border: 1px solid var(--input-color);
   display: grid;
-  grid-template-columns: 290px 290px 290px 290px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 20px;
-  grid-gap: calc(calc(100% - 450px)/2) 30px;  
+  grid-gap: 20px;
+  overflow-y: scroll;  
 }
 
 /* ----board_body 끝------ */
@@ -388,7 +415,7 @@ section
 .diary, .character 
 {
   float: right;
-  width: 450px;
+  width: /*1355px*/ 28%;
   border-radius: 5px;
 }
 
@@ -449,18 +476,11 @@ section
     height: 100%;
     z-index: 2000;
 }
-.popup_trash{
-	display:none;
-    position: absolute;
-    z-index: 2000;
-    width: 300px;
-    min-height: 180px;
- 	max-height: 450px;
- 	overflow-y:scroll;
-    background: white;
-    left: 1235px;
-    top: 132px;
-    border: 1px solid red;
+.pop_dialog_trash 
+{
+	overflow-y: scroll;
+    padding: 0 20px 0 0px;
+    height: 450px;
 }
 .black{
 	background : rgba(0, 0, 0, 0.2);
@@ -468,28 +488,31 @@ section
 }
 .pop_dialog{
     width: 500px;
-    height: 500px;
-    background: white;
+    background: #fff;
     top: 50%;
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 2px solid red;
-    font-size: 1.5em;
+    padding: 50px;
 }
 .pop_head{
 	display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    margin-top: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    margin-bottom: 50px;
+    align-items: center;    
 }
-.pop_input{
-	display: flex;
-    margin-bottom: 20px;
-    margin-left: 20px;
+
+.pop_head> img 
+{
+	width: 22px;
+    height: 20px;
 }
+
+.pop_head> h3 
+{
+	font-size: 28px;
+	margin-left: 10px;
+}
+
 .popup_X{
     width: 30px;
     height: 30px;
@@ -498,17 +521,78 @@ section
     border-radius: 100%;
     cursor: pointer;
     color: white;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
 }
+
+.pop_input
+{
+	margin-bottom: 20px;
+}
+
+.pop_input.time > .time_wrap
+{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.pop_input> h4 
+{
+	font-size: 18px;
+	font-weight: 500;
+	color: #222;
+}
+
+.pop_input> input 
+{
+	width: 100%;
+	height: 50px;
+	border: 1px solid #dadada;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+#pop_TODO_location, .pop_TODO_time, #pop_TODO_file 
+{
+	background-image: url(../../images/individual/location.png);
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 10px;
+    padding-left: 40px;
+}
+
+#pop_TODO_file
+{
+	background-image: url(../../images/individual/add.png);
+}
+
+.pop_TODO_time, .pop_TODO_minute, .pop_TODO_Time_AMPM, #pop_Calendar_time, #pop_Calendar_minute, #pop_Calendar_Time_AMPM
+, #pop_Calendar2_time, #pop_Calendar2_minute, #pop_Calendar2_Time_AMPM
+{
+	width: 30%;
+	height: 50px;
+	border: 1px solid #dadada;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+.pop_TODO_time
+{
+	background-image: url(../../images/individual/time.png);
+}
+
 .popup_Save{
-	width: 90px;
-    height: 30px;
+	width: 100%;
+    height: 50px;
     background: var(--main-color);
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     color: white;
     text-align: center;
-    margin-left: 20px;
+    font-size: 16px;
 }
 .popup_Update{
 	display:none;
@@ -833,11 +917,39 @@ section
   .add_file_upload > label{
   
     width: 50px;
-    height: 30px;
+    height: 25px;
     background: var(--main-color);
     color: white;
     padding: 6px;
     font-size: 14px;
+    margin-left: 10px;
+    border-radius: 5px;
+  }
+  .pop_input > div > label{
+    width: 50px;
+    height: 100%;
+    background: var(--main-color);
+    color: white;
+    padding: 6px;
+    font-size: 14px;
+    margin-left: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  .pop_input > div{
+  	display: flex;
+  }
+  #name_pop_TODO_file{
+  
+    width: 85%;
+    height: 50px;
+    border: 1px solid #dadada;
+    border-radius: 5px;
+    margin-top: 10px;
+  	background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 10px;
+    padding-left: 10px;
   }
   .tablediv{
   	position : relative;

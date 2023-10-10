@@ -681,6 +681,11 @@ $(document).on("change",".add_file_files",function(){
 	  $(this).parent(".add_file_upload").find(".uploaded_file").val(fileName);
 });
 
+$(document).on("change","#pop_TODO_file",function(){
+	  var fileName = $(this).val().split('/').pop().split('\\').pop();
+	  $("#name_pop_TODO_file").val(fileName);
+});
+
 
 function dragopen() {
 	$( '.to_do').find('.to_do_board_con').draggable({

@@ -45,33 +45,25 @@
 		    justify-content: center;
 		}
 		
+		/*------  container.login  ------*/
+		
 		.container
 		{
 		    position: relative;      
 		}
 		
-		.login > .form 
+		.container > .form 
 		{
+		    height: 550px;
 		    position: absolute;
 		    top:50%;
 		    left: 48%;
 		    transform:translate(-50%,-50%);
 		    text-align: center;
+		    padding: 40px 20px;
 		}
-		.find{
-			display:flex;
-		}
-		.find > .form 
-		{
-			   background: white;
-			   text-align: center;
-			   width: 600px;
-    			padding: 20px;
-		}
-		.join > div{
-			   background: white;
-    			padding: 20px;
-		}
+		
+		
 		input 
 		{
 		    width: 400px;
@@ -148,6 +140,183 @@
 		.hidden{
 			display: none;
 		}
+		
+		
+		/*----- container.join  -----*/
+		
+		/*-- 회원가입  --*/
+		
+		.join_title 
+		{
+			margin-bottom: 50px;
+		}
+		
+		.container.join > .form > .input 
+		{
+			margin-bottom: 20px;
+		}
+		
+		.container.join > .form > .input > h5 
+		{
+			text-align: left;
+			color: #999;
+			font-size: 14px;
+			font-weight: 400;
+			margin-top: 5px;
+		}
+		
+		.container.join > .form > .input > input 
+		{
+			margin-bottom: 0;
+		}
+		
+		.input.agree 
+		{
+			display: flex;
+    		align-items: center;
+		}
+		
+		.input.agree.hidden 
+		{
+			display: none;
+		}
+		
+		.container.join > .form > .input.agree > h5 
+		{
+			margin-top: 0;
+		}
+		
+		input#agree 
+		{
+			width: 15px;
+			height: 15px;
+			margin-top: 3px;
+		}
+		
+		.agree_check_txt 
+		{
+			margin-left: 10px;
+		}
+		
+		.agree_see 
+		{
+			margin-left: auto;
+			cursor:pointer;
+		}
+		
+		.join-btn.next, .join-btn.join, .id_btn, .pw_btn  
+		{
+		    width: 400px;
+		    height: 55px;
+		    background: #FF4E43;
+		    color: #fff;
+		    font-size: 18px;
+		    font-weight: 900;
+		    border-radius: 5px;
+		    border:0;
+		    margin-top: 45px;
+		}
+		
+		/*-- 회원정보입력  --*/
+		
+		.join_title2 
+		{
+			margin-bottom: 50px;
+		}
+		
+		.form_con 
+		{
+			height: calc(100% - 20px);
+		    overflow: scroll;
+		    padding: 0 20px;
+		}
+		
+		.form_con > .input 
+		{
+			display: flex;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+		
+		.input_con_title 
+		{
+			width: 60px;
+			text-align: left;
+		}
+		
+		.form_con > .input >input 
+		{
+			    width: 320px;
+    			margin-bottom: 0;
+    			margin-left: auto;
+		}
+		
+		.input.code 
+		{
+			display: flex;   			
+		}
+		
+		input#code, input#addr 
+		{
+			width: 180px;
+		}
+		
+		button.btn_auth, button.btn_location
+		{
+			width: 120px;
+    		height: 50px;
+    		border: 1px solid #FF4E43;
+    		border-radius: 5px;
+    		background: #fff;
+    		color: #FF4E43;
+    		font-size: 16px;
+    		font-weight: 600;
+    		margin-left: auto;
+		}
+		
+		.join-btn.join  
+		{
+			margin-bottom: 45px;
+		}
+		
+		/*----- container.find  -----*/
+		
+		/*-- 아이디 찾기  --*/
+		
+		.form.find_id
+		{
+			left: 8%;
+			top: 50%;
+			transform: translate(0,-50%);
+			border-right: 1px dashed #dadada;
+    		padding-right: 70px;
+		}
+		
+		.form.find_id > .form_con, .form.find_pw > .form_con 
+		{
+			overflow: initial;
+		}
+		
+		.find_title1, .find_title2 
+		{
+			margin-bottom: 50px;
+		}
+		
+		.input.code.find > #code2 
+		{
+			width: 180px;
+		}
+		
+		.id_btn 
+		{
+			margin-top: 115px;
+		}
+		
+		/*-- 비밀번호 찾기  --*/
+		.find_pw.form
+		{
+			left: 74%;
+		}
 	</style>
 </head>
 
@@ -155,8 +324,8 @@
     <div class="main-container">    	
         <div class="container login">
             <img src="./images/login/note_s.png" alt="#" class="note">
-            <div class="form">
-                
+            
+            <div class="form">                
                 <h1 class="logo">
                     <img src="./images/login/logo.svg" alt="#">
                 </h1>            
@@ -171,112 +340,184 @@
                     <a id="gofind" href="#">ID / 비밀번호 찾기</a>
                     <a id="gojoin" href="#">회원가입</a>
                 </div>
-			</div>            
-        </div>
+			</div> 
+			           
+        </div> <!-- container.login -->
+        
+        
         <div class="container join" style="display:none;">
-            <div>
-                <form>
-                    <div>
-                        <h1>회원가입</h1>
-                    </div>
+        	<img src="./images/login/note_s.png" alt="#" class="note">
+            <div class="form">
+                
+                <!--회원가입 -->
+            	<h1 class="join_title">회원가입</h1>
 
-                    <div class="input userid">
-                        <input type="text" name="Join_id" id="Join_id" required
-                            title="Please enter your Id here" />
-                        <label for="Join_id">ID</label>
-                        <p class="warning"></p>
-                    </div>
+                <div class="input userid">
+                    <input type="text" name="Join_id" placeholder="아이디" id="Join_id" required
+                        title="Please enter your Id here" />
+                    <p class="warning"></p>
+                </div>
 
-                    <div class="input pwd">
-                        <input type="password" name="Join_password" id="Join_password" required
-                            title="Please enter your Password here" />
-                        <label for="Join_password">비밀번호</label>
-                    </div>
-                    
-                    <div class="input confirm">
-                        <input type="password" name="password_confirm" id="password_confirm" required
-                            title="Please enter your Password here" />
-                        <label for="password_confirm">비밀번호 확인</label>
-                    </div>
-                    
-                    <input type="button" value="다음" class="join-btn next" />
-                    
-                    <div class="input username hidden">
-                        <input type="text" name="Join_username" id="Join_username" required
-                            title="Please enter your Username here" />
-                        <label for="Join_username">이름</label>
-                    </div>
-                    
-                    <div class="input mail hidden">
-                        <input type="email" name="email" id="email" required
-                            title="Please enter your E-Mail here" />
-                        <label for="email">메일</label>
-                        <button type="button" class="btn_send">인증번호 받기</button>
-                    </div>
-                    
-                    <div class="input tel hidden">
-                        <input type="tel" name="phone" id="phone" required
-                            title="Please enter your Phone Number here" />
-                        <label for="phone">전화번호</label>
-                    </div>
-                    
-                    <div class="input code hidden">
-                        <input type="text" name="code" id="code" required
-                            title="Please enter your Address here" />
-                        <label for="code">인증번호</label>
-                        <button type="button" class="btn_auth">인증</button>
-                    </div>
-                    
-                    <div class="input addr hidden">
-                        <input type="text" name="addr" id="addr" required
-                            title="Please enter your Address here" />
-                        <label for="addr">주소</label>
-                    </div>
-
+                <div class="input pwd">
+                    <input type="password" name="Join_password" placeholder="비밀번호" id="Join_password" required
+                        title="Please enter your Password here" />
+                    <h5>숫자, 영문, 특수문자 포함 8자이상</h5>
+                </div>
+                
+                <div class="input confirm">
+                    <input type="password" name="password_confirm" placeholder="비밀번호 재입력" id="password_confirm" required
+                        title="Please enter your Password here" />
+                </div>
+                
+                <div class="input agree">
+                    <input type="checkbox" id="agree">
+                    <h5 class="agree_check_txt">[필수] 이용 약관에 동의합니다.</h5>
+                    <h5 class="agree_see">보기</h5>
+                </div>
+                
+                <button type="submit" value="다음" class="join-btn next">다음</button>
+                
+                <div class="input username hidden">
+                    <input type="text" name="Join_username" id="Join_username" required
+                        title="Please enter your Username here" />
+                    <label for="Join_username">이름</label>
+                </div>
+    
+<!------------------회원정보 입력 ------------------------->
+                
+                <h1 class="join_title2 hidden">회원정보 입력</h1>
+                
+                <div class="form_con hidden">
+                	<div class="input mail hidden">
+                		<h5 class="input_con_title">이메일</h5>
+	                	<input type="email" name="email" placeholder="이메일" 
+	                    id="email" required title="Please enter your E-Mail here" />
+	                </div>               
+	                
+	                <div class="input tel hidden">
+	                <h5 class="input_con_title">전화번호</h5>
+	                    <input type="tel" name="phone" id="phone" placeholder="'-'제외, 전화번호 입력"
+	                    required title="Please enter your Phone Number here" />
+	                </div>                 
+	                
+	                <div class="input code hidden">
+	                	<h5 class="input_con_title">인증번호</h5>
+	                    <input type="text" name="code" id="code" required placeholder="인증번호 입력"
+	                        title="Please enter your Address here" />
+	                    <button type="button" class="btn_auth">인증번호 받기</button>
+	                </div>
+	                
+	                <div class="input addr hidden">
+	                	<h5 class="input_con_title">주소</h5>
+	                    <input type="text" name="addr" placeholder="주소 입력" id="addr" required
+	                        title="Please enter your Address here" />
+	                    <button type="button" class="btn_location">우편번호 찾기</button>
+	                </div>
+	                
+	                <div class="input addr2 hidden">
+	                	<input type="text" name="addr" placeholder="상세 주소 입력" id="addr2" required
+	                        title="Please enter your Address here" />
+	                </div>
+	
 					<div class="input perpose hidden">
-                        <input type="text" name="perpose" id="perpose" required
-                            title="Please enter your Perpose here" />
-                        <label for="perpose">사용목적(선택)</label>
-                    </div>
-                    
-                    <div class="input contact hidden">
-                        <input type="text" name="contact" id="contact" required
-                            title="Please enter your Contact here" />
-                        <label for="contact">알게된 경로(선택)</label>
-                    </div>
-
-                    <input type="submit" value="가입하기" class="join-btn join hidden" />
-                </form>
+						<h5 class="input_con_title">사용목적</h5>
+	                    <input type="text" name="perpose" placeholder="어떤 용도로 사용하실 건가요? (선택)" id="perpose" required
+	                        title="Please enter your Perpose here" />
+	                </div>
+	                
+	                <div class="input contact hidden">
+	                	<h5 class="input_con_title">컨텍경로</h5>
+	                    <input type="text" name="contact" placeholder="JTM을 어디서 처음 접하셨나요? (선택)"id="contact" required
+	                        title="Please enter your Contact here" />
+	                </div>
+	                
+	                <button type="submit" value="가입하기" class="join-btn join hidden">가입하기</button>
+                </div>
+                
             </div>
         </div>
         <div class="container find" style="display:none;">
-               <div class="find_id form">
-                   <div>
-                       <h1>ID 찾기</h1>
-                   </div>
-
-					<div class="input">
-                       <input type="text" name="findid_username" id="findid_username" required
-                           title="Please enter your Username here" />
-                       <label for="findid_username">이름</label>
-                   </div>
-
-                   <div class="input">
-                       <input type="email" name="findid_email" id="findid_email" required
-                           title="Please enter your E-Mail here" />
-                       <label for="findid_email">메일</label>
-                   </div>
-                   
-                   <div class="input">
-                       <input type="tel" name="findid_phone" id="findid_phone" required
-                           title="Please enter your Phone Number here" />
-                       <label for="findid_phone">전화번호</label>
-                   </div>
+        	<img src="./images/login/note.l.png" alt="#" class="note">
+        	
+        	<div class="form find_id">              
                 
-                   <input type="submit" value="ID찾기" class="id_btn" />
-               </div>
+                <h1 class="find_title1">아이디 찾기</h1>
+                
+                <div class="form_con">
+                
+                	<div class="input name find">
+                		<h5 class="input_con_title">이름</h5>
+	                	<input type="email" name="email" placeholder="이름 입력" 
+	                    id="findid_username" required title="Please enter your Name here" />
+	                </div>
+	                
+                	<div class="input email find">
+                		<h5 class="input_con_title">이메일</h5>
+	                	<input type="email" name="email" placeholder="이메일" 
+	                    id="findid_email" required title="Please enter your E-Mail here" />
+	                </div>               
+	                
+	                <div class="input tel find">
+	                <h5 class="input_con_title">전화번호</h5>
+	                    <input type="tel" name="phone" id="findid_phone" placeholder="'-'제외, 전화번호 입력"
+	                    required title="Please enter your Phone Number here" />
+	                </div>                 
+	                
+	                <div class="input code find">
+	                	<h5 class="input_con_title">인증번호</h5>
+	                    <input type="text" name="code" id="code2" required placeholder="인증번호 입력"
+	                        title="Please enter your Address here" />
+	                    <button type="button" class="btn_auth">인증번호 받기</button>
+	                </div>
+	                
+	                <button type="submit" value="ID찾기" class="id_btn">아이디 조회하기</button>
+                </div>
+                
+            </div>
+            
+            <div class="form find_pw">              
+                
+                <h1 class="find_title2">비밀번호 찾기</h1>
+                
+                <div class="form_con">
+                
+                	<div class="input id find">
+                		<h5 class="input_con_title">아이디</h5>
+	                	<input type="text" placeholder="ID 입력" name="findpw_id" id="findpw_id" 
+	                    required title="Please enter your ID here" />
+	                </div>
+                
+                	<div class="input name find">
+                		<h5 class="input_con_title">이름</h5>
+	                	<input type="email" placeholder="이름 입력" name="findpw_username" 
+	                	id="findpw_username"" required title="Please enter your Username here" />
+	                </div>
+	                
+                	<div class="input email find">
+                		<h5 class="input_con_title">이메일</h5>
+	                	<input type="email" name="findpw_email" id="findpw_email" 
+	                	placeholder="이메일" required title="Please enter your E-Mail here" />
+	                </div>               
+	                
+	                <div class="input tel find">
+	                <h5 class="input_con_title">전화번호</h5>
+	                    <input type="tel" name="findpw_phone" id="findpw_phone" placeholder="'-'제외, 전화번호 입력"
+	                    required title="Please enter your Phone Number here" />
+	                </div>                 
+	                
+	                <div class="input code find">
+	                	<h5 class="input_con_title">인증번호</h5>
+	                    <input type="text" name="code" id="code2" required placeholder="인증번호 입력"
+	                        title="Please enter your Address here" />
+	                    <button type="button" class="btn_auth">인증번호 받기</button>
+	                </div>
+	                
+	                <button type="submit" value="비밀번호찾기" class="pw_btn">비밀번호 조회하기</button>
+                </div>
+                
+            </div>   
                
-               <div class="find_pw form">
+               <!-- <div class="find_pw form hidden">
                	   <div>
                        <h1>비밀번호 찾기</h1>
                    </div>
@@ -306,7 +547,7 @@
                    </div>
 				   
                    <input type="submit" value="비밀번호 찾기" class="pw_btn" />
-               </div>
+               </div> -->
         </div>
     </div>
 </body>
@@ -382,11 +623,16 @@ var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
 			$('.input.pwd').addClass('hidden');
 			$('.input.confirm').addClass('hidden');
 			$('.join-btn.next').addClass('hidden');
+			$('.input.agree').addClass('hidden');
+			$('.join_title').addClass('hidden');
 			
+			$('.form_con').removeClass('hidden');
+			$('.join_title2').removeClass('hidden');
 			$('.input.tel').removeClass('hidden');
 			$('.input.mail').removeClass('hidden');
 			$('.input.code').removeClass('hidden');
 			$('.input.addr').removeClass('hidden');
+			$('.input.addr2').removeClass('hidden');
 			$('.input.perpose').removeClass('hidden');
 			$('.input.contact').removeClass('hidden');
 			

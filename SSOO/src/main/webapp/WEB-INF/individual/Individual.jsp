@@ -40,32 +40,43 @@
    		<div class="black">
    			<div class="pop_dialog">
    				<div class="pop_head">
+   					<img src="./images/individual/watch.png" alt="watch">
 	   				<h3>To-Do List 생성</h3>
 	   				<button class="popup_X">X</button>
    				</div>
    				<div class="pop_middle">
    					<div class="pop_input">
-   						<h4>제목 : </h4><input id="pop_TODO_Title" placeholder="제목을 입력해주세요.">
+   						<h4>일정 제목 </h4>
+   						<input id="pop_TODO_Title" placeholder="일정 제목을 입력해주세요.">
+   					</div>
+   					<div class="pop_input time">
+   						<h4>일정 시간</h4>
+   						<div class="time_wrap">
+   							<input type="number" class="pop_TODO_time" value="0" max="12" min="-1" oninput="handleOnInput2(this, 2)">
+							<input type="number" class="pop_TODO_minute" value="0" max="60" min="-1" oninput="handleOnInput2(this, 2)">
+							<select class="pop_TODO_Time_AMPM">
+								<option value="AM">A.M</option>
+								<option value="PM">P.M</option>
+							</select>
+   						</div>
+						
    					</div>
    					<div class="pop_input">
-   						<h4>시간 : </h4>
-						<input type="number" class="pop_TODO_time" value="0" max="12" min="-1" oninput="handleOnInput2(this, 2)"> :
-						<input type="number" class="pop_TODO_minute" value="0" max="60" min="-1" oninput="handleOnInput2(this, 2)">
-						<select class="pop_TODO_Time_AMPM">
-							<option value="AM">A.M</option>
-							<option value="PM">P.M</option>
-						</select>
+   						<h4>일정 위치</h4>
+   						<input id="pop_TODO_location" >
    					</div>
    					<div class="pop_input">
-   						<h4>장소 : </h4><input id="pop_TODO_location" placeholder="주소 입력">
-   					</div>
-   					<div class="pop_input">
-   						<h4>파일 : </h4><input type="file" id="pop_TODO_file">
+   						<h4>파일 첨부</h4>
+   						<div>
+   						<input type="file" id="pop_TODO_file" style="display:none;">
+   						<input class="uploaded_file" id="name_pop_TODO_file" value="" placeholder="첨부파일" readonly="">
+   						<label for="pop_TODO_file">업로드</label>
+   						</div>
    					</div>
    						
    				</div>
    				<div class="pop_bottom">
-   					<button class="popup_Save" id="pop_TODO_save">등록</button>
+   					<button class="popup_Save" id="pop_TODO_save">등록하기</button>
    				</div>
    			</div>
    		</div>
@@ -74,24 +85,25 @@
    		<div class="black">
    			<div class="pop_dialog">
    				<div class="pop_head">
+   					<img src="./images/individual/watch.png" alt="watch">
 	   				<h3>일정 만들기</h3>
 	   				<input type="hidden" id="pop_IDX_SORT">
 	   				<button class="popup_X">X</button>
    				</div>
    				<div class="pop_middle">
    					<div class="pop_input">
-   						<h4>제목 : </h4><input id="pop_Calendar_Title" placeholder="제목을 입력해주세요.">
+   						<h4>제목 </h4><input id="pop_Calendar_Title" placeholder="제목을 입력해주세요.">
    					</div>
    					<div class="pop_input">
-   						<h4>시작일 : </h4>
+   						<h4>시작일</h4>
 						<input id="pop_Calendar_FROM">
    					</div>
    					<div class="pop_input">
-   						<h4>종료일 : </h4>
+   						<h4>종료일</h4>
 						<input id="pop_Calendar_TO">
    					</div>
    					<div class="pop_input">
-   						<h4>시작시간 : </h4>
+   						<h4>시작시간</h4>
 						<input type="number" class="pop_Calendar_time" id="pop_Calendar_time" value="0" max="12" min="-1" oninput="handleOnInput3(this, 2)"> :
 						<input type="number" class="pop_Calendar_minute" id="pop_Calendar_minute" value="0" max="60" min="-1" oninput="handleOnInput3(this, 2)">
 						<select id="pop_Calendar_Time_AMPM">
@@ -101,7 +113,7 @@
    					</div>
    					
    					<div class="pop_input">
-   						<h4>종료시간 : </h4>
+   						<h4>종료시간</h4>
 						<input type="number" class="pop_Calendar2_time" id="pop_Calendar2_time" value="0" max="12" min="-1" oninput="handleOnInput4(this, 2)"> :
 						<input type="number" class="pop_Calendar2_minute" id="pop_Calendar2_minute" value="0" max="60" min="-1" oninput="handleOnInput4(this, 2)">
 						<select id="pop_Calendar2_Time_AMPM">
@@ -110,7 +122,7 @@
 						</select>
    					</div>
    					<div class="pop_input">
-   						<h4>색상 : </h4>
+   						<h4>색상</h4>
 						<input type="text" id="pop_Calendar_Color" value="#ff4e43" data-coloris>
    					</div>
    				</div>
@@ -122,9 +134,18 @@
    			</div>
    		</div>
    </div>
-   <div class="popup_trash" id="popup_trash">
-   			<div class="pop_dialog_trash">
+   <div class="popup popup_trash" id="popup_trash">
+   		<div class="black">
+   			<div class="pop_dialog">
+   				<div class="pop_head">
+   					<img src="./images/individual/watch.png" alt="watch">
+	   				<h3>휴지통</h3>
+	   				<input type="hidden" id="pop_IDX_SORT">
+	   				<button class="popup_X">X</button>
+   				</div>
+   				<div class="pop_dialog_trash"></div>   				
    			</div>
+   		</div>   		
    	</div>
   <div class="container">
 

@@ -80,7 +80,8 @@
 		.con_div>img 
 		{
 			 display: block;
-   			 margin: 0 auto;
+   			 margin: 0 auto 50px;
+    		 width: 250px;
 		}
 		
 		.con_div>button 
