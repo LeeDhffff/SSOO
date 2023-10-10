@@ -372,7 +372,7 @@ section
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 20px;
   grid-gap: 20px;
-  overflow-y: scroll;  
+/*   overflow-y: scroll;   */
 }
 
 /* ----board_body 끝------ */
@@ -437,8 +437,15 @@ section
   margin-top: 10px;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
 }
+
+.diary_section > .to_do_board_con 
+{
+	height: initial;
+	margin: 20px 0;
+}
 #side_todo_section{
   overflow-y: scroll;
+  padding: 0 40px;
 }
 .character
 {
