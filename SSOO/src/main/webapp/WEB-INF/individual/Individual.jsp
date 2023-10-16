@@ -295,7 +295,7 @@
 	            	<div class="character_image">
 	            	</div>
 	            	</div>
-	            	<h3 class="character_owner"><%=(String)session.getAttribute("SESSION_NAM_KOR")%></h3>
+	            	<h3 class="character_owner"><%=(String)session.getAttribute("SESSION_NICK")%></h3>
             		<div class="level_number">
 	            		<h5 class="character_h5">Level</h5>
 		            	<h5 class="watch">

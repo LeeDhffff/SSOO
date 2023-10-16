@@ -61,6 +61,7 @@ public class LoginController {
 			HttpSession httpSession = request.getSession(true);
 			httpSession.setAttribute("SESSION_COD_MEMB", LoginList.get("ID"));
 			httpSession.setAttribute("SESSION_NAM_KOR", LoginList.get("USERNAME"));
+			httpSession.setAttribute("SESSION_NICK", LoginList.get("NICKNAME"));
 			httpSession.setMaxInactiveInterval(24*60*60);
 			
 			System.out.println("inputMap:: "+inputMap);

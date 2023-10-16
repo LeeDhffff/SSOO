@@ -377,17 +377,32 @@
                 
                 <button type="submit" value="다음" class="join-btn next">다음</button>
                 
-                <div class="input username hidden">
-                    <input type="text" name="Join_username" id="Join_username" required
-                        title="Please enter your Username here" />
-                    <label for="Join_username">이름</label>
-                </div>
+<!--                 <div class="input username hidden"> -->
+<!--                     <input type="text" name="Join_username" id="Join_username" required -->
+<!--                         title="Please enter your Username here" /> -->
+<!--                     <label for="Join_username">이름</label> -->
+<!--                 </div> -->
     
 <!------------------회원정보 입력 ------------------------->
                 
                 <h1 class="join_title2 hidden">회원정보 입력</h1>
                 
-                <div class="form_con hidden">
+	                
+                	<div class="form_con hidden">
+                	
+                	
+	                <div class="input username hidden">
+                		<h5 class="input_con_title">이름</h5>
+	                    <input type="text" name="Join_username" id="Join_username" placeholder="이름"  required
+	                        title="Please enter your Username here" />
+	                </div>
+	                
+	                <div class="input nickname hidden">
+                		<h5 class="input_con_title">닉네임</h5>
+	                    <input type="text" name="nickname" id="nickname" placeholder="닉네임" required
+	                        title="Please enter your Nickname here" />
+	                </div>
+	                
                 	<div class="input mail hidden">
                 		<h5 class="input_con_title">이메일</h5>
 	                	<input type="email" name="email" placeholder="이메일" 
@@ -490,7 +505,7 @@
                 	<div class="input name find">
                 		<h5 class="input_con_title">이름</h5>
 	                	<input type="email" placeholder="이름 입력" name="findpw_username" 
-	                	id="findpw_username"" required title="Please enter your Username here" />
+	                	id="findpw_username" required title="Please enter your Username here" />
 	                </div>
 	                
                 	<div class="input email find">
@@ -673,6 +688,7 @@ var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
 				ID: $('#Join_id').val(),
 				PW: $('#Join_password').val(),
 				NAME: $('#Join_username').val(),
+				NICK: $('#nickname').val(),
 				EMAIL: $('#email').val(),
 				TEL: $('#phone').val().replaceAll('-',''),
 				ADDR: $('#addr').val(),
