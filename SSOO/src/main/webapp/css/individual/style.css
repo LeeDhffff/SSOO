@@ -858,6 +858,7 @@ section
   .character_table_div > table > thead > tr > th{
     background: var(--main-color);
     color: white;
+    position: relative;
   }
   #nowCharacter{
   
@@ -971,8 +972,8 @@ section
     height: 30px;
     border-radius: 15px;    
     position: absolute;
-    right: 5%;
-    top: 33%;
+    right: 0%;
+    top: 22%;
     cursor: pointer;
 	}
   #change_table2{
@@ -983,8 +984,8 @@ section
     height: 30px;
     border-radius: 15px;    
     position: absolute;
-    left: 5%;
-    top: 33%;
+    left: 0%;
+    top: 22%;
     cursor: pointer;
 	}
 	

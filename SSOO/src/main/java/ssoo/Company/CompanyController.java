@@ -153,6 +153,17 @@ public class CompanyController {
 		String jsonStr = mapper.writeValueAsString(LoginList);
 		return jsonStr;
 	}
+
+	@RequestMapping(value = "/Company/select_profile.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String select_profile(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		List<HashMap<String, String>> team = CompanyService.select_profile(inputMap);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(team);
+		
+		return jsonStr;
+	}
 	
 	@RequestMapping(value = "/Company/edit_profile.do", produces = "application/text; charset=utf-8")
 	@ResponseBody
@@ -162,6 +173,21 @@ public class CompanyController {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonStr = mapper.writeValueAsString(team);
 		
+		HttpSession httpSession = request.getSession(true);
+		httpSession.setAttribute("SESSION_NAM_KOR", team.get("USERNAME"));
+		httpSession.setAttribute("SESSION_NICK", team.get("NICKNAME"));
+		
 		return jsonStr;
+	}
+	@RequestMapping(value = "/Company/pwd_profile.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String pwd_profile(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		String team = CompanyService.pwd_profile(inputMap);
+		System.out.println(team);
+		
+//		ObjectMapper mapper = new ObjectMapper();
+//		String jsonStr = mapper.writeValueAsString(team);
+		
+		return team;
 	}
 }

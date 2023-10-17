@@ -82,10 +82,25 @@
 		)}
 	</select>
 	
+	<select id="select_profile" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 개인정보조회 (
+			#{USERID}
+		)}
+	</select>
 	<select id="edit_profile" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
 		{call 개인정보수정 (
 			#{USERID},
-			#{USERNAME}
+			#{PWD},
+			#{USERNAME},
+			#{NICKNAME},
+			#{TEL},
+			#{ADDR}
+		)}
+	</select>
+	<select id="pwd_profile" statementType="CALLABLE" parameterType="hashmap" resultType="string">
+		{call 비밀번호조회 (
+			#{USERID},
+			#{PWD}
 		)}
 	</select>
 </mapper>

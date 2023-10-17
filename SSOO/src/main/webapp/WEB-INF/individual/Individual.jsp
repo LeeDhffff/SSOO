@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>개인 스케쥴러</title>
 </head>
+<jsp:include page="../alert.jsp"></jsp:include>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -153,7 +154,7 @@
 
         <header class="header">
             <h3 class="logo">
-                <a href="#">
+                <a href="Main.do">
                     <img src="./images/individual/logo.png" alt="logo">
                 </a>
             </h3>
@@ -500,7 +501,8 @@
 			
 			
 			
-			var date2 = info.event.end;
+			var date2 = (info.event.end != null ) ? info.event.end
+					    : date1;
 			var endyear = (date2.getFullYear() < 10) ? "0" + date2.getFullYear()
 							: date2.getFullYear();
 			var endmonth = (date2.getMonth() + 1 < 10) ? "0" + (String)(date2.getMonth() + 1)
@@ -640,14 +642,6 @@
     $("#pop_Calendar_save").on("click",function(){
 
     	
-    	if($("#pop_Calendar_FROM").val() == ''){
-    		alert("날짜를 먼저 입력하세요.")
-    	}
-    	else if($("#pop_Calendar_TO").val() == ''){
-    		alert("날짜를 먼저 입력하세요.")
-    	}
-    	else{
-		$(".popup").hide();
 		
 		var time = ($("#pop_Calendar_Time_AMPM").val() == 'AM') ? $("#pop_Calendar_time").val()
 				: (String)(Number($("#pop_Calendar_time").val()) + 12);
@@ -673,8 +667,20 @@
 		var startdate = new Date($("#pop_Calendar_FROM").val() + " " +  totime)
 		var enddate = new Date($("#pop_Calendar_TO").val() + " " + totime2)
 		
+		console.log(startdate,enddate,enddate.getTime() - startdate.getTime())
 // 		date.setDate(date.getDate());
 		
+		if($("#pop_Calendar_FROM").val() == ''){
+    		popup_alert.alerts("날짜를 먼저 입력하세요.");
+    	}
+    	else if($("#pop_Calendar_TO").val() == ''){
+    		popup_alert.alerts("날짜를 먼저 입력하세요.")
+    	}
+    	else if(enddate.getTime() - startdate.getTime() < 0){
+    		popup_alert.alerts("시작시간이 종료시간보다 이전 시간이여야 합니다.")
+    	}
+    	else{
+		$(".popup").hide();
 		
 		var insertdata = {
 				COD_MEMB : uid,
@@ -770,7 +776,8 @@
 
 	$("#pop_Calendar_delete").on("click",function(){
 		
-		if(confirm("해당 일정을 삭제하시겠습니까?")){
+		popup_alert.confirm("해당 일정을 삭제하시겠습니까?", function (res) {
+            if (res){
 			$(".popup").hide();
 			
 			var updatedata = {
@@ -796,7 +803,7 @@
 			})
 			
 		}
-
+		})
 	  });
   });
   

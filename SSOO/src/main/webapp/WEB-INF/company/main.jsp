@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<jsp:include page="../alert.jsp"></jsp:include>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -448,6 +449,17 @@
         	margin-bottom: 20px;
         }
         
+        .modal_change_profile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 9;
+        }
+        
         .input_title 
         {
         	font-size: 18px;
@@ -773,14 +785,95 @@
 		    color: #fff;
 		    font-size: 14px;
 		}
+		
+		
+		
+        .modal_con_wrap_profile {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+			width: 580px;
+            text-align: center;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+            transform: translateX(-50%) translateY(-50%);
+        }
+        .profile_head{
+       	    margin-top: 20px;
+    		margin-bottom: 30px;
+        }
+		.profile_head > h3 {
+			font-size: 30px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		.profile_image_div{
+		    width: 100px;
+		    height: 100px;
+		    background: #b7b7b7;
+		    border-radius: 100px;    
+		    margin: auto;
+		    margin-top: 15px;
+    		margin-bottom: 20px;
+    		position: relative;
+		}
+		.profile_input_div{
+			display: flex;
+			justify-content: center;    
+			font-size: 15px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		.profile_input_div > h4{
+			width: 150px;    
+			text-align: left;
+		    margin-top: auto;
+   		 	margin-bottom: auto;
+		}
+		.profile_input{
+			width: 300px;
+		    height: 40px;
+		    padding-left: 10px;
+		    border: 1px solid #9d9d9d;
+		    border-radius: 6px;
+		}
+		.profile_btn_div{
+		    margin-top: 30px;
+		    margin-bottom: 20px;
+		}
+		.profile_btn{
+		    width: 150px;
+		    height: 40px;
+		    border: 0;
+		    color: white;
+		    border-radius: 5px;
+		    cursor: pointer;
+		}
+		.profile_image_div_btn{
+		    background: gray;
+		    width: 30px;
+		    height: 30px;
+		    position: absolute;
+		    right: 0%;
+		    bottom: 0%;
+		    border-radius: 100px;
+		    cursor: pointer;
+		}
+		#profile_addEvt{
+		    background: var(--company);
+		}
+		#profile_X{
+		    background: black;
+		}
     </style>
     <script>
 	    var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
 	    
-	   if('<%=request.getParameter("SESSION_NAM_KOR")%>' != 'null'){
-		   var uname = '<%=request.getParameter("SESSION_NAM_KOR")%>';
+	   if('<%=request.getParameter("SESSION_NICK")%>' != 'null'){
+		   var uname = '<%=request.getParameter("SESSION_NICK")%>';
 	   }else{
-		   var uname = '<%=(String)session.getAttribute("SESSION_NAM_KOR")%>';
+		   var uname = '<%=(String)session.getAttribute("SESSION_NICK")%>';
 	   }
 	    
 		console.log(uid, uname);
@@ -789,7 +882,9 @@
 <body>
     <div class="container">        
 		<nav class="navigation">
+			<a href="/SSOO/Main.do">
 		    <h1 class="logo"></h1>
+		    </a>
 		    <div class="admin">
 		        <div class="profile_img">
 		            <img src="../images/admin.png" alt="#">
@@ -909,13 +1004,77 @@
             </div>
     	</div>
     </div>
+    
+    <div class="modal_change_profile">
+    	<div class="modal_con_wrap_profile">
+    		<div class="profile_head">
+                <h3>내 정보</h3>
+                <div class="profile_image_div">
+                	<img src="" class="profile_image">
+	                <div class="profile_image_div_btn">
+	                </div>
+                </div>
+            </div>
+    		<div class="profile_body">
+                <div class="profile_input_div">
+            		<h4>아이디</h4>
+            		<input class="profile_input" id="profile_id" disabled>
+                </div>
+                <div class="profile_input_div">
+            		<h4>이름</h4>
+            		<input class="profile_input" id="profile_name" placeholder="이름을 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>닉네임</h4>
+            		<input class="profile_input" id="profile_nick" placeholder="닉네임을 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>현재 패스워드</h4>
+            		<input type="password" class="profile_input" id="profile_now_pass" placeholder="현재 패스워드를 입력하세요.">
+            		<input type="hidden" class="profile_input" id="profile_now_pass_chk" placeholder="변경 패스워드를 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>변경 패스워드</h4>
+            		<input type="password" class="profile_input P_password" id="profile_new_pass" placeholder="변경 패스워드를 입력하세요." disabled>
+            		<input type="hidden" class="profile_input" id="profile_new_pass_chk" placeholder="변경 패스워드를 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>변경 패스워드 확인</h4>
+            		<input type="password" class="profile_input P_password" id="profile_new_pass_2" placeholder="변경 패스워드 확인" disabled>
+                </div>
+                <div class="profile_input_div">
+            		<h4>전화번호</h4>
+            		<input class="profile_input" id="profile_phone" placeholder="전화번호를 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>주소</h4>
+            		<input class="profile_input" id="profile_address" placeholder="주소를 입력하세요.">
+                </div>
+            </div>
+            <div class="profile_btn_div">
+                <button id="profile_X" class="profile_btn">취소하기</button>
+                <button id="profile_addEvt" class="profile_btn">등록하기</button>
+            </div>
+    	</div>
+    </div>
+    
+    <div class="modal_Mini_alert">
+    	<div class="modal_con_wrap_profile">
+    	</div>
+   	</div>
 </body>
 <script>
     $(document).ready(function() {
     	window.addEventListener("keydown", function(e){
-            if(e.code == "Tab"){
+            if(e.code == "Tab" && $(".modal_change_profile").css("display") == 'none'){
                 // 개인으로 이동
                 $('.btn.ps').click();
+            }
+            else if(e.code == "Escape" && ($(".modal").css("display") == 'block' || $(".modal2").css("display") == 'block' || $(".modal_change_profile").css("display") == 'block')){
+                // 개인으로 이동
+                $('.close').click();
+                $('.close2').click();
+                $('#profile_X').click();
             }
         });
     	
@@ -926,37 +1085,11 @@
         $('.profile_name')[0].innerText = uname+'님';
 
         $('.btn_edit').on('click',function(){
-        	var new_name = prompt('변경할 이름을 입력해주세요','');
+        	$(".modal_change_profile").show();
+        	profileReset();
+//         	var new_name = prompt('변경할 이름을 입력해주세요','');
         	
-        	$.ajax({
-        		type: "POST",
-				url : "./edit_profile.do",
-				data:{
-					USERID: uid,
-					USERNAME: new_name
-				},
-				async: false,
-				success:function(data){
-					console.log(data);
-					
-					var frm = document.createElement("form");
-		        	frm.setAttribute("charset", "UTF-8");
-		        	frm.setAttribute("method", "POST");
-		        	frm.setAttribute("action", "./main.do");
-		        	
-		        	var hiddenField = document.createElement("input");
-		        	hiddenField.setAttribute("type", "hidden");
-		            hiddenField.setAttribute("name", "SESSION_NAM_KOR");
-		            hiddenField.setAttribute("value", new_name);
-		            frm.appendChild(hiddenField);
-		            
-		            document.body.appendChild(frm);
-		            frm.submit();
-				},
-				error:function(err){
-					console.log(err);
-				}
-        	});
+
         });
         
         /* toggle */
@@ -1194,6 +1327,118 @@
              $(".close2").click();
              loadBK();
          });
+        
+        
+        $("#profile_X").on("click",function(){
+        	$(".modal_change_profile").hide();
+        })
+        $("#profile_addEvt").on("click",function(){
+        	
+        	if($("#profile_name").val() == ''){
+     		   popup_alert.alerts('이름을 입력해주세요.')
+        	}
+        	else if($("#profile_nick").val() == ''){
+      		   popup_alert.alerts('닉네임을 입력해주세요.')
+        	}
+        	else if($("#profile_new_pass_chk").val() == '' && $("#profile_now_pass_chk").val() == 'Y'){
+       		   popup_alert.alerts('비밀번호가 일치하지 않습니다.')
+        	}
+        	else{
+        		
+	            	$.ajax({
+	        		type: "POST",
+					url : "./edit_profile.do",
+					data:{
+						USERID: uid,
+						PWD: ($("#profile_now_pass_chk").val() == '') ? ''
+							  : $("#profile_new_pass").val(),
+						USERNAME: $("#profile_name").val(),
+						NICKNAME: $("#profile_nick").val(),
+						TEL: $("#profile_phone").val(),
+						ADDR: $("#profile_address").val(),
+							  
+					},
+					async: false,
+					success:function(data){
+						console.log(data);
+						
+						var frm = document.createElement("form");
+			        	frm.setAttribute("charset", "UTF-8");
+			        	frm.setAttribute("method", "POST");
+			        	frm.setAttribute("action", "./main.do");
+			        	
+			        	var hiddenField = document.createElement("input");
+			        	hiddenField.setAttribute("type", "hidden");
+			            hiddenField.setAttribute("name", "SESSION_NAM_KOR");
+			            hiddenField.setAttribute("value", $("#profile_name").val());
+			            frm.appendChild(hiddenField);
+			            
+			            document.body.appendChild(frm);
+			            frm.submit();
+			            
+
+						var frm2 = document.createElement("form");
+			        	frm2.setAttribute("charset", "UTF-8");
+			        	frm2.setAttribute("method", "POST");
+			        	frm2.setAttribute("action", "./main.do");
+			        	
+			        	var hiddenField2 = document.createElement("input");
+			        	hiddenField2.setAttribute("type", "hidden");
+			            hiddenField2.setAttribute("name", "SESSION_NICK");
+			            hiddenField2.setAttribute("value", $("#profile_nick").val());
+			            frm2.appendChild(hiddenField2);
+			            
+			            document.body.appendChild(frm2);
+			            frm2.submit();
+			            
+			            profileReset();
+					},
+					error:function(err){
+						console.log(err);
+					}
+	        	});
+        	}
+        })
+        
+        $("#profile_now_pass").on("change",function(){
+
+        	$.ajax({
+    		type: "POST",
+			url : "./pwd_profile.do",
+			data:{
+				USERID: uid,
+				PWD: $("#profile_now_pass").val(),
+				},
+			success : function(data){
+					if(data == '비밀번호가 일치합니다.'){
+						$("#profile_now_pass_chk").val('Y')
+						$("#profile_new_pass").prop("disabled",false);
+						$("#profile_new_pass_2").prop("disabled",false);
+						$("#profile_new_pass").val("");
+						$("#profile_new_pass_2").val("");
+						$("#profile_new_pass_chk").val("");
+					}
+					else{
+						$("#profile_now_pass_chk").val('');
+						$("#profile_new_pass").prop("disabled",true);
+						$("#profile_new_pass_2").prop("disabled",true);
+						$("#profile_new_pass").val("");
+						$("#profile_new_pass_2").val("");
+						$("#profile_new_pass_chk").val("");
+					}
+				}
+        	})
+        })
+        
+        $(".P_password").on("change",function(){
+
+			if($("#profile_new_pass").val() == $("#profile_new_pass_2").val()){
+				$("#profile_new_pass_chk").val('Y')
+			}
+			else{
+				$("#profile_new_pass_chk").val('')
+			}
+        })
     });
     
     function start(){
@@ -1268,6 +1513,33 @@
 					console.log(result[i]);
 					$('#'+result[i].TEAM+'.team_div').append("<div>"+result[i].TITLE+"<p>("+result[i].TIME_FROM+"~"+result[i].TIME_TO+")</p></div>");
 				}
+			},
+			error: function(err){
+				console.log(err);
+			}
+        });
+    }
+    function profileReset(){
+    	
+    	$.ajax({
+        	type: "POST",
+			url : "./select_profile.do",
+			data: {
+				USERID: uid
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+
+		    	$(".profile_input").val("");
+
+		    	$("#profile_id").val(result[0].ID);
+		    	$("#profile_name").val(result[0].USERNAME);
+		    	$("#profile_nick").val(result[0].NICKNAME);
+		    	$("#profile_phone").val(result[0].TEL);
+		    	$("#profile_address").val(result[0].ADDR);
+		    	
+		    	console.log(result);
 			},
 			error: function(err){
 				console.log(err);

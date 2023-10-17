@@ -84,4 +84,14 @@ public class CompanyServiceImpl implements CompanyService {
 			// TODO Auto-generated method stub
 			return CompanyMapper.edit_profile(inputMap);
 		}
+		@Override
+		public List<HashMap<String, String>> select_profile(HashMap<String, Object> inputMap) throws Exception {
+			// TODO Auto-generated method stub
+			return CompanyMapper.select_profile(inputMap);
+		}
+		@Override
+		public String pwd_profile(HashMap<String, Object> inputMap) throws Exception {
+			// TODO Auto-generated method stub
+			return CompanyMapper.pwd_profile(inputMap);
+		}
 }

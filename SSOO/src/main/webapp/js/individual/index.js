@@ -99,7 +99,7 @@ $(document).ready(function(){
 			})
 	   }                            
 	   else{
-		   alert('윗칸에는 4개만 넣을수 있습니다.')
+		   popup_alert.alerts('윗칸에는 4개만 넣을수 있습니다.')
 	   }
 	                            
 	                        
@@ -199,7 +199,7 @@ $(document).ready(function(){
 		   
 	   }                            
 	   else{
-		   alert('윗칸에는 4개만 넣을수 있습니다.')
+		   popup_alert.alerts('윗칸에는 4개만 넣을수 있습니다.')
 	   }
      
 	});
@@ -302,31 +302,35 @@ $(document).ready(function(){
         $(".mission_pop_div_update").append($("#Mission_save"));
 	});
 	$(document).on("click",".Mission_remove",function(){
-		
+		var target = $(this);
 		if($(this).attr("idx") == '0'){
 			$(this).parent('.mission_div').remove();
 		}
-		else if(confirm("해당 미션을 삭제하시겠습니까?")){
-			var selectdata2 = {
-					COD_MEMB : uid,
-					IDX_SORT :  $(this).attr("idx")
-			};
-			$.ajax({
-				url: "TodaysMission_Delete.do",
-				data: selectdata2,
-				type: "POST",
-				async: false,
-				success: function(data2){		
-					var result2 = JSON.parse(data2);
-
-					alert("삭제되었습니다.");
-					$(".mission_pop_div_update").empty();
-					
-					selectMission();
-				}
+		else{
+			popup_alert.confirm("해당 미션을 삭제하시겠습니까?", function (res) {
+	            if (res){
+				var selectdata2 = {
+						COD_MEMB : uid,
+						IDX_SORT :  target.attr("idx")
+				};
+				$.ajax({
+					url: "TodaysMission_Delete.do",
+					data: selectdata2,
+					type: "POST",
+					async: false,
+					success: function(data2){		
+						var result2 = JSON.parse(data2);
+						
+						popup_alert.alerts("삭제되었습니다.");
+						$(".mission_pop_div_update").empty();
+						
+						selectMission();
+					}
+				})
+			
+	            }
 			})
 		}
-		
 	});
 	$(document).on("click","#Mission_save",function(){
 
@@ -356,7 +360,7 @@ $(document).ready(function(){
 			}
 		})
 		
-		alert("저장되었습니다.");
+		popup_alert.alerts("저장되었습니다.");
 	});
 	/*===============================================================================================*/
 	/*==========================================기타==================================================*/
@@ -368,21 +372,21 @@ $(document).ready(function(){
 		location.href = "Company/main.do"
 	})
 	
-	
-document.querySelector("body").addEventListener("click", function(e) {
-	if($("#popup_trash").css("display") != "none"){
-		if(e.target.className != e.currentTarget.querySelector(".popup_trash").className 
-				&& e.target.className != e.currentTarget.querySelector(".trash").className
-				&& e.target.className != e.currentTarget.querySelector(".trash_img").className
-				&& $(e.target).parents(".popup_trash").attr("id") != 'popup_trash'){
-			$("#popup_trash").hide();
-			if($(".trash").hasClass("notopen") == false){
-				$(".trash").addClass("notopen");
-				
-			}
-	    }
-	}
-})
+//	
+//document.querySelector("body").addEventListener("click", function(e) {
+//	if($("#popup_trash").css("display") != "none"){
+//		if(e.target.className != e.currentTarget.querySelector(".popup_trash").className 
+//				&& e.target.className != e.currentTarget.querySelector(".trash").className
+//				&& e.target.className != e.currentTarget.querySelector(".trash_img").className
+//				&& $(e.target).parents(".popup_trash").attr("id") != 'popup_trash'){
+//			$("#popup_trash").hide();
+//			if($(".trash").hasClass("notopen") == false){
+//				$(".trash").addClass("notopen");
+//				
+//			}
+//	    }
+//	}
+//})
 
 	$("#character_change").on("click",function(){
 		$(".character_menu").show();
@@ -611,8 +615,9 @@ $(document).on('click','.option_list.delete',function(){
 	
 	const idx = $(parent).attr("idx");
 	
-	
-	if(confirm("해당 Todo 항목을 삭제하시겠습니까?")){
+
+	popup_alert.confirm("해당 Todo 항목을 삭제하시겠습니까?", function (res) {
+        if (res){
 
 		 var insertdata = {
 					COD_MEMB : uid,
@@ -631,7 +636,7 @@ $(document).on('click','.option_list.delete',function(){
 				
 			})
 	}
-		
+	})
 })
 $(document).on('click','.option_list.recovery',function(){
 	const parent = $(this).parents('.to_do_board_con');
@@ -640,8 +645,9 @@ $(document).on('click','.option_list.recovery',function(){
 	
 	const idx = $(parent).attr("idx");
 	
-	
-	if(confirm("해당 Todo 항목을 복구하시겠습니까?")){
+
+	popup_alert.confirm("해당 Todo 항목을 복구하시겠습니까?", function (res) {
+        if (res){
 
 		 var insertdata = {
 					COD_MEMB : uid,
@@ -662,8 +668,8 @@ $(document).on('click','.option_list.recovery',function(){
 				}
 				
 			})
-	}
-		
+        }
+	})
 })
 
 $(document).on("click",".filedown",function(){
@@ -1572,6 +1578,8 @@ function selectMission(){
 				var result2 = JSON.parse(data2);
 				
 				var addString2 = "";
+
+				$(".mission_pop_div_update").empty();
 				
 				for(var i=0; i<result2.length ; i++){
 
@@ -1615,33 +1623,34 @@ function selectCharacter(){
 		})
 }
 function CompleteMission(target,event){
-
-	if(confirm("해당 미션을 완료 처리하시겠습니까?")){
-	var idx = $(target).attr("idx");
-	var name = $(target).attr("target");
-	 
-	 var date = new Date();
-	 var today = returndate(date);
-	 var selectdata = {
-			COD_MEMB : uid,
-			DAY_KEY : today,
-			IDX_SORT : idx,
-	};
-	$.ajax({
-		url: "TodaysMission_Complete.do",
-		data: selectdata,
-		type: "POST",
-		async: false,
-		success: function(data){		
-//			var result = JSON.parse(data);
-			selectCharacter()
-			$(target).prop("disabled",true)
+	event.preventDefault();
+	popup_alert.confirm("해당 미션을 완료 처리하시겠습니까?", function (res) {
+        if (res){
+			var idx = $(target).attr("idx");
+			var name = $(target).attr("target");
+			 
+			 var date = new Date();
+			 var today = returndate(date);
+			 var selectdata = {
+					COD_MEMB : uid,
+					DAY_KEY : today,
+					IDX_SORT : idx,
+			};
+			$.ajax({
+				url: "TodaysMission_Complete.do",
+				data: selectdata,
+				type: "POST",
+				async: false,
+				success: function(data){		
+		//			var result = JSON.parse(data);
+					selectCharacter();
+					$(target).prop("disabled",true)
+					$(target).prop("checked",true)
+				}
+			})
 		}
+        
 	})
-	}
-	else{
-		event.preventDefault();
-	}
 }
 
 
