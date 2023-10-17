@@ -1657,8 +1657,12 @@ function checkTodoNum2() {
 function popReset(){
 	$("#pop_Calendar_Title").val("");
 	$("#pop_IDX_SORT").val("");
-	$("#pop_Calendar_FROM").val("");
-	$("#pop_Calendar_TO").val("");
+	
+	var date = new Date();
+	$("#pop_Calendar_FROM").val(returndate(date));
+	$("#pop_Calendar_TO").val(returndate(date));
+	
+	
 	$("#pop_Calendar_time").val(0);
 	$("#pop_Calendar_minute").val(0);
 	$("#pop_Calendar_Time_AMPM").val("AM");

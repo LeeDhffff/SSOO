@@ -639,6 +639,14 @@
     
     $("#pop_Calendar_save").on("click",function(){
 
+    	
+    	if($("#pop_Calendar_FROM").val() == ''){
+    		alert("날짜를 먼저 입력하세요.")
+    	}
+    	else if($("#pop_Calendar_TO").val() == ''){
+    		alert("날짜를 먼저 입력하세요.")
+    	}
+    	else{
 		$(".popup").hide();
 		
 		var time = ($("#pop_Calendar_Time_AMPM").val() == 'AM') ? $("#pop_Calendar_time").val()
@@ -697,6 +705,8 @@
 			}
 			
 		})
+    		
+    	}
 		
 	})
 	$("#pop_Calendar_update").on("click",function(){

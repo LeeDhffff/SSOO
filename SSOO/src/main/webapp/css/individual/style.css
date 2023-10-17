@@ -245,6 +245,7 @@ section
 
 .to_do_board_con_grid{
   height: 100%;
+  min-width: 0;
 }
 .board_con_header 
 {
@@ -370,6 +371,7 @@ section
   border: 1px solid var(--input-color);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   padding: 20px;
   grid-gap: 20px;
 /*   overflow-y: scroll;   */
