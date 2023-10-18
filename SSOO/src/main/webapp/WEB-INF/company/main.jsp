@@ -846,6 +846,8 @@
 		    margin-top: 15px;
     		margin-bottom: 20px;
     		position: relative;
+   		    background-size: 100%;
+    		border: 2px solid #b7b7b7;
 		}
 		.profile_input_div{
 			display: flex;
@@ -866,6 +868,9 @@
 		    padding-left: 10px;
 		    border: 1px solid #9d9d9d;
 		    border-radius: 6px;
+		}
+		.profile_input:disabled{
+			background: #ffb8b8;
 		}
 		.profile_btn_div{
 		    margin-top: 30px;
@@ -1039,9 +1044,9 @@
     		<div class="profile_head">
                 <h3>내 정보</h3>
                 <div class="profile_image_div">
-                	<img src="" class="profile_image">
-                	<input type="file" class="profile_file" id="projile_image" style="display:none;">
-	                <label class="profile_image_div_btn" for="projile_image">
+                	<img src="" id="profile_image_preview">
+                	<input type="file" class="profile_file" id="profile_image" style="display:none;" onchange="readURL(this);">
+	                <label class="profile_image_div_btn" for="profile_image">
 	                </label>
                 </div>
             </div>
@@ -1377,20 +1382,28 @@
         	}
         	else{
         		
+
+				var pwd = ($("#profile_now_pass_chk").val() == '') ? ''
+					  : $("#profile_new_pass").val();
+
+    		 	var form = new FormData();
+    		 
+    		 	form.append("USERID",uid);
+    		 	form.append("PWD",pwd);
+    		 	form.append("USERNAME",$("#profile_name").val());
+    		 	form.append("NICKNAME",$("#profile_nick").val());
+    		 	form.append("TEL",$("#profile_phone").val());
+    		 	form.append("ADDR",$("#profile_address").val());
+    		 	form.append("profileImage",$("#profile_image")[0].files[0]);
+    		 	
+    		 	
 	            	$.ajax({
 	        		type: "POST",
 					url : "./edit_profile.do",
-					data:{
-						USERID: uid,
-						PWD: ($("#profile_now_pass_chk").val() == '') ? ''
-							  : $("#profile_new_pass").val(),
-						USERNAME: $("#profile_name").val(),
-						NICKNAME: $("#profile_nick").val(),
-						TEL: $("#profile_phone").val(),
-						ADDR: $("#profile_address").val(),
-							  
-					},
+					data: form,
 					async: false,
+					processData : false,
+					contentType : false,
 					success:function(data){
 						console.log(data);
 						
@@ -1570,6 +1583,8 @@
 		    	$("#profile_nick").val(result[0].NICKNAME);
 		    	$("#profile_phone").val(result[0].TEL);
 		    	$("#profile_address").val(result[0].ADDR);
+		    	$(".profile_image_div").css("background-image","url(/SSOO/Company/proFile/" + result[0].FILE_SAVE_NAME + ")");
+// 		    	$("#profile_image_preview").attr("src","/proFile/" + result[0].FILE_SAVE_NAME);
 		    	
 		    	console.log(result);
 			},
@@ -1578,5 +1593,19 @@
 			}
         });
     }
+    
+    function readURL(input) {
+    	  if (input.files && input.files[0]) {
+    	    var reader = new FileReader();
+    	    reader.onload = function(e) {
+//     	      document.getElementById('profile_image_preview').src = e.target.result;
+			$(".profile_image_div").css("background-image", "url(" + e.target.result + ")");
+    	    };
+    	    reader.readAsDataURL(input.files[0]);
+    	  } else {
+  			$(".profile_image_div").css("background-image","");
+//     	    document.getElementById('profile_image_preview').src = "";
+    	  }
+    	}
 </script>
 </html>

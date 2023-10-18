@@ -3,6 +3,8 @@ package ssoo.Company;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -165,9 +169,69 @@ public class CompanyController {
 		return jsonStr;
 	}
 	
+//	@RequestMapping(value = "/Company/edit_profile.do", produces = "application/text; charset=utf-8")
+//	@ResponseBody
+//	public String edit_profile(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+//		HashMap<String, String> team = CompanyService.edit_profile(inputMap);
+//		
+//		ObjectMapper mapper = new ObjectMapper();
+//		String jsonStr = mapper.writeValueAsString(team);
+//		
+//		HttpSession httpSession = request.getSession(true);
+//		httpSession.setAttribute("SESSION_NAM_KOR", team.get("USERNAME"));
+//		httpSession.setAttribute("SESSION_NICK", team.get("NICKNAME"));
+//		
+//		return jsonStr;
+//	}
+	
+
 	@RequestMapping(value = "/Company/edit_profile.do", produces = "application/text; charset=utf-8")
 	@ResponseBody
-	public String edit_profile(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+	public String edit_profile(@RequestParam("profileImage") List<MultipartFile> uploadFile, @RequestParam HashMap<String, Object> inputMap, HttpServletRequest request, MultipartHttpServletRequest mRequest,
+			HttpSession session) throws Exception{
+		
+		System.out.println("uploadFile.size : "+uploadFile.size());
+		
+		String path1 = "D:\\upload\\proFile";
+		File savePath1 = new File(path1);
+		if(!savePath1.exists()) savePath1.mkdir();
+
+		
+		SimpleDateFormat now = new SimpleDateFormat("yyyyMMddhhmmss");		
+		
+		for(int i=0; i<uploadFile.size(); i++) {
+			
+			String today = now.format(System.currentTimeMillis());
+			String oName = uploadFile.get(i).getOriginalFilename();
+			String ext = oName.substring(oName.lastIndexOf(".")+1);
+			if(!oName.equals("")) {
+				oName = today+"_"+oName.substring(oName.lastIndexOf("\\")+1);
+			}
+			System.out.println("oName : " + oName + ", " + "확장자 : " + ext);
+
+			inputMap.put("PATH_PROFILE", path1);
+
+			File saveFile = new File(path1, oName);
+			try {
+				if(!oName.equals("")) {
+					uploadFile.get(i).transferTo(saveFile);
+					inputMap.put("PATH_PROFILE_NM", oName);
+					inputMap.put("FILE_NAME", uploadFile.get(i).getOriginalFilename());
+					System.out.println("업로드 성공 :" + "PATH_PROFILE");
+				}
+				else {
+					System.out.println("해당파일 없음 :" + "PATH_PROFILE");
+				}
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}				
+		}	
+		if(uploadFile.size() == 0) {
+			inputMap.put("PATH_PROFILE", "");
+			inputMap.put("PATH_PROFILE_NM", "");
+			inputMap.put("FILE_NAME", "");
+		}
+
 		HashMap<String, String> team = CompanyService.edit_profile(inputMap);
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -178,7 +242,9 @@ public class CompanyController {
 		httpSession.setAttribute("SESSION_NICK", team.get("NICKNAME"));
 		
 		return jsonStr;
+		
 	}
+	
 	@RequestMapping(value = "/Company/pwd_profile.do", produces = "application/text; charset=utf-8")
 	@ResponseBody
 	public String pwd_profile(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{

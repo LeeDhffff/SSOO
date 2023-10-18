@@ -94,7 +94,10 @@
 			#{USERNAME},
 			#{NICKNAME},
 			#{TEL},
-			#{ADDR}
+			#{ADDR},
+			#{PATH_PROFILE},
+			#{FILE_NAME},
+			#{PATH_PROFILE_NM}
 		)}
 	</select>
 	<select id="pwd_profile" statementType="CALLABLE" parameterType="hashmap" resultType="string">
