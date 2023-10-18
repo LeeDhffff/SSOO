@@ -459,7 +459,36 @@
             background-color: rgba(0, 0, 0, 0.3);
             z-index: 9;
         }
-        
+        .modal_con_wrap_Mini_1{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 9;
+        }
+        .modal_con_wrap_Mini_2{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 9;
+        }
+        .modal_Mini_alert{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 9;
+        }
         .input_title 
         {
         	font-size: 18px;
@@ -1011,8 +1040,9 @@
                 <h3>내 정보</h3>
                 <div class="profile_image_div">
                 	<img src="" class="profile_image">
-	                <div class="profile_image_div_btn">
-	                </div>
+                	<input type="file" class="profile_file" id="projile_image" style="display:none;">
+	                <label class="profile_image_div_btn" for="projile_image">
+	                </label>
                 </div>
             </div>
     		<div class="profile_body">
@@ -1058,8 +1088,10 @@
     	</div>
     </div>
     
-    <div class="modal_Mini_alert">
-    	<div class="modal_con_wrap_profile">
+    <div class="modal_Mini_alert" id="modal_Mini_1">
+    	<div class="modal_con_wrap_Mini_1">
+    	</div>
+    	<div class="modal_con_wrap_Mini_2">
     	</div>
    	</div>
 </body>

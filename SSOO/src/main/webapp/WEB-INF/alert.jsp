@@ -91,6 +91,7 @@
 
 <script type="text/javascript">
 var popup_alert = {
+		timer : 200, // 1000 = 1초
 	    confirm : function(txt, callback){
 	        if(txt == null || txt.trim() == ""){
 	            console.warn("confirm message is empty.");
