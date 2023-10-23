@@ -977,14 +977,13 @@
                  </div>
                  <div class="empty_div">
              		<img id="empty_img" src="../images/empty.svg" alt="#">
-               <div class="msg">가입된 팀이 없습니다.</div>
-             	</div>
+               		<div class="msg">가입된 팀이 없습니다.</div>
+             	 </div>
                  <div class="swiper">
                  	<div class="swiper-wrapper">
-                 		                    		
-               </div>
-               <div class="swiper-button-next"></div>
-		    <div class="swiper-button-prev"></div>
+                 </div>
+                 <div class="swiper-button-next"></div>
+			     <div class="swiper-button-prev"></div>
               </div>
             	</div>                    
             </div>
@@ -1238,46 +1237,48 @@
         
         
         $('#search_team').on('click',function(){
-        	console.log($('.searchBar').val());
-        	
-        	$.ajax({
-				type: "POST",
-				url : "./TEAM_SEARCH.do",
-				data: {
-					LINK: $('.searchBar').val()
-				},
-				async: false,
-				success:function(data){
-					var result = JSON.parse(data);
-					console.log($('.searchBar').val().split('/'));
-					if(confirm('['+result.resultMsg+']에 가입하시겠습니까?')){
-						$.ajax({
-							
-    						type: "POST",
-    						url : "./TEAM_JOIN.do",
-    						data: {
-    							TEAM: $('.searchBar').val().split('/')[3],
-    							USER: uid,
-    							TYPE: 'M'
-    						},
-    						async: false,
-    						success:function(data){
-    							console.log(data);
-    						},
-    						error:function(err){ console.log(err); }
-	    					
-						});
-						alert('가입이 완료되었습니다');
-						window.location.reload();
-					}else{
-						alert('가입을 취소했습니다.');
-					}
-				},
-				error:function(err){
-					alert('잘못된 링크입니다.');
-				}
-			});
-        	start()
+        	if($('.searchBar').val() != ''){
+        		$.ajax({
+    				type: "POST",
+    				url : "./TEAM_SEARCH.do",
+    				data: {
+    					LINK: $('.searchBar').val()
+    				},
+    				async: false,
+    				success:function(data){
+    					var result = JSON.parse(data);
+    					console.log($('.searchBar').val().split('/'));
+    					if(confirm('['+result.resultMsg+']에 가입하시겠습니까?')){
+    						$.ajax({
+    							
+        						type: "POST",
+        						url : "./TEAM_JOIN.do",
+        						data: {
+        							TEAM: $('.searchBar').val().split('/')[3],
+        							USER: uid,
+        							TYPE: 'M'
+        						},
+        						async: false,
+        						success:function(data){
+        							console.log(data);
+        						},
+        						error:function(err){ console.log(err); }
+    	    					
+    						});
+    						alert('가입이 완료되었습니다');
+    						window.location.reload();
+    					}else{
+    						alert('가입을 취소했습니다.');
+    					}
+    				},
+    				error:function(err){
+    					alert('잘못된 링크입니다.');
+    				}
+    			});
+            	start()
+        	}else{
+        		alert('링크를 입력해주시기 바랍니다.');
+        	}
         });
         
         // swipe 설정
