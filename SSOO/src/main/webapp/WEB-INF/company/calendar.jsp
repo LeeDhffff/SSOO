@@ -297,6 +297,31 @@
 				<img src="" class="bk_fav">
 				<p class="bk_name"></p>
 			</div>
+			<div class="bk slot5 hidden">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
+			<div class="bk slot6 hidden">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
+			<div class="bk slot7 hidden">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
+			<div class="bk slot8 hidden">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
+			<div class="bk slot9 hidden">
+				<input type='text' class="bk_url hidden" value="" />
+				<img src="" class="bk_fav">
+				<p class="bk_name"></p>
+			</div>
 			<div class="bk_add">
 				<input type='text' class="bk_url hidden" value="" />
 				<img src="../images/add.png" alt="#" class="bk_fav">
@@ -601,7 +626,7 @@
 
         // 북마크
         $('.bk').on('click',function(){
-            var url = $(this)[0].childNodes[1].value;
+            /* var url = $(this)[0].childNodes[1].value;
             slot = $(this)[0].classList[1];
             console.log(url);
 			
@@ -610,28 +635,31 @@
             	// window.location.href = $(this)[0].childNodes[1].value;
             }else{                
                 alert('등록된 사이트가 없습니다.');
+            } */
+            var url = $(this)[0].childNodes[1].value;
+            slot = $(this)[0].classList[1];
+			
+            if(url != ''){ 
+                window.location.href = $(this)[0].childNodes[1].value;
+            }else{                
+            	$(".modal2").css('display','block');
+                $('.container').css('z-index',-1);
             }
         });
         
         $('.bk_add').on('click',function(){
-        	$('#bk_url').val('');
-			$('#bk_name').val('');
-			var cnt = 0;
-        	for(cnt = 0; cnt < 5; cnt++){
-        		var chk = $('.bk.slot'+cnt)[0].childNodes[1].value;
-        		if(chk == '' || chk == undefined || chk == null){
-        			console.log(cnt, '없음');
-        			slot = cnt;
+        	/* if($('.bk').length < 10){
+	        	$('.bk_add').before("<div class='bk slot"+$('.bk').length+"'><input type='text' class='bk_url hidden' value='' /><img src='' class='bk_fav'><p class='bk_name'></p></div>");
+        	}else{
+        		alert('슬롯을 더 이상 늘릴 수 없습니다.');
+        	} */
+        	console.log($('.bk').hasClass('hidden'));
+        	for(var i = 0; i < $('.bk').length; i++){
+        		console.log(i, $('.bk.slot'+i).hasClass('hidden'));
+        		if($('.bk.slot'+i).hasClass('hidden')){
+        			$('.bk.slot'+i).removeClass('hidden')
         			break
-        			
         		}
-        	}
-        	
-        	if(cnt<5){
-	        	$(".modal2").css('display','block');
-    	        $('.container').css('z-index',-1);
-        	}else if(cnt>=5){
-        		alert('더 이상 등록할 수 없습니다.');
         	}
         });
         
@@ -640,7 +668,7 @@
         	var insertData = {
        			USERID: uid,
    				TEAM: '',
-				SLOT: slot,
+   				SLOT: slot.substr(slot.length-1, 1),
 				URL: $('#bk_url').val(),
 				BK_NAME: $('#bk_name').val()
 			}
@@ -735,6 +763,9 @@
         	location.href = "../Individual.do";
         });
         
+        $('.btn.cp').on('click',function(){
+        	location.href = "../Company/main.do";
+        });
         
         $('input[type=checkbox][name=allDay]').change(function() {
             if ($(this).is(':checked')) {
@@ -917,11 +948,15 @@
 			success:function(data){
 				var result = JSON.parse(data);
 				console.log(result);
+				
 				for(var i = 0; i < result.length; i++){
-					console.log(result[i].URL);
+					if(i > 4){
+						$('.bk.slot'+i).removeClass('hidden')
+					}
 					$('.bk_url')[result[i].SLOT].value = result[i].URL;
 					$('.bk_fav')[result[i].SLOT].src = result[i].URL+'/favicon.ico';
 					// $('.bk_name')[result[i].SLOT].innerText = result[i].BK_NAME;
+					// https://dummyimage.com/16x16/a3a3a3/363636.png&text=X
 				}
 			},
 			error: function(err){
