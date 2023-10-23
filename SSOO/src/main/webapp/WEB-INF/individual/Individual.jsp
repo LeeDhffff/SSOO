@@ -281,7 +281,8 @@
             	<div class="character_div">
     				
 	            	<div class="character_status">
-		            	<div class="character_button">
+	            		<button class="character_option">O</button>
+		            	<div class="character_button" style="display:none;">
 			            	<button id="mission">오늘의 미션</button>
 			            	<button id="character_change">Custom</button>
 	            		</div>
@@ -313,19 +314,24 @@
 			<div class="character_menu" style="display:none;">
 				<button class="character_menu_toggle">></button>
 				<div class="character_table_div">
+					<div class="character_table_tab">
+						<button class="table_tab active" id="change_table_o">캐릭터</button>
+						<button class="table_tab" id="change_table">포즈</button>
+						<button class="table_tab" id="change_table2">배경</button>
+					</div>
 					<table id="character_table">
 						<thead>
 							<tr><th colspan="3">캐릭터 선택</th></tr>
 						</thead>
 						<tbody>
-							<tr><td id="character1"><img src="./images/Character/1.svg"></td><td id="character1_1"><img src="./images/Character/1_1.svg"></td><td id="character1_2"><img src="./images/Character/1_2.svg"></td></tr>
-							<tr><td id="character1_3"><img src="./images/Character/1_3.svg"></td><td id="character1_4"></td><td id="character1_5"></td></tr>
+							<tr><td id="character1"><img src="./images/Character/1.svg" id="o_1"></td><td id="character1_1"><img src="./images/Character/1_1.svg" id="o_1_1"></td><td id="character1_2"><img src="./images/Character/1_2.svg" id="o_1_2"></td></tr>
+							<tr><td id="character1_3"><img src="./images/Character/1_3.svg" id="o_1_3"></td><td id="character1_4"></td><td id="character1_5"></td></tr>
 						</tbody>
 					</table>
 <!-- 					<div class="tablediv"> -->
-						<table id="pose_table">
+						<table id="pose_table" style="display:none;">
 							<thead>
-								<tr><th colspan="3">포즈 선택 <button id="change_table">></button></th></tr>
+								<tr><th colspan="3">포즈 선택</th></tr>
 							</thead>
 							<tbody>
 								<tr><td id="pose1"></td><td id="pose2"></td><td id="pose3"></td></tr>
@@ -334,7 +340,7 @@
 						</table>
 						<table id="background_table" style="display:none;">
 							<thead>
-								<tr><th colspan="3"><button id="change_table2"><</button>배경 선택</th></tr>
+								<tr><th colspan="3">배경 선택</th></tr>
 							</thead>
 							<tbody>
 								<tr><td id="back1"><img src="./images/background/1.svg" id="back_1"></td><td id="back2"><img src="./images/background/2.svg" id="back_2"></td><td id="back3"><img src="./images/background/3.svg" id="back_3"></td></tr>
@@ -749,7 +755,7 @@
 		var updatedata = {
 				COD_MEMB : uid,
 				IDX_SORT : $("#pop_IDX_SORT").val(),
-				TXT_TITLE : $("#pop_Calendar_Title").val(),
+				TXT_TITLE : $("# pop_Calendar_Title").val(),
 				DAY_FROM : $("#pop_Calendar_FROM").val() + " " +  totime,
 				DAY_TO : $("#pop_Calendar_TO").val() + " " + totime2,
 				COLOR : $("#pop_Calendar_Color").val(),

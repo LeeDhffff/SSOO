@@ -399,43 +399,30 @@ $(document).ready(function(){
 	
 	$("#character_table > tbody > tr > td").on("click",function(){
 		var thisid = $(this).attr("id");
+		var imgid = $(this).find("img").attr("id").replaceAll("o_","");
 		
-		var Cat1 = ["1","1_4","1_8","1_12"];
-		var Cat2 = ["1_1","1_5","1_9","1_13"];
-		var Cat3 = ["1_2","1_6","1_10","1_14"];
-		var Cat4 = ["1_3","1_7","1_11","1_15"];
+		var selectdata2 = {
+				COD_MEMB : uid,
+				CHARACTER :  imgid,
+				BACKGROUND : "",
+				ADD_EXP : 0
+		};
 		
-		if(thisid == "character1" && $(this).has("img").length > 0){
-			$("#pose_table > tbody > tr > td").empty();
-			$("#pose1").append("<img src='./images/Character/"+Cat1[0]+".svg' id='"+Cat1[0]+"'>");
-			$("#pose2").append("<img src='./images/Character/"+Cat1[1]+".svg' id='"+Cat1[1]+"'>");
-			$("#pose3").append("<img src='./images/Character/"+Cat1[2]+".svg' id='"+Cat1[2]+"'>");
-			$("#pose4").append("<img src='./images/Character/"+Cat1[3]+".svg' id='"+Cat1[3]+"'>");
-		}
-		else if(thisid == "character1_1" && $(this).has("img").length > 0){
-			$("#pose_table > tbody > tr > td").empty();
-			$("#pose1").append("<img src='./images/Character/"+Cat2[0]+".svg' id='"+Cat2[0]+"'>");
-			$("#pose2").append("<img src='./images/Character/"+Cat2[1]+".svg' id='"+Cat2[1]+"'>");
-			$("#pose3").append("<img src='./images/Character/"+Cat2[2]+".svg' id='"+Cat2[2]+"'>");
-			$("#pose4").append("<img src='./images/Character/"+Cat2[3]+".svg' id='"+Cat2[3]+"'>");
-		}
-		else if(thisid == "character1_2" && $(this).has("img").length > 0){
-			$("#pose_table > tbody > tr > td").empty();
-			$("#pose1").append("<img src='./images/Character/"+Cat3[0]+".svg' id='"+Cat3[0]+"'>");
-			$("#pose2").append("<img src='./images/Character/"+Cat3[1]+".svg' id='"+Cat3[1]+"'>");
-			$("#pose3").append("<img src='./images/Character/"+Cat3[2]+".svg' id='"+Cat3[2]+"'>");
-			$("#pose4").append("<img src='./images/Character/"+Cat3[3]+".svg' id='"+Cat3[3]+"'>");
-		}
-		else if(thisid == "character1_3" && $(this).has("img").length > 0){
-			$("#pose_table > tbody > tr > td").empty();
-			$("#pose1").append("<img src='./images/Character/"+Cat4[0]+".svg' id='"+Cat4[0]+"'>");
-			$("#pose2").append("<img src='./images/Character/"+Cat4[1]+".svg' id='"+Cat4[1]+"'>");
-			$("#pose3").append("<img src='./images/Character/"+Cat4[2]+".svg' id='"+Cat4[2]+"'>");
-			$("#pose4").append("<img src='./images/Character/"+Cat4[3]+".svg' id='"+Cat4[3]+"'>");
-		}
+		$.ajax({
+			url: "Character_Update.do",
+			data: selectdata2,
+			type: "POST",
+			async: false,
+			success: function(data2){		
+				var result2 = JSON.parse(data2);
 
-		$("#pose_table").show();
-		$("#background_table").hide();
+				
+				selectCharacter();
+			}
+		})
+		
+//		$("#pose_table").show();
+//		$("#background_table").hide();
 	})
 	
 	// 포즈 선택 후 저장
@@ -493,14 +480,36 @@ $(document).ready(function(){
 		}
 		
 	})
-	
-	$("#change_table").on("click",function(){
-		$("#pose_table").hide();
-		$("#background_table").show();
+	$(".character_option").on("click",function(){
+		
+		if($(".character_button").css("display") == 'none'){
+
+			$(".character_button").show();
+		}
+		else{
+			$(".character_button").hide();
+		}
 	})
-	$("#change_table2").on("click",function(){
+	$("#change_table_o").on("click",function(){
+		$("#character_table").show();
+		$("#pose_table").hide();
+		$("#background_table").hide();
+		$(".table_tab").removeClass("active");
+		$(this).addClass("active");
+	})
+	$("#change_table").on("click",function(){
+		$("#character_table").hide();
 		$("#pose_table").show();
 		$("#background_table").hide();
+		$(".table_tab").removeClass("active");
+		$(this).addClass("active");
+	})
+	$("#change_table2").on("click",function(){
+		$("#character_table").hide();
+		$("#pose_table").hide();
+		$("#background_table").show();
+		$(".table_tab").removeClass("active");
+		$(this).addClass("active");
 	})
 }); //documet 끝
 
@@ -1613,6 +1622,24 @@ function selectCharacter(){
 				$("#character_exp").val(result.MIN_EXP)
 				$(".character_image").empty();
 				$("#nowCharacter").empty();
+				
+
+				var Cat = [["1","1_4","1_8","1_12"], ["1_1","1_5","1_9","1_13"],["1_2","1_6","1_10","1_14"],["1_3","1_7","1_11","1_15"]];
+				
+				for(let i=0; i<Cat.length; i++){
+					for(let j=0; j<Cat[i].length; j++){
+						if(Cat[i][j] == result.CHARACTER){
+							$("#pose_table > tbody > tr > td").empty();
+							$("#pose1").append("<img src='./images/Character/"+Cat[i][0]+".svg' id='"+Cat[i][0]+"'>");
+							$("#pose2").append("<img src='./images/Character/"+Cat[i][1]+".svg' id='"+Cat[i][1]+"'>");
+							$("#pose3").append("<img src='./images/Character/"+Cat[i][2]+".svg' id='"+Cat[i][2]+"'>");
+							$("#pose4").append("<img src='./images/Character/"+Cat[i][3]+".svg' id='"+Cat[i][3]+"'>");
+							break;
+						}
+					}
+				}
+				
+				
 				if(result.BACKGROUND != ""){
 					$(".character_image").css("background-image" ,"url('./images/background/"+result.BACKGROUND+".svg')")
 					$("#nowCharacter").css("background-image" ,"url('./images/background/"+result.BACKGROUND+".svg')")

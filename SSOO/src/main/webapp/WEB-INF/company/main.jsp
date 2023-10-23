@@ -1115,6 +1115,7 @@
         });
     	
     	start();
+    	profileReset();
     	
         var rand = '';
         
@@ -1585,6 +1586,7 @@
 		    	$("#profile_phone").val(result[0].TEL);
 		    	$("#profile_address").val(result[0].ADDR);
 		    	$(".profile_image_div").css("background-image","url(/SSOO/Company/proFile/" + result[0].FILE_SAVE_NAME + ")");
+		    	$(".profile_img > img").attr("src","/SSOO/Company/proFile/" + result[0].FILE_SAVE_NAME);
 // 		    	$("#profile_image_preview").attr("src","/proFile/" + result[0].FILE_SAVE_NAME);
 		    	
 		    	console.log(result);

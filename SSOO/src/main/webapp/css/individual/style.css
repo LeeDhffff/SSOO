@@ -635,6 +635,7 @@ section
 	width : 90%;
 	height : 73%;
     margin: auto;    
+      position: relative;
 }
 #mission{
     width: 100px;
@@ -964,30 +965,6 @@ section
   .tablediv{
   	position : relative;
   }
-  #change_table{
-  
-    color: white;
-    background: var(--sub-color1);
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;    
-    position: absolute;
-    right: 0%;
-    top: 22%;
-    cursor: pointer;
-	}
-  #change_table2{
-  
-    color: white;
-    background: var(--sub-color1);
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;    
-    position: absolute;
-    left: 0%;
-    top: 22%;
-    cursor: pointer;
-	}
 	
 	.main_img{
 	    height:100%;
@@ -1003,6 +980,39 @@ section
 		    margin-left: 5px;
 	}
 	.character_button{
+        position: absolute;
+	    right: 0%;
+	    z-index: 2000;
+	    width: 100px;
+	    top: 10%;
+	}
+	.character_table_tab{
+		width: 500px;
+	    text-align: center;
+	    margin: auto;
 	    display: flex;
 	    justify-content: space-between;
+		
+	}
+	
+	.table_tab{
+		width: 130px;
+	    height: 40px;
+	    background: var(--sub-color2);
+	    color: white;
+	    font-weight: bold;
+	    border-radius: 5px;
+	}
+	.table_tab.active{
+	    background: var(--main-color);
+	}
+	.character_option{
+	    float: right;
+	    z-index: 2000;
+	    position: relative;
+	    width: 30px;
+	    height: 30px;
+	    border-radius: 100px;
+	    background: gray;
+	    color: white;
 	}
