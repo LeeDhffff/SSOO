@@ -79,19 +79,51 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 	
 	// 팀 가입
-		@Override
-		public HashMap<String, String> edit_profile(HashMap<String, Object> inputMap) throws Exception {
-			// TODO Auto-generated method stub
-			return CompanyMapper.edit_profile(inputMap);
-		}
-		@Override
-		public List<HashMap<String, String>> select_profile(HashMap<String, Object> inputMap) throws Exception {
-			// TODO Auto-generated method stub
-			return CompanyMapper.select_profile(inputMap);
-		}
-		@Override
-		public String pwd_profile(HashMap<String, Object> inputMap) throws Exception {
-			// TODO Auto-generated method stub
-			return CompanyMapper.pwd_profile(inputMap);
-		}
+	@Override
+	public HashMap<String, String> edit_profile(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.edit_profile(inputMap);
+	}
+	@Override
+	public List<HashMap<String, String>> select_profile(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.select_profile(inputMap);
+	}
+	@Override
+	public String pwd_profile(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.pwd_profile(inputMap);
+	}
+	
+	
+	// 공지사항
+	@Override
+	public HashMap<String, String> NOTICE_INSERT(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.NOTICE_INSERT(inputMap);
+	}
+	
+	@Override
+	public HashMap<String, String> NOTICE_UPDATE(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.NOTICE_UPDATE(inputMap);
+	}
+	
+	@Override
+	public HashMap<String, String> NOTICE_DELETE(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.NOTICE_DELETE(inputMap);
+	}
+	
+	@Override
+	public List<HashMap<String, String>> LIST_NOTICE(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.LIST_NOTICE(inputMap);
+	}
+	
+	@Override
+	public List<HashMap<String, String>> NOTICE_SELECT(HashMap<String, Object> inputMap) throws Exception {
+		// TODO Auto-generated method stub
+		return CompanyMapper.NOTICE_SELECT(inputMap);
+	}
 }

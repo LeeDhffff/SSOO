@@ -256,4 +256,63 @@ public class CompanyController {
 		
 		return team;
 	}
+	
+	
+	/* 공지사항 */
+	@RequestMapping(value = "/Company/NOTICE_INSERT.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String NOTICE_INSERT(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		HashMap<String, String> NOTICE = CompanyService.NOTICE_INSERT(inputMap);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(NOTICE);
+		
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/NOTICE_UPDATE.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String NOTICE_UPDATE(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		HashMap<String, String> NOTICE = CompanyService.NOTICE_UPDATE(inputMap);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(NOTICE);
+		
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/NOTICE_DELETE.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String NOTICE_DELETE(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception{
+		HashMap<String, String> NOTICE = CompanyService.NOTICE_DELETE(inputMap);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(NOTICE);
+		
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/LIST_NOTICE.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String LIST_NOTICE(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		List<HashMap<String, String>> NOTICE = CompanyService.LIST_NOTICE(inputMap);
+		System.out.println(NOTICE);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(NOTICE);
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "/Company/NOTICE_SELECT.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String NOTICE_SELECT(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		List<HashMap<String, String>> NOTICE = CompanyService.NOTICE_SELECT(inputMap);
+		System.out.println(NOTICE);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(NOTICE);
+		return jsonStr;
+	}
 }

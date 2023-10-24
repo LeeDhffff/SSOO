@@ -106,4 +106,46 @@
 			#{PWD}
 		)}
 	</select>
+	
+	<!-- 공지사항 -->
+	<select id="NOTICE_INSERT" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 공지사항_등록 (
+			#{USERID},
+			#{TEAMID},
+			#{TITLE},
+			#{CONTENT},
+			#{PATH}
+		)}
+	</select>
+	
+	<select id="NOTICE_UPDATE" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 공지사항_수정 (
+			#{USERID},
+			#{TEAMID},
+			#{TITLE},
+			#{CONTENT},
+			#{PATH}
+		)}
+	</select>
+	
+	<select id="NOTICE_DELETE" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{call 공지사항_삭제 (
+			#{USERID},
+			#{TEAM},
+			#{TITLE}
+		)}
+	</select>
+	
+	<select id="LIST_NOTICE" parameterType="hashmap" resultType="hashmap">
+		{ call 공지사항_리스트조회(
+			#{TEAM}	
+		) }
+	</select>
+	
+	<select id="NOTICE_SELECT" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{ call 공지사항_상세조회(
+			#{TEAM},
+			#{TITLE}
+		) }
+	</select>
 </mapper>

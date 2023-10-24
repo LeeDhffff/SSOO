@@ -22,6 +22,9 @@
     <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css">
     
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
     <style type="text/css">
         :root {
             --main-color: #0E51BB;
@@ -163,12 +166,12 @@
 
         .notice_header{
             display: flex;
-            /* justify-content: space-between; */
+            justify-content: space-between;
             align-items: center;
         }
 
         .timepicker{
-            width: 100px;
+            width: 50px;
         }
 
 		.schedule_div{
@@ -206,13 +209,24 @@
 
             display: none;
         }
+        
+        .notice_modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: none;
+        }
 
         .modal_body {
             position: absolute;
             top: 50%;
             left: 50%;
 
-            width: 550px;
+            width: 630px;
             height: 250px;
 
             padding: 40px;
@@ -242,6 +256,11 @@
         }
         
         .close2{
+            width: 40px;
+            height: 40px;
+        }
+        
+        .notice_close{
             width: 40px;
             height: 40px;
         }
@@ -355,8 +374,9 @@
                 <div class="notice_div">
                     <div class="notice_header">
                         <img class="btn_notice" src="../images/arrow_left.png" alt="#" style="width: 24px; height: 24px;">
-                        <h2>공지사항</h2>
+                        <img class="btn_write" src="../images/edit.png" alt="#" style="width: 24px; height: 24px;">
                     </div>
+                    <h2>공지사항</h2>
                     <div class="notice_body">
                         <h3>[전체] 공지사항</h3>
                         <p>10월 02일(월)은 대체공휴일입니다.</p>
@@ -369,7 +389,7 @@
     <div class="modal">
         <div class="modal_body">
             <div style="display: flex; justify-content: space-between;">
-                <h3>스케줄 등록</h3>
+                <h3>일정 생성하기</h3>
                 <img src="../images/close.png" class="close">
             </div>
             
@@ -377,11 +397,36 @@
 
             <div class="modal_content">
                 <div>
-                    <label for="name">스케줄명</label>
+                    <label for="teamID">일정을 위한 팀 선택</label>
+                    <select id="teamID"></select>
+                </div>
+                
+                <div>
+                    <label for="title">일정 제목</label>
                     <input type="text" name="title" id="title">
                 </div>
                 
                 <div>
+                    <label for="members">참여대상 선택</label>
+                    <select class="form-control select2" multiple="multiple">
+                    	<option value="green">김초록(green)</option>
+				        <option value="black">박검정(black)</option>
+				        <option value="white">이하얀(white)</option>
+                    </select>
+                    <!-- https://select2.org/ -->
+                </div>
+                
+                <div>
+                    <label for="period">진행 기간 설정</label>
+                    <input type="date" name="startDay" id="startDay">
+                    <input type="text" name="startHH" id="startHH" class="timepicker hh">
+                    <input type="text" name="startMM" id="startMM" class="timepicker mm">
+                    ~
+                    <input type="date" name="endDay" id="endDay">
+                    
+                </div>
+                
+                <!-- <div>
                     <label for="startDay">시작</label>
                     <input type="date" name="startDay" id="startDay">
                     <input type="text" name="startHH" id="startHH" class="timepicker hh">
@@ -396,7 +441,7 @@
                 <div>
                     <label for="allDay">종일</label>
                     <input type="checkbox" name="allDay" id="allDay">
-                </div>
+                </div> -->
             </div>
 
             <div class="btn_div">
@@ -429,6 +474,36 @@
             </div>
     	</div>
     </div>
+    
+    <div class="notice_modal">
+    	<div class="modal_body">
+    		<div style="display: flex; justify-content: space-between;">
+                <h3>공지사항 글쓰기</h3>
+                <img src="../images/close.png" class="notice_close">
+            </div>
+            
+            <div class="modal_content">
+            	<div>
+                    <label for="notice_title">제목</label>
+                    <input type="text" name="notice_title" id="notice_title">
+                </div>
+                
+                <div>
+                    <label for="notice_content">내용</label>
+                    <input type="text" name="notice_content" id="notice_content">
+                </div>
+                
+                <div>
+                    <label for="notice_file">첨부파일</label>
+                    <input type="file" name="notice_file" id="notice_file">
+                </div>
+            </div>
+            
+            <div class="btn_div">
+                <button id="notice_addEvt" class="btn add">등록하기</button>
+            </div>
+    	</div>
+    </div>
   </body>
   <script>
     var calendarEl, calendar;
@@ -440,7 +515,13 @@
 	var year = today.getFullYear();
 	var month = today.getMonth()+1;
 
+	
+	
     $(document).ready(function () {
+    	$('.select2').select2({
+    		placeholder: '이름 또는 ID로 검색하세요.'
+    	});
+    	
     	if(month < 10) month = "0"+month;
     	
     	window.addEventListener("keydown", function(e){
@@ -690,7 +771,33 @@
             $(".close2").click();
             loadBK();
         });
-
+        
+        // 공지사항 등록
+        $('#notice_addEvt').on('click',function(){
+        	var insertData = {
+        		USERID: uid,
+    			TEAM: tid,
+    			TITLE: $('#notice_title').val(),
+   				CONTENT: $('#notice_content').val(),
+   				PATH: '' //$('#notice_path').val()
+   			}
+        	
+        	$.ajax({
+            	type: "POST",
+				url : "./NOTICE_INSERT.do",
+				data: insertData,
+				async: false,
+				success:function(data){
+					var result = JSON.parse(data);
+					alert(result.RESULTMSG);
+				},
+				error: function(err){
+					console.log(err);
+				}
+            });
+            
+            $(".notice_close").click();
+        });
         // 달성률 관련
         var semiCircle = new ProgressBar.SemiCircle(achievement, {
             strokeWidth: 6,
@@ -744,6 +851,7 @@
         	return args.value+"%";
         }
 		
+        /* 팝업창 닫기 */
         $(".close").click(function(){
             $(".modal").css('display','none');
             $('.container').css('z-index',1);
@@ -757,6 +865,15 @@
             
             $('.bk_url').val('');
             $('.bk_name').val('');
+        });
+        
+        $(".notice_close").click(function(){
+            $(".notice_modal").css('display','none');
+            $('.container').css('z-index',1);
+            
+            $('.notice_title').val('');
+            $('.notice_content').val('');
+            $('.notice_file').val('');
         });
         
         $('.btn.ps').on('click',function(){
@@ -779,6 +896,13 @@
             	isAllDay = false;
             }
         });
+        
+        $('.btn_write').on('click',function(){
+        	console.log('공지사항 등록');
+        	
+        	$(".notice_modal").css('display','block');
+            $('.container').css('z-index',-1);
+        })
         
         $('.btn_notice').on('click',function(){
         	$('.btn_notice').attr("src","../images/arrow_right.png");
@@ -884,8 +1008,10 @@
 					for(var i = 0; i < result.length; i++){
 						if(result[i].TEAM_ID == tid){
 							$('#teamList').append("<option value='"+result[i].TEAM_ID+"' selected>"+result[i].TEAM_NAME+"</option>")
+							$('#teamID').append("<option value='"+result[i].TEAM_ID+"' selected>"+result[i].TEAM_NAME+"</option>")
 						}else{
 							$('#teamList').append("<option value='"+result[i].TEAM_ID+"'>"+result[i].TEAM_NAME+"</option>")
+							$('#teamID').append("<option value='"+result[i].TEAM_ID+"'>"+result[i].TEAM_NAME+"</option>")
 						}
 					}
 				}
@@ -963,6 +1089,25 @@
 				console.log(err);
 			}
         });
+	}
+	
+	function getNotices(tid){
+		$.ajax({
+			type: "POST",
+			url : "./list_notice.do",
+			data: {
+				TEAM: tid
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				console.log(result);
+				
+			},
+			error: function(err){
+				console.log(err);
+			}
+		})
 	}
   </script>
 </html>

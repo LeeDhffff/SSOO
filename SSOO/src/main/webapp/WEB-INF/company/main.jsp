@@ -770,8 +770,43 @@
         	text-align: center;
         }
         
+        .empty{
+        	border: 1px dotted #e5e5e5;
+        }
         
+        .swiper-button-prev{
+        	right: auto;
+        	left: var(--swiper-navigation-sides-offset,-10px);
+        	
+        	    position: relative;
+			    top: var(--swiper-navigation-top-offset,50%);
+			    width: calc(var(--swiper-navigation-size)/ 44 * 27);
+			    height: var(--swiper-navigation-size);
+			    margin-top: calc(320px - (var(--swiper-navigation-size)/ 2));
+			    z-index: 10;
+			    cursor: pointer;
+			    display: flex;
+			    align-items: center;
+			    justify-content: center;
+			    color: var(--swiper-navigation-color,var(--swiper-theme-color));
+        }
         
+        .swiper-button-next{
+        	left: auto;
+        	right: var(--swiper-navigation-sides-offset,-10px);
+        	
+        	position: relative;
+        	top: top: var(--swiper-navigation-top-offset,50%);
+		    width: calc(var(--swiper-navigation-size)/ 44 * 27);
+		    height: var(--swiper-navigation-size);
+		    margin-top: calc(320px - (var(--swiper-navigation-size)/ 2));
+		    z-index: 10;
+		    cursor: pointer;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    color: var(--swiper-navigation-color,var(--swiper-theme-color));
+        }
         
         .toggle
 		{
@@ -969,22 +1004,23 @@
                 </div>
             </header>
             <div class="content_div">
-            	<div class="content_con_div">
-             		
-                 <div class="search_div">
-                     <input type="text" class="searchBar" placeholder="링크를 입력해주세요.">
-                     <img id="search_team" src="../images/search.png" alt="#">
-                 </div>
-                 <div class="empty_div">
-             		<img id="empty_img" src="../images/empty.svg" alt="#">
-               		<div class="msg">가입된 팀이 없습니다.</div>
-             	 </div>
-                 <div class="swiper">
-                 	<div class="swiper-wrapper">
-                 </div>
-                 <div class="swiper-button-next"></div>
-			     <div class="swiper-button-prev"></div>
-              </div>
+				<div class="content_con_div">
+             		<div class="search_div">
+                    	<input type="text" class="searchBar" placeholder="링크를 입력해주세요.">
+                     	<img id="search_team" src="../images/search.png" alt="#">
+                 	</div>
+                 	<div class="empty_div">
+             			<img id="empty_img" src="../images/empty.svg" alt="#">
+               			<div class="msg">가입된 팀이 없습니다.</div>
+             	 	</div>
+             	 	<div style="display: flex">
+	             	 	<div class="swiper-button-prev"></div>
+	                 	<div class="swiper">
+	                 		<div class="swiper-wrapper">
+	                 		</div>
+	              		</div>
+	                 	<div class="swiper-button-next"></div>
+			     	</div>
             	</div>                    
             </div>
         </section>        
@@ -1508,6 +1544,11 @@
 						$('.empty_div').css('display','none');
 						
 						$('#team').append("<option value='"+result[i].TEAM_ID+"'>"+result[i].TEAM_NAME+"</option>")
+					}
+					if(result.length < 4){
+						for(var j = result.length; j < 4; j++){
+							$('.swiper-wrapper').append("<div id='empty"+j+"' class='team_div empty swiper-slide'></div>");						
+						}
 					}
 				}
 				

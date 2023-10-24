@@ -29,4 +29,10 @@ public interface CompanyService {
 
 	String pwd_profile(HashMap<String, Object> inputMap) throws Exception;
 	
+	// 공지사항
+	HashMap<String, String> NOTICE_INSERT(HashMap<String, Object> inputMap) throws Exception;
+	HashMap<String, String> NOTICE_UPDATE(HashMap<String, Object> inputMap) throws Exception;
+	HashMap<String, String> NOTICE_DELETE(HashMap<String, Object> inputMap) throws Exception;
+	List<HashMap<String,String>> LIST_NOTICE(HashMap<String, Object> inputMap) throws Exception;
+	List<HashMap<String,String>> NOTICE_SELECT(HashMap<String, Object> inputMap) throws Exception;
 }
