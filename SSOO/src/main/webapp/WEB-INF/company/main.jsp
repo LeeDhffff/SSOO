@@ -731,6 +731,10 @@
 		    padding: 200px 0;
 		}
 		
+		.swiper_div{
+			display: none;
+		}
+		
 		.msg 
 		{
 			font-size: 16px;
@@ -1013,7 +1017,7 @@
              			<img id="empty_img" src="../images/empty.svg" alt="#">
                			<div class="msg">가입된 팀이 없습니다.</div>
              	 	</div>
-             	 	<div style="display: flex">
+             	 	<div class="swiper_div">
 	             	 	<div class="swiper-button-prev"></div>
 	                 	<div class="swiper">
 	                 		<div class="swiper-wrapper">
@@ -1542,6 +1546,7 @@
 						$('.marker')[i].style.backgroundColor = '#'+result[i].TEAM_ID.substr(0,6);
 						$('.msg').css('display','none');
 						$('.empty_div').css('display','none');
+						$('.swiper_div').css('display','flex');
 						
 						$('#team').append("<option value='"+result[i].TEAM_ID+"'>"+result[i].TEAM_NAME+"</option>")
 					}
