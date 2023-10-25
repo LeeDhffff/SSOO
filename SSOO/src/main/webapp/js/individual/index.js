@@ -278,13 +278,14 @@ $(document).ready(function(){
 			$("#mission_add").show();	
 			$(".mission_pop_div").hide();	
 			$("#Mission_save").show();	
-		
+			$("#mission_update").text("편집 취소");
 		
 		}else{
 			$(".mission_pop_div_update").hide();	
 			$("#mission_add").hide();	
 			$(".mission_pop_div").show();
 			$("#Mission_save").hide();	
+			$("#mission_update").text("미션 편집");
 		}
 		
 		
@@ -363,6 +364,13 @@ $(document).ready(function(){
 		
 		popup_alert.alerts("저장되었습니다.");
 	});
+	
+
+	
+	$(".misson_pop_X").on("click",function(){
+		$(".mission_pop").hide();
+	})
+	
 	/*===============================================================================================*/
 	/*==========================================기타==================================================*/
 	/*===============================================================================================*/
@@ -398,7 +406,8 @@ $(document).ready(function(){
 		
 	})
 	
-	$("#character_table > tbody > tr > td").on("click",function(){
+	
+	$("#character_table > .grid_con").on("click",function(){
 		var thisid = $(this).attr("id");
 		var imgid = $(this).find("img").attr("id").replaceAll("o_","");
 		
@@ -427,7 +436,7 @@ $(document).ready(function(){
 	})
 	
 	// 포즈 선택 후 저장
-	$("#pose_table > tbody > tr > td").on("click",function(){
+	$("#pose_table > .grid_con").on("click",function(){
 		if($(this).has("img").length > 0){
 			var imgid = $(this).find("img").attr("id");
 			
@@ -455,7 +464,7 @@ $(document).ready(function(){
 	})
 	
 	// 배경 선택 후 저장
-	$("#background_table > tbody > tr > td").on("click",function(){
+	$("#background_table > .grid_con").on("click",function(){
 		if($(this).has("img").length > 0){
 			var imgid = $(this).find("img").attr("id").replaceAll("back_","");
 			
@@ -512,6 +521,29 @@ $(document).ready(function(){
 		$(".table_tab").removeClass("active");
 		$(this).addClass("active");
 	})
+	
+	
+    	window.addEventListener("keydown", function(e){
+    		if(e.code == 'Escape' && $(".mission_pop").css("display") != 'none'){
+    			if($(".minimodal").css("display") != 'none'){
+                    $('.modal_close').click();
+    			}
+    			else{
+        			$(".mission_pop").hide();
+        			if($("#Mission_save").css("display") != 'none'){
+            			$("#mission_update").click();
+        			}
+    			}
+    		}
+    		else if(e.code == 'Escape' && $(".character_menu").css("display") != 'none'){   		
+        		if($(".minimodal").css("display") != 'none'){
+                    $('.modal_close').click();
+    			}
+    			else{
+    				$(".character_menu").hide();
+    			}
+        	}
+    	})
 }); //documet 끝
 
 
@@ -1623,14 +1655,13 @@ function selectCharacter(){
 				$("#character_exp").val(result.MIN_EXP)
 				$(".character_image").empty();
 				$("#nowCharacter").empty();
-				
+				$(".pose").empty();
 
 				var Cat = [["1","1_4","1_8","1_12"], ["1_1","1_5","1_9","1_13"],["1_2","1_6","1_10","1_14"],["1_3","1_7","1_11","1_15"]];
 				
 				for(let i=0; i<Cat.length; i++){
 					for(let j=0; j<Cat[i].length; j++){
 						if(Cat[i][j] == result.CHARACTER){
-							$("#pose_table > tbody > tr > td").empty();
 							$("#pose1").append("<img src='./images/Character/"+Cat[i][0]+".svg' id='"+Cat[i][0]+"'>");
 							$("#pose2").append("<img src='./images/Character/"+Cat[i][1]+".svg' id='"+Cat[i][1]+"'>");
 							$("#pose3").append("<img src='./images/Character/"+Cat[i][2]+".svg' id='"+Cat[i][2]+"'>");
