@@ -276,13 +276,15 @@ $(document).ready(function(){
 		if($(".mission_pop_div_update").css("display") == "none"){
 			$(".mission_pop_div_update").show();	
 			$("#mission_add").show();	
-			$(".mission_pop_div").hide();
+			$(".mission_pop_div").hide();	
+			$("#Mission_save").show();	
 		
 		
 		}else{
 			$(".mission_pop_div_update").hide();	
 			$("#mission_add").hide();	
 			$(".mission_pop_div").show();
+			$("#Mission_save").hide();	
 		}
 		
 		
@@ -299,7 +301,6 @@ $(document).ready(function(){
 		
 		
         $(".mission_pop_div_update").append(addString2);
-        $(".mission_pop_div_update").append($("#Mission_save"));
 	});
 	$(document).on("click",".Mission_remove",function(){
 		var target = $(this);
@@ -1598,9 +1599,9 @@ function selectMission(){
 					addString2 += '</div>';
 					
 				}
-				addString2 += '<button id="Mission_save">SAVE</button>';
         		
 	            $(".mission_pop_div_update").append(addString2);
+	            
 			}
 		})
 }

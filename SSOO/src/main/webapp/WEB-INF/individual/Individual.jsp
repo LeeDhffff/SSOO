@@ -281,27 +281,20 @@
             	<div class="character_div">
     				
 	            	<div class="character_status">
-	            		<button class="character_option">O</button>
-		            	<div class="character_button" style="display:none;">
-			            	<button id="mission">오늘의 미션</button>
-			            	<button id="character_change">Custom</button>
-	            		</div>
-            		<div class="mission_pop" style="display:none;">
-		            	<button id="mission_update">미션 편집</button>
-		            	<button id="mission_add" style="display:none;">+</button>
-	            		<div class="mission_pop_div">
-		            	</div>
-		            	<div class="mission_pop_div_update" style="display:none;">
-		            	</div>
-            		</div>
-	            	<div class="character_image">
-	            	</div>
+	            		<div class="character_option">
+	            			<i class="fa-solid fa-gear"></i>
+	            			<div class="character_button" style="display:none;">
+				            	<button id="mission">오늘의 미션</button>
+				            	<button id="character_change">Custom</button>
+	            			</div>
+	            		</div>            		
+	            		<div class="character_image"></div>
 	            	</div>
 	            	<h3 class="character_owner"><%=(String)session.getAttribute("SESSION_NICK")%></h3>
             		<div class="level_number">
 	            		<h5 class="character_h5">Level</h5>
 		            	<h5 class="watch">
-	                            <img src="./images/individual/watch.png" alt="watch" style="width: 15px; height: 15px;">
+	                    	<img src="./images/individual/watch.png" alt="watch" style="width: 15px; height: 15px;">
 	                    </h5>
                     </div>
     				<progress id="character_exp" value="0" max="100"></progress>        
@@ -311,24 +304,64 @@
             		</div>
 	            </div>
             </div>
-			<div class="character_menu" style="display:none;">
-				<button class="character_menu_toggle">></button>
-				<div class="character_table_div">
+            
+			<div class="character_menu">
+				<div class="character_con_wrap">
+					
+					<!-- 타이틀 + X버튼 -->
+					<div class="chacracter_con_header">
+						<h5 class="cat_icon"></h5>
+						<h3 class="title"><span>홍길동</span>님의 야옹이 카테고리</h3>
+						<div class="character_menu_toggle">
+							<i class="fa-solid fa-xmark"></i>
+						</div>
+					</div>	
+					
+					<!-- 탭버튼 -->
 					<div class="character_table_tab">
 						<button class="table_tab active" id="change_table_o">캐릭터</button>
 						<button class="table_tab" id="change_table">포즈</button>
 						<button class="table_tab" id="change_table2">배경</button>
 					</div>
-					<table id="character_table">
-						<thead>
-							<tr><th colspan="3">캐릭터 선택</th></tr>
-						</thead>
-						<tbody>
-							<tr><td id="character1"><img src="./images/Character/1.svg" id="o_1"></td><td id="character1_1"><img src="./images/Character/1_1.svg" id="o_1_1"></td><td id="character1_2"><img src="./images/Character/1_2.svg" id="o_1_2"></td></tr>
-							<tr><td id="character1_3"><img src="./images/Character/1_3.svg" id="o_1_3"></td><td id="character1_4"></td><td id="character1_5"></td></tr>
-						</tbody>
-					</table>
-<!-- 					<div class="tablediv"> -->
+									
+					<div class="character_table_div">
+						<!-- 케릭터 테이블 -->
+						<div class="con_table" id="character_table">
+							<div class="grid_con ch" id="character1"></div>
+							<div class="grid_con ch" id="character2"></div>
+							<div class="grid_con ch" id="character3"></div>
+							<div class="grid_con ch" id="character4"></div>
+							<div class="grid_con ch" id="character4"></div>
+							<div class="grid_con ch" id="character4"></div>
+							<div class="grid_con ch" id="character4"></div>
+						</div>
+						
+						<!-- 포즈 테이블 -->
+						<div class="con_table" id="pose_table" style="display: none;">
+							<div class="grid_con pose" id="pose1"></div>
+							<div class="grid_con pose" id="pose2"></div>
+							<div class="grid_con pose" id="pose3"></div>
+							<div class="grid_con pose" id="pose4"></div>
+						</div>
+						
+						<!-- 배경 테이블 -->
+						<div class="con_table" id="background_table" style="display: none;">
+							<div class="grid_con back" id="back1"></div>
+							<div class="grid_con back" id="back2"></div>
+							<div class="grid_con back" id="back3"></div>
+							<div class="grid_con back" id="back4"></div>
+						</div>
+						
+						<!-- <table id="character_table">
+							<thead>
+								<tr><th colspan="3">캐릭터 선택</th></tr>
+							</thead>
+							<tbody>
+								<tr><td id="character1"><img src="./images/Character/1.svg" id="o_1"></td><td id="character1_1"><img src="./images/Character/1_1.svg" id="o_1_1"></td><td id="character1_2"><img src="./images/Character/1_2.svg" id="o_1_2"></td></tr>
+								<tr><td id="character1_3"><img src="./images/Character/1_3.svg" id="o_1_3"></td><td id="character1_4"></td><td id="character1_5"></td></tr>
+							</tbody>
+						</table>
+						<div class="tablediv">
 						<table id="pose_table" style="display:none;">
 							<thead>
 								<tr><th colspan="3">포즈 선택</th></tr>
@@ -346,15 +379,49 @@
 								<tr><td id="back1"><img src="./images/background/1.svg" id="back_1"></td><td id="back2"><img src="./images/background/2.svg" id="back_2"></td><td id="back3"><img src="./images/background/3.svg" id="back_3"></td></tr>
 								<tr><td id="back4"><img src="./images/background/4.svg" id="back_4"></td><td id="back5"><img src="./images/background/5.svg" id="back_5"></td><td id="back6"><img src="./images/background/6.svg" id="back_6"></td></tr>
 							</tbody>
-						</table>
-<!-- 					</div> -->
-					<div id="nowCharacter">
-						
-					</div>
-				</div>
-			</div>
+						</table> -->
+	<!-- 					</div> -->
+						<div class="now_ch_wrap">
+							<div id="nowCharacter"></div>
+							<div class="ch_info_wrap">
+								<h5 class="level">LV15</h5>
+								<h1 class="name">진아네 고양이</h1>
+								<h3 class="sub_name">살찐 야옹이</h3>
+								<div class="item_list">
+									<div class="item cat_type">
+										<h3 class="cat_foot_icon"></h3>치즈
+									</div>
+									<div class="item cat_pose">
+										<h3 class="cat_foot_icon"></h3>앉아있는 고양이
+									</div>
+									<div class="item cat_bg">
+										<h3 class="cat_foot_icon"></h3>배경을 선택해주세요.
+									</div>
+								</div>
+							</div>
+						</div>						
+					</div> <!-- character_table_div 끝 -->
+				</div>	<!-- character_con_wrap 끝 -->			
+			</div> <!-- character_menu 끝 -->
+			
         </section>
-        
+        <div class="mission_pop" style="display:none;">
+        	<div class="mission_pop_con_wrap">
+        		<div class="mission_pop_header">
+        			<h3 class="misson_pop_logo">
+        				<img src="./images/logo_white.svg">
+        			</h3>
+        			<h1>오늘의 미션</h1>
+        		</div>
+        		<div class="mission_pop_body">        			
+		        	<div class="mission_pop_div"></div>
+		        	<button id="mission_update">미션 편집</button>
+		         	<button id="mission_add" style="display:none;">미션 추가</button>
+		         	<div class="mission_pop_div_update" style="display:none;"></div>
+		         	<button id="Mission_save" style="display:none;">SAVE</button>
+        		</div>        		
+        	</div>         	
+        </div>
    </div>
    
    
