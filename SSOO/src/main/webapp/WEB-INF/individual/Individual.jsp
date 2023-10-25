@@ -305,13 +305,13 @@
 	            </div>
             </div>
             
-			<div class="character_menu">
+			<div class="character_menu" style="display:none;">
 				<div class="character_con_wrap">
 					
 					<!-- 타이틀 + X버튼 -->
 					<div class="chacracter_con_header">
 						<h5 class="cat_icon"></h5>
-						<h3 class="title"><span>홍길동</span>님의 야옹이 카테고리</h3>
+						<h3 class="title"><span><%=(String)session.getAttribute("SESSION_NICK")%></span>님의 야옹이 카테고리</h3>
 						<div class="character_menu_toggle">
 							<i class="fa-solid fa-xmark"></i>
 						</div>
@@ -327,13 +327,13 @@
 					<div class="character_table_div">
 						<!-- 케릭터 테이블 -->
 						<div class="con_table" id="character_table">
-							<div class="grid_con ch" id="character1"></div>
-							<div class="grid_con ch" id="character2"></div>
-							<div class="grid_con ch" id="character3"></div>
-							<div class="grid_con ch" id="character4"></div>
-							<div class="grid_con ch" id="character4"></div>
-							<div class="grid_con ch" id="character4"></div>
-							<div class="grid_con ch" id="character4"></div>
+							<div class="grid_con ch" id="character1"><img src="./images/Character/1.svg" id="o_1"></div>
+							<div class="grid_con ch" id="character2"><img src="./images/Character/1_1.svg" id="o_1_1"></div>
+							<div class="grid_con ch" id="character3"><img src="./images/Character/1_2.svg" id="o_1_2"></div>
+							<div class="grid_con ch" id="character4"><img src="./images/Character/1_3.svg" id="o_1_3"></div>
+<!-- 							<div class="grid_con ch" id="character5"></div> -->
+<!-- 							<div class="grid_con ch" id="character6"></div> -->
+<!-- 							<div class="grid_con ch" id="character7"></div> -->
 						</div>
 						
 						<!-- 포즈 테이블 -->
@@ -346,10 +346,12 @@
 						
 						<!-- 배경 테이블 -->
 						<div class="con_table" id="background_table" style="display: none;">
-							<div class="grid_con back" id="back1"></div>
-							<div class="grid_con back" id="back2"></div>
-							<div class="grid_con back" id="back3"></div>
-							<div class="grid_con back" id="back4"></div>
+							<div class="grid_con back" id="back1"><img src="./images/background/1.svg" id="back_1"></div>
+							<div class="grid_con back" id="back2"><img src="./images/background/2.svg" id="back_2"></div>
+							<div class="grid_con back" id="back3"><img src="./images/background/3.svg" id="back_3"></div>
+							<div class="grid_con back" id="back4"><img src="./images/background/4.svg" id="back_4"></div>
+							<div class="grid_con back" id="back5"><img src="./images/background/5.svg" id="back_5"></div>
+							<div class="grid_con back" id="back6"><img src="./images/background/6.svg" id="back_6"></div>
 						</div>
 						
 						<!-- <table id="character_table">
@@ -408,6 +410,7 @@
         <div class="mission_pop" style="display:none;">
         	<div class="mission_pop_con_wrap">
         		<div class="mission_pop_header">
+        			<button class="misson_pop_X">X</button>
         			<h3 class="misson_pop_logo">
         				<img src="./images/logo_white.svg">
         			</h3>
