@@ -135,11 +135,15 @@
 		    align-items: center;
 		    justify-content: center;	
         }
-        
+        .profile_img > img{
+       	    width: 100%;
+    		border-radius: 100px;
+        }
         
         .navigation.active .profile_img 
         {
         	width: 40px;
+        	height: 40px;
         }
         
         .profile_txt
