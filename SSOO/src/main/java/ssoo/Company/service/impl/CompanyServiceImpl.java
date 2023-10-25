@@ -40,6 +40,13 @@ public class CompanyServiceImpl implements CompanyService {
 		return CompanyMapper.TEAM_SELECT(inputMap);
 	}
 	
+	// 소속멤버 조회
+		@Override
+		public List<HashMap<String, String>> LIST_TEAM_MEMBER(HashMap<String, Object> inputMap) throws Exception {
+			// TODO Auto-generated method stub
+			return CompanyMapper.LIST_TEAM_MEMBER(inputMap);
+		}
+	
 	@Override
 	public List<HashMap<String, String>> Company_Calendar_Select(HashMap<String, Object> inputMap) throws Exception {
 		// TODO Auto-generated method stub

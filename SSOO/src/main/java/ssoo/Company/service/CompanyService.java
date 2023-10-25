@@ -14,6 +14,8 @@ public interface CompanyService {
 	// 소속팀 조회
 	List<HashMap<String,String>> TEAM_SELECT(HashMap<String, Object> inputMap) throws Exception;
 	
+	List<HashMap<String,String>> LIST_TEAM_MEMBER(HashMap<String, Object> inputMap) throws Exception;
+	
 	List<HashMap<String,String>> Company_Calendar_Select(HashMap<String, Object> inputMap) throws Exception;
 	HashMap<String, String> Company_Calendar_Insert(HashMap<String, Object> inputMap) throws Exception;
 	HashMap<String, String> Company_Calendar_Delete(HashMap<String, Object> inputMap) throws Exception;

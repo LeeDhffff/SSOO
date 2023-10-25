@@ -408,10 +408,7 @@
                 
                 <div>
                     <label for="members">참여대상 선택</label>
-                    <select class="form-control select2" multiple="multiple">
-                    	<option value="green">김초록(green)</option>
-				        <option value="black">박검정(black)</option>
-				        <option value="white">이하얀(white)</option>
+                    <select class="form-control select2" multiple="multiple" style="width: 500px">
                     </select>
                     <!-- https://select2.org/ -->
                 </div>
@@ -423,7 +420,8 @@
                     <input type="text" name="startMM" id="startMM" class="timepicker mm">
                     ~
                     <input type="date" name="endDay" id="endDay">
-                    
+                    <input type="text" name="endtHH" id="endHH" class="timepicker hh">
+                    <input type="text" name="endMM" id="endMM" class="timepicker mm">
                 </div>
                 
                 <!-- <div>
@@ -559,6 +557,7 @@
                     $('#endDay').val(i.dateStr);
                     $('#endHH').val(today.getHours()+1);
                     $('#endMM').val(today.getMinutes());
+                    getTeamMems($('#teamID').val());
                 }else{
                    console.log('click');
                 }
@@ -566,20 +565,27 @@
                 firstClick = i.dateStr;
             },
             eventClick: function(i) {
+            	getTeamMems(tid);
+            	
+            	var members = i.event.id.split(',');
+            	
             	$('.container').css('z-index',-1);
                 $(".modal").css('display','block');
                 
                 $('#title').val(i.event.title);
-                                
-                console.log(i.event);
+                $('.select2').val(members);
+                $('.select2').trigger('change');
                 
-                if(i.event.allDay){
+                console.log(i.event);
+                console.log(members);
+                
+                /* if(i.event.allDay){
                 	$('#allDay').prop("checked",true);
                 	$('#startDay').val(i.event.startStr);
                 	$('#endDay').val(i.event.endStr);
                 	$('.timepicker').css('display','none');
                 }else{
-                	$('#allDay').prop("checked",false);
+                	$('#allDay').prop("checked",false); */
                 	
                 	$('#startDay').val(i.event.startStr.split('T')[0]);
                 	$('#endDay').val(i.event.endStr.split('T')[0]);
@@ -591,7 +597,7 @@
                     $('#endMM').val(i.event.endStr.split('T')[1].split(':')[1]);
                     
                 	$('.timepicker').css('display','');
-                }
+                // }
                 
                 $('#sch_addEvt')[0].innerText = "수정하기";
             }
@@ -600,6 +606,7 @@
     	
     	start();
     	loadBK();
+    	getNoticeDetail();
     	
 	    $('input.hh').timepicker({
             timeFormat: 'HH',
@@ -626,7 +633,7 @@
             var start = $('#startDay').val()+'T'+$('#startHH').val()+':'+$('#startMM').val()+':00';
             var end = $('#endDay').val()+'T'+$('#endHH').val()+':'+$('#endMM').val()+':00';
             
-            console.log($('#allDay').is(":checked"));
+            // console.log($('#allDay').is(":checked"));
             
             if($('#sch_addEvt')[0].innerText == "수정하기"){
             	console.log("삭제:: ", title);
@@ -649,7 +656,32 @@
                 });
             }
             
-           	if($('#allDay').is(":checked")){				
+            var insertData = {
+           		USERID: uid,
+				TEAM : tid,
+				TITLE : title,
+				DAY_FROM : start.split('T')[0],
+				DAY_TO : end.split('T')[0],
+				TIME_FROM : start.split('T')[1],
+				TIME_TO : end.split('T')[1],
+				MEMBERS : $('.select2').val().toString()
+            }
+            console.log(insertData);
+            $.ajax({
+        		type: "POST",
+				url : "./Calendar_Insert.do",
+				data: insertData,
+				async: false,
+				success:function(data){
+					alert(JSON.parse(data).RESULTMSG);
+					location.reload(true);
+				},
+				error:function(err){
+					alert('등록이 실패했습니다.');
+				}
+        	});
+            
+           	/* if($('#allDay').is(":checked")){
            		$.ajax({
 	        		type: "POST",
 					url : "./Calendar_Insert.do",
@@ -698,7 +730,7 @@
 						alert('등록이 실패했습니다.');
 					}
 	        	});
-            }
+            } */
             
             
             $(".close").click();
@@ -776,12 +808,12 @@
         $('#notice_addEvt').on('click',function(){
         	var insertData = {
         		USERID: uid,
-    			TEAM: tid,
+    			TEAMID: tid,
     			TITLE: $('#notice_title').val(),
    				CONTENT: $('#notice_content').val(),
    				PATH: '' //$('#notice_path').val()
    			}
-        	
+        	console.log(insertData);
         	$.ajax({
             	type: "POST",
 				url : "./NOTICE_INSERT.do",
@@ -795,7 +827,6 @@
 					console.log(err);
 				}
             });
-            
             $(".notice_close").click();
         });
         // 달성률 관련
@@ -907,32 +938,17 @@
         $('.btn_notice').on('click',function(){
         	$('.btn_notice').attr("src","../images/arrow_right.png");
         	
-        	$('.notice_body').empty();
-        	$('.notice_body').append("<div id='000'><h3>[전체] 공지사항</h3></div><div id='001'><h3>[디자인팀] 공지사항</h3></div><div id='002'><h3>[개발팀] 공지사항</h3></div>");
-        	
-        	$('#000').on('click',function(){
-    			$('.btn_notice').attr("src","../images/arrow_left.png");
-            	
-            	$('.notice_body').empty();
-            	$('.notice_body').append("<h3>[전체] 공지사항</h3><p>10월 02일(월)은 대체공휴일입니다.</p>");
-            });
-            
-            $('#001').on('click',function(){
-    			$('.btn_notice').attr("src","../images/arrow_left.png");
-            	
-            	$('.notice_body').empty();
-            	$('.notice_body').append("<h3>[디자인팀] 공지사항</h3><p>디자인 시안 전달 양식이 변경되어 공지드립니다.</p>");
-            });
-            
-            $('#002').on('click',function(){
-    			$('.btn_notice').attr("src","../images/arrow_left.png");
-            	
-            	$('.notice_body').empty();
-            	$('.notice_body').append("<h3>[개발팀] 공지사항</h3><p>어? 소리 금지</p>");
-            });
+        	getNotices(tid);
+			
+        	$('.btn_notice').click(function(){
+        		getNoticeDetail();
+        	});
         });
         
-        
+        $('#teamID').change(function(){
+        	console.log(this.value);
+        	getTeamMems(this.value);
+        });
     });
         
     function deleteEvt(title){
@@ -1036,7 +1052,7 @@
 				console.log(result);
 				
 				for(var i=0 ; i<result.length; i++){
-					if(result[i].ALLDAY == 'N '){			            
+					/* if(result[i].ALLDAY == 'N '){			            
 						calendar.addEvent({ 
 							id: result[i].TITLE,
 							title: result[i].TITLE,
@@ -1052,8 +1068,14 @@
 							end: result[i].DAY_TO,
 							allDay: true
 						})
-					}
-					$('.schedule_div').append('<div id="'+result[i].TITLE+'" class="schedule_item"><h3>'+result[i].TITLE+'</h3><button class="btn delete" onClick="deleteEvt(\''+result[i].TITLE+'\')"><img src="../images/delete.png" alt="#"></button></div>');
+					} */
+					calendar.addEvent({ 
+						id: result[i].MEMBERS,
+						title: result[i].TITLE,
+						start: result[i].DAY_FROM+"T"+result[i].TIME_FROM,
+						end: result[i].DAY_TO+"T"+result[i].TIME_TO
+					})
+					$('.schedule_div').append('<div id="'+result[i].MEMBERS+'" class="schedule_item"><h3>'+result[i].TITLE+'</h3><button class="btn delete" onClick="deleteEvt(\''+result[i].MEMBERS+'\')"><img src="../images/delete.png" alt="#"></button></div>');
 				}
 			},
 			error:function(err){
@@ -1094,7 +1116,54 @@
 	function getNotices(tid){
 		$.ajax({
 			type: "POST",
-			url : "./list_notice.do",
+			url : "./LIST_NOTICE.do",
+			data: {
+				TEAM: tid
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				
+				
+				$('.notice_body').empty();
+				
+				for(var i = 0; i < result.length; i++){
+					console.log(result[i]);
+					$('.notice_body').append("<div id='0"+i+"'><h3>"+result[i].TITLE+"</h3></div>");
+				}
+			},
+			error: function(err){
+				console.log(err);
+			}
+		})
+	}
+	
+	function getNoticeDetail(){
+		$.ajax({
+			type: "POST",
+			url : "./NOTICE_SELECT.do",
+			data: {
+				TEAM: tid,
+				TITLE: '테스트'
+			},
+			async: false,
+			success:function(data){
+				var result = JSON.parse(data);
+				console.log(result);
+				$('.btn_notice').attr("src","../images/arrow_left.png");
+				$('.notice_body').empty();
+            	$('.notice_body').append("<h3>"+result[0].TITLE+"</h3><p>"+result[0].CONTENT+"</p>");
+			},
+			error: function(err){
+				console.log(err);
+			}
+		})
+	}
+	
+	function getTeamMems(tid){
+		$.ajax({
+			type: "POST",
+			url : "./LIST_TEAM_MEMBER.do",
 			data: {
 				TEAM: tid
 			},
@@ -1103,6 +1172,9 @@
 				var result = JSON.parse(data);
 				console.log(result);
 				
+				$('.select2').select2({
+					data: result
+		    	});
 			},
 			error: function(err){
 				console.log(err);

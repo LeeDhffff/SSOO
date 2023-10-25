@@ -24,6 +24,12 @@
 		) }
 	</select>
 	
+	<select id="LIST_TEAM_MEMBER" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
+		{ call 팀_소속멤버조회(
+			#{TEAM}		
+		) }
+	</select>
+	
 	<select id="TEAM_SELECT" statementType="CALLABLE" parameterType="hashmap" resultType="hashmap">
 		{ call 팀_소속조회(
 			#{USER}		
@@ -47,7 +53,7 @@
 			#{DAY_TO},
 			#{TIME_FROM},
 			#{TIME_TO},
-			#{ALLDAY}
+			#{MEMBERS}
 		)}
 	</select>
 	

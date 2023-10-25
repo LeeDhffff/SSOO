@@ -135,6 +135,7 @@
 		    align-items: center;
 		    justify-content: center;	
         }
+        
         .profile_img > img{
        	    width: 100%;
     		border-radius: 100px;

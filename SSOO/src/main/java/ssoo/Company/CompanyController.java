@@ -76,6 +76,18 @@ public class CompanyController {
 		return jsonStr;
 	}
 	
+	@RequestMapping(value = "/Company/LIST_TEAM_MEMBER.do", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String LIST_TEAM_MEMBER(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		List<HashMap<String, String>> TEAM_MEMBER = CompanyService.LIST_TEAM_MEMBER(inputMap);
+		System.out.println(TEAM_MEMBER);
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonStr = mapper.writeValueAsString(TEAM_MEMBER);
+		return jsonStr;
+	}
+	
 	@RequestMapping(value = "/Company/TEAM_SELECT.do", produces = "application/text; charset=utf-8")
 	@ResponseBody
 	public String TEAM_SELECT(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
