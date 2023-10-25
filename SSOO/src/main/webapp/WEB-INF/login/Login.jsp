@@ -329,8 +329,8 @@
                 <h1 class="logo">
                     <img src="./images/login/logo.svg" alt="#">
                 </h1>            
-                <input type="text" name="username" id="username" required title="Please enter your Username here" placeholder="아이디">
-                <input type="password" name="password" id="password" required title="Please enter your Password here" placeholder="비밀번호">                               
+                <input type="text" name="username" id="username" required title="Please enter your Username here" placeholder="아이디" autocomplete="off">
+                <input type="password" name="password" id="password" required title="Please enter your Password here" placeholder="비밀번호" >                               
                 <div class="id_save">
                     <input type="checkbox" class="id_save_check">
                     <h3 class="id_save_h3">아이디 저장</h3>
@@ -354,19 +354,19 @@
 
                 <div class="input userid">
                     <input type="text" name="Join_id" placeholder="아이디" id="Join_id" required
-                        title="Please enter your Id here" />
+                        title="Please enter your Id here" autocomplete="off"/>
                     <p class="warning"></p>
                 </div>
 
                 <div class="input pwd">
                     <input type="password" name="Join_password" placeholder="비밀번호" id="Join_password" required
-                        title="Please enter your Password here" />
+                        title="Please enter your Password here" autocomplete="off"/>
                     <h5>숫자, 영문, 특수문자 포함 8자이상</h5>
                 </div>
                 
                 <div class="input confirm">
                     <input type="password" name="password_confirm" placeholder="비밀번호 재입력" id="password_confirm" required
-                        title="Please enter your Password here" />
+                        title="Please enter your Password here" autocomplete="off"/>
                 </div>
                 
                 <div class="input agree">
@@ -394,56 +394,56 @@
 	                <div class="input username hidden">
                 		<h5 class="input_con_title">이름</h5>
 	                    <input type="text" name="Join_username" id="Join_username" placeholder="이름"  required
-	                        title="Please enter your Username here" />
+	                        title="Please enter your Username here" autocomplete="off"/>
 	                </div>
 	                
 	                <div class="input nickname hidden">
                 		<h5 class="input_con_title">닉네임</h5>
 	                    <input type="text" name="nickname" id="nickname" placeholder="닉네임" required
-	                        title="Please enter your Nickname here" />
+	                        title="Please enter your Nickname here" autocomplete="off"/>
 	                </div>
 	                
                 	<div class="input mail hidden">
                 		<h5 class="input_con_title">이메일</h5>
 	                	<input type="email" name="email" placeholder="이메일" 
-	                    id="email" required title="Please enter your E-Mail here" />
+	                    id="email" required title="Please enter your E-Mail here" autocomplete="off"/>
 	                </div>               
 	                
 	                <div class="input tel hidden">
 	                <h5 class="input_con_title">전화번호</h5>
 	                    <input type="tel" name="phone" id="phone" placeholder="'-'제외, 전화번호 입력"
-	                    required title="Please enter your Phone Number here" />
+	                    required title="Please enter your Phone Number here" autocomplete="off"/>
 	                </div>                 
 	                
 	                <div class="input code hidden">
 	                	<h5 class="input_con_title">인증번호</h5>
 	                    <input type="text" name="code" id="code" required placeholder="인증번호 입력"
-	                        title="Please enter your Address here" />
+	                        title="Please enter your Address here" autocomplete="off" />
 	                    <button type="button" class="btn_auth">인증번호 받기</button>
 	                </div>
 	                
 	                <div class="input addr hidden">
 	                	<h5 class="input_con_title">주소</h5>
 	                    <input type="text" name="addr" placeholder="주소 입력" id="addr" required
-	                        title="Please enter your Address here" />
+	                        title="Please enter your Address here" autocomplete="off"/>
 	                    <button type="button" class="btn_location">우편번호 찾기</button>
 	                </div>
 	                
 	                <div class="input addr2 hidden">
 	                	<input type="text" name="addr" placeholder="상세 주소 입력" id="addr2" required
-	                        title="Please enter your Address here" />
+	                        title="Please enter your Address here" autocomplete="off"/>
 	                </div>
 	
 					<div class="input perpose hidden">
 						<h5 class="input_con_title">사용목적</h5>
 	                    <input type="text" name="perpose" placeholder="어떤 용도로 사용하실 건가요? (선택)" id="perpose" required
-	                        title="Please enter your Perpose here" />
+	                        title="Please enter your Perpose here" autocomplete="off"/>
 	                </div>
 	                
 	                <div class="input contact hidden">
 	                	<h5 class="input_con_title">컨텍경로</h5>
 	                    <input type="text" name="contact" placeholder="JTM을 어디서 처음 접하셨나요? (선택)"id="contact" required
-	                        title="Please enter your Contact here" />
+	                        title="Please enter your Contact here" autocomplete="off"/>
 	                </div>
 	                
 	                <button type="submit" value="가입하기" class="join-btn join hidden">가입하기</button>
@@ -463,25 +463,25 @@
                 	<div class="input name find">
                 		<h5 class="input_con_title">이름</h5>
 	                	<input type="email" name="email" placeholder="이름 입력" 
-	                    id="findid_username" required title="Please enter your Name here" />
+	                    id="findid_username" required title="Please enter your Name here" autocomplete="off"/>
 	                </div>
 	                
                 	<div class="input email find">
                 		<h5 class="input_con_title">이메일</h5>
 	                	<input type="email" name="email" placeholder="이메일" 
-	                    id="findid_email" required title="Please enter your E-Mail here" />
+	                    id="findid_email" required title="Please enter your E-Mail here" autocomplete="off"/>
 	                </div>               
 	                
 	                <div class="input tel find">
 	                <h5 class="input_con_title">전화번호</h5>
 	                    <input type="tel" name="phone" id="findid_phone" placeholder="'-'제외, 전화번호 입력"
-	                    required title="Please enter your Phone Number here" />
+	                    required title="Please enter your Phone Number here" autocomplete="off"/>
 	                </div>                 
 	                
 	                <div class="input code find">
 	                	<h5 class="input_con_title">인증번호</h5>
 	                    <input type="text" name="code" id="code2" required placeholder="인증번호 입력"
-	                        title="Please enter your Address here" />
+	                        title="Please enter your Address here" autocomplete="off"/>
 	                    <button type="button" class="btn_auth">인증번호 받기</button>
 	                </div>
 	                
@@ -499,31 +499,31 @@
                 	<div class="input id find">
                 		<h5 class="input_con_title">아이디</h5>
 	                	<input type="text" placeholder="ID 입력" name="findpw_id" id="findpw_id" 
-	                    required title="Please enter your ID here" />
+	                    required title="Please enter your ID here" autocomplete="off"/>
 	                </div>
                 
                 	<div class="input name find">
                 		<h5 class="input_con_title">이름</h5>
 	                	<input type="email" placeholder="이름 입력" name="findpw_username" 
-	                	id="findpw_username" required title="Please enter your Username here" />
+	                	id="findpw_username" required title="Please enter your Username here" autocomplete="off"/>
 	                </div>
 	                
                 	<div class="input email find">
                 		<h5 class="input_con_title">이메일</h5>
 	                	<input type="email" name="findpw_email" id="findpw_email" 
-	                	placeholder="이메일" required title="Please enter your E-Mail here" />
+	                	placeholder="이메일" required title="Please enter your E-Mail here" autocomplete="off"/>
 	                </div>               
 	                
 	                <div class="input tel find">
 	                <h5 class="input_con_title">전화번호</h5>
 	                    <input type="tel" name="findpw_phone" id="findpw_phone" placeholder="'-'제외, 전화번호 입력"
-	                    required title="Please enter your Phone Number here" />
+	                    required title="Please enter your Phone Number here" autocomplete="off"/>
 	                </div>                 
 	                
 	                <div class="input code find">
 	                	<h5 class="input_con_title">인증번호</h5>
 	                    <input type="text" name="code" id="code2" required placeholder="인증번호 입력"
-	                        title="Please enter your Address here" />
+	                        title="Please enter your Address here" autocomplete="off"/>
 	                    <button type="button" class="btn_auth">인증번호 받기</button>
 	                </div>
 	                

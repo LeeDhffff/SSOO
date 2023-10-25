@@ -544,6 +544,18 @@ $(document).ready(function(){
     			}
         	}
     	})
+    	
+    	$("#logout").click(function(){	
+			
+    		$.ajax({
+    			url:"Logout.do",
+    			type:"post",
+    			async:false
+    		})
+
+    		location.href = "/SSOO"
+    	});
+	
 }); //documet 끝
 
 
@@ -1650,7 +1662,17 @@ function selectCharacter(){
 			success: function(data){		
 				var result = JSON.parse(data);
 				
-				$(".now_level").text(result.LEVEL)
+				
+				console.log(result);
+				
+				$(".now_level").text(result.LEVEL);
+				$(".ch_info_wrap > .level").text("LV" + result.LEVEL);
+				$(".ch_info_wrap > .name").text(nick);
+//				$(".ch_info_wrap > .sub_name").text(result.POSE);
+				$(".cat_type > span").text(result.CAT);
+				$(".cat_pose > span").text(result.POSE);
+				$(".cat_bg > span").text(result.BACKGROUND_NAME);
+				
 				$(".next_level").text(Number(result.LEVEL) + 1)
 				$("#character_exp").val(result.MIN_EXP)
 				$(".character_image").empty();

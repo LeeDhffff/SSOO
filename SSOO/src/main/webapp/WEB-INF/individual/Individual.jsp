@@ -286,6 +286,7 @@
 	            			<div class="character_button" style="display:none;">
 				            	<button id="mission">오늘의 미션</button>
 				            	<button id="character_change">Custom</button>
+				            	<button id="logout">로그아웃</button>
 	            			</div>
 	            		</div>            		
 	            		<div class="character_image"></div>
@@ -386,18 +387,18 @@
 						<div class="now_ch_wrap">
 							<div id="nowCharacter"></div>
 							<div class="ch_info_wrap">
-								<h5 class="level">LV15</h5>
-								<h1 class="name">진아네 고양이</h1>
+								<h5 class="level"></h5>
+								<h1 class="name"></h1>
 								<h3 class="sub_name">살찐 야옹이</h3>
 								<div class="item_list">
 									<div class="item cat_type">
-										<h3 class="cat_foot_icon"></h3>치즈
+										<h3 class="cat_foot_icon"></h3><span></span>
 									</div>
 									<div class="item cat_pose">
-										<h3 class="cat_foot_icon"></h3>앉아있는 고양이
+										<h3 class="cat_foot_icon"></h3><span></span>
 									</div>
 									<div class="item cat_bg">
-										<h3 class="cat_foot_icon"></h3>배경을 선택해주세요.
+										<h3 class="cat_foot_icon"></h3><span>배경을 선택해주세요.</span>
 									</div>
 								</div>
 							</div>
@@ -439,6 +440,7 @@
   var calendar2;
 
   var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
+  var nick = '<%=(String)session.getAttribute("SESSION_NICK")%>';
 
 
   	$(document).ready(function(){

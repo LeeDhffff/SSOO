@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -73,6 +74,19 @@ public class LoginController {
 		}
 		
 	}
+	
+
+	@RequestMapping(value = "Logout.do")
+	@ResponseBody
+	public String Logout(@RequestParam HashMap<String, Object> inputMap, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		HttpSession httpSession = request.getSession(true);
+		httpSession.invalidate();
+		
+		return "";
+	}
+	
 	
 	@RequestMapping(value = "/signUp.do" , produces = "application/text; charset=utf-8")
 	@ResponseBody
