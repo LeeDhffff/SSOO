@@ -126,6 +126,9 @@ $(document).ready(function(){
 
 	$(".popup_X").on("click",function(){
 		$(".popup").hide();
+		if($(".trash").hasClass("notopen") == false){
+			$(".trash").addClass("notopen");
+		}
 	});
 	
 	
@@ -543,6 +546,14 @@ $(document).ready(function(){
     				$(".character_menu").hide();
     			}
         	}
+    		else if(e.code == 'Escape' && $(".modal_change_profile").css("display") != 'none'){   		
+        		if($(".minimodal").css("display") != 'none'){
+                    $('.modal_close').click();
+    			}
+    			else{
+    				$(".modal_change_profile").hide();
+    			}
+        	}
     	})
     	
     	$("#logout").click(function(){	
@@ -556,10 +567,182 @@ $(document).ready(function(){
     		location.href = "/SSOO"
     	});
 	
-}); //documet 끝
+	
+	 $('#btn_edit').on('click',function(){
+     	$(".modal_change_profile").show();
+     	profileReset();
+//      	var new_name = prompt('변경할 이름을 입력해주세요','');
+     	
+     });
+	 $("#profile_X").on("click",function(){
+     	$(".modal_change_profile").hide();
+     })
+     $("#profile_addEvt").on("click",function(){
+     	
+     	if($("#profile_name").val() == ''){
+  		   popup_alert.alerts('이름을 입력해주세요.')
+     	}
+     	else if($("#profile_nick").val() == ''){
+   		   popup_alert.alerts('닉네임을 입력해주세요.')
+     	}
+     	else if($("#profile_new_pass_chk").val() == '' && $("#profile_now_pass_chk").val() == 'Y'){
+    		   popup_alert.alerts('비밀번호가 일치하지 않습니다.')
+     	}
+     	else{
+     		
+
+				var pwd = ($("#profile_now_pass_chk").val() == '') ? ''
+					  : $("#profile_new_pass").val();
+
+ 		 	var form = new FormData();
+ 		 
+ 		 	form.append("USERID",uid);
+ 		 	form.append("PWD",pwd);
+ 		 	form.append("USERNAME",$("#profile_name").val());
+ 		 	form.append("NICKNAME",$("#profile_nick").val());
+ 		 	form.append("TEL",$("#profile_phone").val());
+ 		 	form.append("ADDR",$("#profile_address").val());
+ 		 	form.append("profileImage",$("#profile_image")[0].files[0]);
+ 		 	
+ 		 	
+	            	$.ajax({
+	        		type: "POST",
+					url : "Company/edit_profile.do",
+					data: form,
+					async: false,
+					processData : false,
+					contentType : false,
+					success:function(data){
+						console.log(data);
+						
+						var frm = document.createElement("form");
+			        	frm.setAttribute("charset", "UTF-8");
+			        	frm.setAttribute("method", "POST");
+			        	frm.setAttribute("action", "Individual.do");
+			        	
+			        	var hiddenField = document.createElement("input");
+			        	hiddenField.setAttribute("type", "hidden");
+			            hiddenField.setAttribute("name", "SESSION_NAM_KOR");
+			            hiddenField.setAttribute("value", $("#profile_name").val());
+			            frm.appendChild(hiddenField);
+			            
+			            document.body.appendChild(frm);
+			            frm.submit();
+			            
+
+						var frm2 = document.createElement("form");
+			        	frm2.setAttribute("charset", "UTF-8");
+			        	frm2.setAttribute("method", "POST");
+			        	frm2.setAttribute("action", "./Individual.do");
+			        	
+			        	var hiddenField2 = document.createElement("input");
+			        	hiddenField2.setAttribute("type", "hidden");
+			            hiddenField2.setAttribute("name", "SESSION_NICK");
+			            hiddenField2.setAttribute("value", $("#profile_nick").val());
+			            frm2.appendChild(hiddenField2);
+			            
+			            document.body.appendChild(frm2);
+			            frm2.submit();
+			            
+			            profileReset();
+					},
+					error:function(err){
+						console.log(err);
+					}
+	        	});
+     	}
+     })
+     
+        $("#profile_now_pass").on("change",function(){
+
+        	$.ajax({
+    		type: "POST",
+			url : "Company/pwd_profile.do",
+			data:{
+				USERID: uid,
+				PWD: $("#profile_now_pass").val(),
+				},
+			success : function(data){
+					if(data == '비밀번호가 일치합니다.'){
+						$("#profile_now_pass_chk").val('Y')
+						$("#profile_new_pass").prop("disabled",false);
+						$("#profile_new_pass_2").prop("disabled",false);
+						$("#profile_new_pass").val("");
+						$("#profile_new_pass_2").val("");
+						$("#profile_new_pass_chk").val("");
+					}
+					else{
+						$("#profile_now_pass_chk").val('');
+						$("#profile_new_pass").prop("disabled",true);
+						$("#profile_new_pass_2").prop("disabled",true);
+						$("#profile_new_pass").val("");
+						$("#profile_new_pass_2").val("");
+						$("#profile_new_pass_chk").val("");
+					}
+				}
+        	})
+        })
+        
+        $(".P_password").on("change",function(){
+
+			if($("#profile_new_pass").val() == $("#profile_new_pass_2").val()){
+				$("#profile_new_pass_chk").val('Y')
+			}
+			else{
+				$("#profile_new_pass_chk").val('')
+			}
+        })
+}); //document 끝
 
 
 
+function profileReset(){
+	
+	$.ajax({
+    	type: "POST",
+		url : "Company/select_profile.do",
+		data: {
+			USERID: uid
+		},
+		async: false,
+		success:function(data){
+			var result = JSON.parse(data);
+
+	    	$(".profile_input").val("");
+
+	    	$("#profile_id").val(result[0].ID);
+	    	$("#profile_name").val(result[0].USERNAME);
+	    	$("#profile_nick").val(result[0].NICKNAME);
+	    	$("#profile_phone").val(result[0].TEL);
+	    	$("#profile_address").val(result[0].ADDR);
+	    	$(".profile_image_div").css("background-image","url(/SSOO/Company/proFile/" + result[0].FILE_SAVE_NAME + ")");
+	    	$(".profile_img > img").attr("src","/SSOO/Company/proFile/" + result[0].FILE_SAVE_NAME);
+	    	$("#profile_new_pass").prop("disabled",true);
+	    	$("#profile_new_pass_2").prop("disabled",true);
+	    	
+//		    	$("#profile_image_preview").attr("src","/proFile/" + result[0].FILE_SAVE_NAME);
+	    	
+	    	console.log(result);
+		},
+		error: function(err){
+			console.log(err);
+		}
+    });
+}
+
+function readURL(input) {
+	  if (input.files && input.files[0]) {
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+// 	      document.getElementById('profile_image_preview').src = e.target.result;
+		$(".profile_image_div").css("background-image", "url(" + e.target.result + ")");
+	    };
+	    reader.readAsDataURL(input.files[0]);
+	  } else {
+			$(".profile_image_div").css("background-image","");
+// 	    document.getElementById('profile_image_preview').src = "";
+	  }
+	}
 //TO-DO 스케쥴 추가할때마다 함수 재설정 
 
 $(document).on('click','.option_div',function(){
@@ -752,9 +935,26 @@ function dragopen() {
 		scroll : false,
 		containment : '.to_do', //부모 요소 안에서만 이동 범위 제한
 		handle :".handle",
+	     cursor: "pointer",
 //			snap: '.div',
 // 		 snapMode: "inner",
 			  snapTolerance: 50,
+			  drag: function( event, ui ) {
+
+			        var delx = $(this).find('.mosuri').offset().left;
+			        var dely = $(this).find('.mosuri').offset().top;
+			        var delx2 = $('.trash').offset().left;
+			        var dely2 = $('.trash').offset().top;
+			        
+					if(delx > delx2 - 22 && dely < dely2 + 30){
+						$(".trash").css({"transform": "scale(1.5)", "z-index":"2000"});
+						$(".trash").css({"position":"absolute"});
+						}
+					else{
+						$(".trash").css({"transform": "scale(1)", "z-index":""});
+						$(".trash").css({"position":""});
+					}
+				},
 			stop: function (event, ui) {
 				var idx = $(this).attr("idx");
 		        var left = $(this).css("left");
@@ -864,7 +1064,8 @@ function dragopen() {
 				
 				checkTodoNum()
 				}
-					
+				$(".trash").css({"transform": "scale(1)", "z-index":""});
+				$(".trash").css({"position":""});
 			}
 	});
 }

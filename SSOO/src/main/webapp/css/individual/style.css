@@ -195,7 +195,9 @@ section
   cursor: pointer;
   box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
-
+.trash{
+	transition: all 0.1s linear;
+}
 /* ----to_do_icon_div 끝------ */
 
 .to_do_section 
@@ -655,8 +657,11 @@ section
 	    display: flex;
 	    align-items: center;
 	    justify-content: center;
+	    cursor : pointer;
 	}
-	
+.character_option:hover{
+		background: black;
+}
 .character_option .fa-solid 
 {
 	font-size: 20px;
@@ -701,10 +706,18 @@ section
 }
 
 #character_change:hover{
+    background: var(--sub-color1);
+/*     border-radius: 0 0 15px 15px; */
+}
+
+#logout:hover{
     background: var(--main-color);
     border-radius: 0 0 15px 15px;
 }
-
+#btn_edit:hover{
+    background: var(--main-color);
+/*     border-radius: 0 0 15px 15px; */
+}
 /* 미션팝업 시작 */ 
 
 #mission_add
@@ -1005,6 +1018,7 @@ section
     display: flex;
     align-items: center;
     justify-content: center;	
+    cursor: pointer;
 }
 
 /* 탭부분 */

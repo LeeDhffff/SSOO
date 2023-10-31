@@ -574,7 +574,7 @@ var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
 	$(document).ready(function(){
 
 		if(uid != '' && uid != null && uid != 'null'){
-			location.href = "Main.do";
+			location.href = "Individual.do";
 		}
 		
 		$("#btn_signin").on("click", function(){
@@ -605,7 +605,7 @@ var uid = '<%=(String)session.getAttribute("SESSION_COD_MEMB")%>';
 	    			var relt = JSON.parse(result);
 	    			console.log(relt);
 	    			if(relt.resultMsg == "1"){
-	    				location.href = "Main.do";
+	    				location.href = "Individual.do";
 	    			}else if (relt.resultMsg == "0"){
 	    				alert("아이디 또는 비밀번호를 확인하세요.");
 	    			}

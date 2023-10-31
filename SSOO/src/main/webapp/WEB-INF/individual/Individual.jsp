@@ -34,6 +34,104 @@
     
 
 <style>
+.tab_div{
+	display:none;
+}
+
+        .modal_change_profile{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+         .modal_con_wrap_profile {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+			width: 580px;
+            text-align: center;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+            transform: translateX(-50%) translateY(-50%);
+        }
+        
+        .profile_head{
+       	    margin-top: 20px;
+    		margin-bottom: 30px;
+        }
+		.profile_head > h3 {
+			font-size: 30px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		.profile_image_div{
+		    width: 100px;
+		    height: 100px;
+		    background: #b7b7b7;
+		    border-radius: 100px;    
+		    margin: auto;
+		    margin-top: 15px;
+    		margin-bottom: 20px;
+    		position: relative;
+   		    background-size: 100%;
+    		border: 2px solid #b7b7b7;
+		}
+		.profile_input_div{
+			display: flex;
+			justify-content: center;    
+			font-size: 15px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		.profile_input_div > h4{
+			width: 150px;    
+			text-align: left;
+		    margin-top: auto;
+   		 	margin-bottom: auto;
+		}
+		.profile_input{
+			width: 300px;
+		    height: 40px;
+		    padding-left: 10px;
+		    border: 1px solid #9d9d9d;
+		    border-radius: 6px;
+		}
+		.profile_input:disabled{
+			background: #ffb8b8;
+		}
+		.profile_btn_div{
+		    margin-top: 30px;
+		    margin-bottom: 20px;
+		}
+		.profile_btn{
+		    width: 150px;
+		    height: 40px;
+		    border: 0;
+		    color: white;
+		    border-radius: 5px;
+		    cursor: pointer;
+		}
+		.profile_image_div_btn{
+		    background: gray;
+		    width: 30px;
+		    height: 30px;
+		    position: absolute;
+		    right: 0%;
+		    bottom: 0%;
+		    border-radius: 100px;
+		    cursor: pointer;
+		}
+		#profile_addEvt{
+		    background: var(--main-color);
+		}
+		#profile_X{
+		    background: black;
+		}
 </style>
 <body>
 
@@ -154,7 +252,7 @@
 
         <header class="header">
             <h3 class="logo">
-                <a href="Main.do">
+                <a href="#">
                     <img src="./images/individual/logo.png" alt="logo">
                 </a>
             </h3>
@@ -286,6 +384,7 @@
 	            			<div class="character_button" style="display:none;">
 				            	<button id="mission">오늘의 미션</button>
 				            	<button id="character_change">Custom</button>
+				            	<button id="btn_edit">프로필 변경</button>
 				            	<button id="logout">로그아웃</button>
 	            			</div>
 	            		</div>            		
@@ -427,7 +526,59 @@
         	</div>         	
         </div>
    </div>
-   
+   <div class="modal_change_profile">
+    	<div class="modal_con_wrap_profile">
+    		<div class="profile_head">
+                <h3>내 정보</h3>
+                <div class="profile_image_div">
+                	<img src="" id="profile_image_preview">
+                	<input type="file" class="profile_file" id="profile_image" style="display:none;" onchange="readURL(this);">
+	                <label class="profile_image_div_btn" for="profile_image">
+	                </label>
+                </div>
+            </div>
+    		<div class="profile_body">
+                <div class="profile_input_div">
+            		<h4>아이디</h4>
+            		<input class="profile_input" id="profile_id" disabled>
+                </div>
+                <div class="profile_input_div">
+            		<h4>이름</h4>
+            		<input class="profile_input" id="profile_name" placeholder="이름을 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>닉네임</h4>
+            		<input class="profile_input" id="profile_nick" placeholder="닉네임을 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>현재 패스워드</h4>
+            		<input type="password" class="profile_input" id="profile_now_pass" placeholder="현재 패스워드를 입력하세요.">
+            		<input type="hidden" class="profile_input" id="profile_now_pass_chk" placeholder="변경 패스워드를 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>변경 패스워드</h4>
+            		<input type="password" class="profile_input P_password" id="profile_new_pass" placeholder="변경 패스워드를 입력하세요." disabled>
+            		<input type="hidden" class="profile_input" id="profile_new_pass_chk" placeholder="변경 패스워드를 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>변경 패스워드 확인</h4>
+            		<input type="password" class="profile_input P_password" id="profile_new_pass_2" placeholder="변경 패스워드 확인" disabled>
+                </div>
+                <div class="profile_input_div">
+            		<h4>전화번호</h4>
+            		<input class="profile_input" id="profile_phone" placeholder="전화번호를 입력하세요.">
+                </div>
+                <div class="profile_input_div">
+            		<h4>주소</h4>
+            		<input class="profile_input" id="profile_address" placeholder="주소를 입력하세요.">
+                </div>
+            </div>
+            <div class="profile_btn_div">
+                <button id="profile_X" class="profile_btn">취소하기</button>
+                <button id="profile_addEvt" class="profile_btn">등록하기</button>
+            </div>
+    	</div>
+    </div>
    
 </body>
 <script>
